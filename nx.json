@@ -1,0 +1,8 @@
+{
+  "defaultBase": "main",
+  "targetDefaults": {
+    "build": {
+      "cache": true
+    }
+  }
+}

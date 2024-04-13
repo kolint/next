@@ -1,0 +1,5 @@
+{
+  "extends": ["@kolint/tsconfig/bun.json"],
+  "compilerOptions": {},
+  "files": ["./prepare"]
+}

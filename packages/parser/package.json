@@ -1,0 +1,12 @@
+{
+  "name": "@kolint/parser",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts"
+  },
+  "dependencies": {
+    "parse5": "^7.1.2"
+  }
+}

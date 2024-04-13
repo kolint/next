@@ -1,0 +1,21 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "**/node_modules": true
+  },
+  "explorer.fileNesting.patterns": {
+    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml"
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["nx.json"],
+      "url": "./node_modules/nx/schemas/nx-schema.json"
+    },
+    {
+      "fileMatch": ["tsconfig/*.json"],
+      "url": "https://json.schemastore.org/tsconfig.json"
+    }
+  ],
+  "eslint.validate": ["json"]
+}

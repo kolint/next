@@ -1,0 +1,7 @@
+{
+  "name": "@kolint/tsconfig",
+  "private": true,
+  "dependencies": {
+    "@tsconfig/strictest": "^2.0.5"
+  }
+}
