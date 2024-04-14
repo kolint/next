@@ -1,0 +1,10 @@
+{
+  "name": "@kolint/eslint-plugin",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "targets": {
+    "build": {},
+    "test": {},
+    "lint": {}
+  }
+}

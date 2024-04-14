@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "Package",
+  "title": "Package",
+  "type": "object",
+  "description": "Generates the basics for a '@kolint' package under 'packages/'.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of package without scope.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Enter package name without scope: "
+    }
+  },
+  "required": ["name"]
+}

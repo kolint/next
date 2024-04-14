@@ -2,7 +2,51 @@
   "defaultBase": "main",
   "targetDefaults": {
     "build": {
+      "dependsOn": ["^build"],
+      "executor": "@kolint/nx:build",
+      "inputs": ["default", "{workspaceRoot}/packages/nx/**"],
+      "options": {
+        "entry": "{projectRoot}/src/index.ts",
+        "exports": "./index.js",
+        "types": "./index.d.ts",
+        "assets": ["{projectRoot}/README.md", "{workspaceRoot}/LICENSE"],
+        "tsup": {
+          "format": "esm",
+          "dts": true,
+          "splitting": true,
+          "tsconfig": "{projectRoot}/tsconfig.lib.json"
+        }
+      },
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "cache": true
+    },
+    "test": {
+      "executor": "@kolint/nx:test",
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["{projectRoot}"]
+      },
+      "outputs": ["{options.outputFile}"],
       "cache": true
     }
-  }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ]
 }

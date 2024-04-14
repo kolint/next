@@ -1,0 +1,5 @@
+{
+  "extends": ["@kolint/tsconfig/node.json"],
+  "include": ["src", "lib"],
+  "exclude": ["**/__test__"]
+}

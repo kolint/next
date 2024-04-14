@@ -1,3 +1,0 @@
-{
-  "extends": ["@kolint/tsconfig/node.json"]
-}

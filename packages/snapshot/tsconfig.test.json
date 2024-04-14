@@ -1,0 +1,4 @@
+{
+  "extends": ["@kolint/tsconfig/bun.json"],
+  "include": ["src/**/__test__"]
+}

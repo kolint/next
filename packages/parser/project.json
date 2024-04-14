@@ -1,0 +1,10 @@
+{
+  "name": "@kolint/parser",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "targets": {
+    "build": {},
+    "test": {},
+    "lint": {}
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extends": ["@kolint/tsconfig/node.json"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "exactOptionalPropertyTypes": false
+  },
+  "include": ["src"],
+  "exclude": ["src/runtime"]
+}

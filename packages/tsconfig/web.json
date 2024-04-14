@@ -1,0 +1,10 @@
+{
+  "extends": ["./base.json"],
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ES2015",
+    "lib": ["ES2015", "DOM"],
+    "moduleResolution": "Bundler",
+    "types": []
+  }
+}

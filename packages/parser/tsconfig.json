@@ -1,3 +1,7 @@
 {
-  "extends": ["@kolint/tsconfig/node.json"]
+  "references": [
+    { "path": "tsconfig.lib.json" },
+    { "path": "tsconfig.test.json" }
+  ],
+  "include": []
 }

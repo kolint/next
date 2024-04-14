@@ -2,7 +2,9 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "files.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/.nx": true,
+    "tmp": true
   },
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml"
@@ -13,9 +15,16 @@
       "url": "./node_modules/nx/schemas/nx-schema.json"
     },
     {
+      "fileMatch": ["project.json"],
+      "url": "./node_modules/nx/schemas/project-schema.json"
+    },
+    {
       "fileMatch": ["tsconfig/*.json"],
       "url": "https://json.schemastore.org/tsconfig.json"
     }
   ],
+  "material-icon-theme.files.associations": {
+    "project.json": "nrwl"
+  },
   "eslint.validate": ["json"]
 }

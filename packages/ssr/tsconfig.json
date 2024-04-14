@@ -1,3 +1,12 @@
 {
-  "extends": ["@kolint/tsconfig/node.json"]
+  "references": [
+    { "path": "tsconfig.e2e.json" },
+    { "path": "tsconfig.node.json" },
+    { "path": "tsconfig.test.json" },
+    { "path": "tsconfig.web.json" },
+  ],
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": []
 }
