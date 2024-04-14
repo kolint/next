@@ -1,0 +1,8 @@
+{
+  "extends": ["@kolint/tsconfig/node.json"],
+  "compilerOptions": {
+    "sourceMap": true,
+		"verbatimModuleSyntax": false
+  },
+  "include": ["src"]
+}

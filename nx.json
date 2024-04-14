@@ -10,12 +10,8 @@
         "exports": "./index.js",
         "types": "./index.d.ts",
         "assets": ["{projectRoot}/README.md", "{workspaceRoot}/LICENSE"],
-        "tsup": {
-          "format": "esm",
-          "dts": true,
-          "splitting": true,
-          "tsconfig": "{projectRoot}/tsconfig.lib.json"
-        }
+        "tsconfig": "{projectRoot}/tsconfig.lib.json",
+        "declaration": true
       },
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "cache": true

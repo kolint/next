@@ -1,0 +1,33 @@
+{
+  "name": "@kolint/vscode",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "targets": {
+    "build": {
+      "options": {
+        "entry": [
+          "{projectRoot}/src/extension.ts",
+          "{projectRoot}/src/language-server.ts"
+        ],
+        "format": "cjs",
+        "package": {
+          "type": "commonjs",
+          "main": "./extension.cjs"
+        },
+        "tsconfig": "tsconfig.json",
+        "declaration": false,
+        "tsup": {
+          "external": ["vscode"]
+        }
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vscode-test",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "lint": {}
+  }
+}

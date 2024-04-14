@@ -5,19 +5,18 @@
   "description": "",
   "type": "object",
   "properties": {
-    "includeDevDependencies": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "tsup": {
-      "type": "object"
-    },
-    "types": {},
-    "exports": {},
-    "outputPath": {
-      "type": "string"
+    "format": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "entry": {
       "oneOf": [
@@ -31,7 +30,58 @@
           }
         }
       ]
+    },
+    "outputPath": {
+      "type": "string"
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "string"
+              },
+              "output": {
+                "type": "string"
+              },
+              "glob": {
+                "type": "string"
+              },
+              "ignore": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dot": {
+                "type": "boolean"
+              }
+            },
+            "required": ["input", "output", "glob"]
+          }
+        ]
+      }
+    },
+    "tsup": {
+      "type": "object"
+    },
+    "package": {
+      "type": "object"
+    },
+    "tsconfig": {
+      "type": "string"
+    },
+    "declaration": {
+      "type": "boolean"
+    },
+    "watch": {
+      "type": "boolean"
     }
-  },
-  "required": ["entry", "exports"]
+  }
 }

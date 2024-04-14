@@ -1,17 +1,12 @@
 import { TsupExecutorSchema } from "./schema";
 import { Executor, readJsonFile, writeJsonFile } from "@nx/devkit";
 import { copyAssets } from "@nx/js";
-import { calculateProjectBuildableDependencies } from "@nx/js/src/utils/buildable-libs-utils";
 import { rm } from "node:fs/promises";
 import { relative, resolve } from "node:path";
 import { sortPackageJson } from "sort-package-json";
-import { Options, build } from "tsup";
+import { build } from "tsup";
 
 import slash = require("slash");
-
-const DEFAULT_CONFIG: Options = {
-  format: "esm",
-};
 
 const executor: Executor<TsupExecutorSchema> = async (options, context) => {
   let success = true;
@@ -28,20 +23,21 @@ const executor: Executor<TsupExecutorSchema> = async (options, context) => {
     await rm(outputPath, { force: true, recursive: true });
   }
 
-  const configs = Array.isArray(options.tsup)
-    ? options.tsup
-    : [options.tsup ?? {}];
+  const configs = Array.isArray(options.tsup) ? options.tsup : [options.tsup];
 
   const results = await Promise.allSettled(
     configs.map((config) =>
       build({
-        ...DEFAULT_CONFIG,
-        entry: options.entry
-          ? Array.isArray(options.entry)
-            ? options.entry
-            : [options.entry]
-          : [resolve(projectRoot, "src/index.ts")],
+        // entry
+        ...(options.entry && {
+          entry: Array.isArray(options.entry) ? options.entry : [options.entry],
+        }),
+
+        format: options.format ?? "esm",
         outDir: outputPath,
+        tsconfig: options.tsconfig,
+        dts: options.declaration,
+
         ...config,
       }),
     ),
@@ -53,15 +49,6 @@ const executor: Executor<TsupExecutorSchema> = async (options, context) => {
       console.error(result.reason.message);
     }
   }
-
-  const { dependencies } = calculateProjectBuildableDependencies(
-    context.taskGraph,
-    context.projectGraph!,
-    context.root,
-    context.projectName!,
-    context.targetName!,
-    context.configurationName!,
-  );
 
   const rootPackageJsonPath = resolve(context.root, "package.json");
   const rootPackageJson = readJsonFile(rootPackageJsonPath);
@@ -84,45 +71,11 @@ const executor: Executor<TsupExecutorSchema> = async (options, context) => {
 
   delete packageJson.nx;
   delete packageJson.pnpm;
-
-  packageJson.types = options.types;
-  packageJson.exports = options.exports;
-
-  for (const dependency of dependencies) {
-    if (
-      !packageJson.dependencies[dependency.name] &&
-      !packageJson.peerDependencies[dependency.name] &&
-      !packageJson.optionalDependencies[dependency.name]
-    ) {
-      success = false;
-      console.error(
-        `"${relativePackageJsonPath}" is missing production dependency "${dependency.name}".`,
-      );
-    }
-  }
+  delete packageJson.devDependencies;
 
   if (!packageJson.private && !packageJson.version) {
     success = false;
     console.error(`"${relativePackageJsonPath}" is missing version field.`);
-  }
-
-  if (options.includeDevDependencies?.length) {
-    packageJson.devDependencies = Object.fromEntries(
-      options.includeDevDependencies
-        .filter((name) => {
-          const isDefined = !!packageJson.devDependencies[name];
-          if (!isDefined) {
-            success = false;
-            console.error(
-              `"${relativePackageJsonPath}" is missing development dependency "${name}".`,
-            );
-          }
-          return isDefined;
-        })
-        .map((name) => [name, packageJson.devDependencies[name]]),
-    );
-  } else {
-    delete packageJson.devDependencies;
   }
 
   packageJson.repository ??= {
@@ -130,6 +83,8 @@ const executor: Executor<TsupExecutorSchema> = async (options, context) => {
     directory: slash(relative(context.root, projectRoot)),
   };
   packageJson.license ??= rootPackageJson.license;
+
+  Object.assign(packageJson, options.package ?? {});
 
   writeJsonFile(
     resolve(outputPath, "package.json"),

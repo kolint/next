@@ -1,12 +1,13 @@
-import { CopyAssetsOptions } from "@nx/js/src/utils/assets/assets";
-import { Options } from "tsup";
+import { AssetGlob } from "@nx/js/src/utils/assets/assets";
+import { Format, Options } from "tsup";
 
 export interface TsupExecutorSchema {
-  includeDevDependencies?: readonly string[];
+  format?: Format | readonly Format[];
   entry?: string | readonly string[];
-  tsup?: Options;
   outputPath?: string;
-  assets?: CopyAssetsOptions;
-  exports: any;
-  types?: string;
+  assets?: (string | AssetGlob)[];
+  tsup?: Options | readonly Options[];
+  package?: any;
+  tsconfig?: string;
+  declaration?: boolean;
 }

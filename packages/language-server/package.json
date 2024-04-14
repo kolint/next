@@ -12,9 +12,9 @@
   },
   "license": "MIT",
   "type": "module",
-  "exports": "./index.js",
-  "types": "./index.d.ts",
+  "exports": "./src/index.ts",
   "dependencies": {
+    "@kolint/snapshot": "workspace:*",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11"
   },
