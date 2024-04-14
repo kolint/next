@@ -13,9 +13,7 @@ import {
   NamedContextNode,
   ContextAssignmentNode,
 } from "./syntax-tree.js";
-import { createRequire } from "node:module";
 
-const require = createRequire(import.meta.url);
 const docParser =
   require("../../../lib/legacy/parser.cjs") as typeof import("../../../lib/legacy/parser.cjs");
 
