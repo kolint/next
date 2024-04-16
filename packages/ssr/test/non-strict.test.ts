@@ -1,7 +1,7 @@
 import { render } from "../src/lib/exports.js";
+import { test, describe } from "bun:test";
 import assert from "node:assert/strict";
 import { resolve } from "node:path";
-import { test, describe } from "bun:test";
 
 // Prettier can format the template literals as html when tagged.
 const html = String.raw;

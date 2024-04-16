@@ -1,6 +1,6 @@
-import { Element } from "@kolint/parser";
 import { type Plugin } from "../plugin.js";
 import value from "./value.js";
+import { Element } from "@kolint/parser";
 
 const textInput: Plugin = {
   filter: (binding) =>

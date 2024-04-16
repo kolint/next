@@ -105,6 +105,9 @@ importers:
       globby:
         specifier: ^14.0.1
         version: 14.0.1
+      ts-morph:
+        specifier: ^22.0.0
+        version: 22.0.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -135,6 +138,9 @@ importers:
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
+      ts-morph:
+        specifier: ^22.0.0
+        version: 22.0.0
       vscode-languageserver:
         specifier: ^9.0.1
         version: 9.0.1

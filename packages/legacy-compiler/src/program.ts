@@ -2,7 +2,7 @@ import { Diagnostic } from "./diagnostic.js";
 import { SourceMapGenerator } from "source-map";
 
 export interface Reporting {
-  diagnostics: Diagnostic[]
+  diagnostics: Diagnostic[];
   registerOutput(filename: string, code: string, map: SourceMapGenerator): void;
   addDiagnostic(...diags: Diagnostic[]): void;
   disableAllDiagnostics(): void;

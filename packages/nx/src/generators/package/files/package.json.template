@@ -2,8 +2,7 @@
   "name": "@kolint/<%= name %>",
   "version": "0.1.0",
   "type": "module",
-  "types": "./src/index.ts",
-"exports": "./dist/index.js",
+  "exports": "./src/index.ts",
   "engines": {
     "node": ">=20.0.0"
   }

@@ -1,6 +1,8 @@
 import { Compiler, Snapshot } from "@kolint/compiler";
+import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SourceMapConsumer } from "source-map";
+import { ts } from "ts-morph";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import {
   type Connection,
@@ -22,7 +24,6 @@ export function startLanguageServer(options?: LanguageServerOptions) {
     options?.connection ?? createConnection(ProposedFeatures.all);
   const documents = new TextDocuments(TextDocument);
 
-  const compiler = new Compiler();
   const snapshots = new WeakMap<TextDocument, Snapshot>();
 
   documents.onDidOpen(async (event) => {
@@ -33,10 +34,23 @@ export function startLanguageServer(options?: LanguageServerOptions) {
     await refreshDocument(event.document);
   });
 
+  documents.onDidClose((event) => {
+    snapshots.delete(event.document);
+  });
+
   async function refreshDocument(document: TextDocument) {
     let snapshot = snapshots.get(document);
     if (!snapshot) {
       const path = fileURLToPath(document.uri);
+
+      // create compiler
+      const tsConfigFilePath = ts.findConfigFile(
+        dirname(path),
+        ts.sys.fileExists,
+      );
+      const compiler = new Compiler(tsConfigFilePath);
+
+      // create snapshot
       snapshot = compiler.createSnapshot(path);
       snapshots.set(document, snapshot);
     }

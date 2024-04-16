@@ -3,16 +3,20 @@ import { globby } from "globby";
 import { writeFileSync } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
 import { SourceMapGenerator } from "source-map";
+import { ts } from "ts-morph";
 
 export interface CheckOptions {
   include?: readonly string[] | undefined;
   exclude?: readonly string[] | undefined;
   severity?: { [key: string]: "off" | "warn" | "warning" | "error" };
   debug?: boolean;
+  tsconfig?: string | undefined;
 }
 
 export async function check(paths: readonly string[], options?: CheckOptions) {
-  const compiler = new Compiler();
+  const tsConfigFilePath =
+    options?.tsconfig ?? ts.findConfigFile(process.cwd(), ts.sys.fileExists);
+  const compiler = new Compiler(tsConfigFilePath);
   const diagnostics: Diagnostic[] = [];
 
   const registerOutput = options?.debug

@@ -1,5 +1,5 @@
-import { test, describe } from "bun:test";
 import { render } from "../src/lib/exports.js";
+import { test, describe } from "bun:test";
 import assert from "node:assert/strict";
 
 describe("binding context", () => {

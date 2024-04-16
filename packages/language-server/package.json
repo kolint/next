@@ -12,13 +12,13 @@
   },
   "license": "MIT",
   "type": "module",
-  "types": "./src/index.ts",
-"exports": "./dist/index.js",
+  "exports": "./src/index.ts",
   "dependencies": {
     "@kolint/compiler": "workspace:*",
     "source-map": "^0.7.4",
     "vscode-languageserver": "^9.0.1",
-    "vscode-languageserver-textdocument": "^1.0.11"
+    "vscode-languageserver-textdocument": "^1.0.11",
+    "ts-morph": "^22.0.0"
   },
   "engines": {
     "node": ">=20.0.0"

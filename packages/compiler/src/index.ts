@@ -1,26 +1,16 @@
 import * as legacyCompiler from "@kolint/legacy-compiler";
-import { dirname } from "node:path";
 import type { RawSourceMap } from "source-map";
-import { ts, Project, SourceFile } from "ts-morph";
+import { Project, SourceFile } from "ts-morph";
 
-export { Diagnostic, Severity } from '@kolint/legacy-compiler'
+export { Diagnostic, Severity } from "@kolint/legacy-compiler";
 
 export class Compiler {
-  #projects = new Map<string | undefined, Project>();
+  readonly project: Project;
 
-  getProject(path: string): Project {
-    const tsConfigFilePath = ts.findConfigFile(
-      dirname(path),
-      ts.sys.fileExists,
-    );
-    let project = this.#projects.get(tsConfigFilePath);
-    if (!project) {
-      project = new Project({
-        tsConfigFilePath,
-      });
-      this.#projects.set(tsConfigFilePath, project);
-    }
-    return project;
+  constructor(tsConfigFilePath?: string) {
+    this.project = new Project({
+      tsConfigFilePath,
+    });
   }
 
   createSnapshot(path: string) {
@@ -45,10 +35,6 @@ export class Snapshot {
    */
   _program = legacyCompiler.createProgram();
 
-  #compiler: Compiler;
-  get project() {
-    return this.#compiler.getProject(this.path);
-  }
   #sourceFile: SourceFile;
   get sourceFile() {
     return this.#sourceFile;
@@ -79,13 +65,16 @@ export class Snapshot {
   }
 
   constructor(
-    compiler: Compiler,
+    readonly compiler: Compiler,
     readonly path: string,
   ) {
-    this.#compiler = compiler;
-    this.#sourceFile = this.project.createSourceFile(this.path, undefined, {
-      overwrite: true,
-    });
+    this.#sourceFile = this.compiler.project.createSourceFile(
+      this.path,
+      undefined,
+      {
+        overwrite: true,
+      },
+    );
   }
 
   increment(version = this.#version + 1) {
@@ -109,7 +98,7 @@ export class Snapshot {
 
         // Compile typescript contents
         const compiler = new legacyCompiler.Compiler(
-          this.project.compilerOptions.get(),
+          this.compiler.project.compilerOptions.get(),
         );
         const compiled = await compiler.compile(
           [document],

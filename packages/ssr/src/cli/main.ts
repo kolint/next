@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import * as prettier from "prettier";
 import { render } from "../lib/exports.js";
-import yargs from "yargs";
-import { basename, dirname, resolve } from "node:path";
 import { resolve as importMetaResolve } from "import-meta-resolve";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { basename, dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import * as prettier from "prettier";
+import yargs from "yargs";
 
 const options = await yargs(process.argv.slice(2))
   .strict()

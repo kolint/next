@@ -12,13 +12,13 @@
   },
   "license": "MIT",
   "type": "module",
-  "types": "./src/index.ts",
-"exports": "./dist/index.js",
+  "exports": "./src/index.ts",
   "dependencies": {
     "@kolint/compiler": "workspace:*",
     "@types/yargs": "^17.0.32",
     "chalk": "^5.3.0",
     "globby": "^14.0.1",
+    "ts-morph": "^22.0.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

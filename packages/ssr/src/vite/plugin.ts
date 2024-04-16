@@ -1,6 +1,6 @@
+import { type RenderOptions, render } from "../lib/exports.js";
 import { dataToEsm } from "@rollup/pluginutils";
 import { type FilterPattern, type Plugin, createFilter } from "vite";
-import { type RenderOptions, render } from "../lib/exports.js";
 
 export interface KnockoutSSRPluginOptions extends RenderOptions {
   /**

@@ -1,7 +1,7 @@
-import MagicString from "magic-string";
-import * as acorn from "acorn";
-import { escapeJs } from "./utils.js";
 import { BindingContext } from "./binding-context.js";
+import { escapeJs } from "./utils.js";
+import * as acorn from "acorn";
+import MagicString from "magic-string";
 
 /**
  * Transform an knockout binding expression to a valid javascript expression.

@@ -1,5 +1,5 @@
-import { test, describe } from "bun:test";
 import { transform } from "../src/lib/eval.js";
+import { test, describe } from "bun:test";
 import assert from "node:assert/strict";
 
 describe("evaluation", () => {

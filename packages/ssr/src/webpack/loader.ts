@@ -1,8 +1,8 @@
-import { validate } from "schema-utils";
+import { render, type RenderOptions } from "../lib/exports.js";
 import { urlToRequest } from "loader-utils";
+import { validate } from "schema-utils";
 import type { Schema } from "schema-utils/declarations/validate.js";
 import type { LoaderDefinitionFunction } from "webpack";
-import { render, type RenderOptions } from "../lib/exports.js";
 
 const schema: Schema = {
   type: "object",

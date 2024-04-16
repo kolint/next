@@ -1,6 +1,6 @@
 {
-    "compilerOptions": {
-        "skipLibCheck": true,
-        "types": []
-    }
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "types": []
+  }
 }

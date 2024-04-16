@@ -1,7 +1,7 @@
 import knockoutSSR from "../src/rollup/plugin.js";
+import { test, describe } from "bun:test";
 import assert from "node:assert/strict";
 import { resolve } from "node:path";
-import { test, describe } from "bun:test";
 import { rollup } from "rollup";
 
 describe("rollup (build-tool)", () => {
