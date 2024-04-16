@@ -1,9 +1,9 @@
 import { Compiler, Severity, type Diagnostic } from "@kolint/compiler";
+import { ts, getCompilerOptionsFromTsConfig } from "@kolint/ts-utils";
 import { globby } from "globby";
 import { writeFileSync } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
 import { SourceMapGenerator } from "source-map";
-import { ts } from "ts-morph";
 
 export interface CheckOptions {
   include?: readonly string[] | undefined;
@@ -14,9 +14,15 @@ export interface CheckOptions {
 }
 
 export async function check(paths: readonly string[], options?: CheckOptions) {
+  // TODO: report if tsconfig is not found
   const tsConfigFilePath =
     options?.tsconfig ?? ts.findConfigFile(process.cwd(), ts.sys.fileExists);
-  const compiler = new Compiler(tsConfigFilePath);
+  // TODO: reports compiler options errors
+  const compilerOptions = tsConfigFilePath
+    ? getCompilerOptionsFromTsConfig(tsConfigFilePath).options
+    : ts.getDefaultCompilerOptions();
+
+  const compiler = new Compiler(compilerOptions);
   const diagnostics: Diagnostic[] = [];
 
   const registerOutput = options?.debug

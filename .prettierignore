@@ -3,3 +3,5 @@ coverage
 /.nx/cache
 node_modules
 /tsconfig.json
+pnpm-lock.yaml
+package-lock.json

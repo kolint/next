@@ -1,0 +1,11 @@
+{
+  "extends": ["@kolint/tsconfig/bun.json"],
+  "include": [
+    "test",
+    "spec",
+    "src/**/__test__",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ],
+  "exclude": ["**/__fixtures__"]
+}

@@ -5,8 +5,8 @@
   "exports": "./src/index.ts",
   "dependencies": {
     "@kolint/legacy-compiler": "workspace:*",
-    "source-map": "^0.7.4",
-    "ts-morph": "^22.0.0"
+    "@kolint/ts-utils": "workspace:*",
+    "source-map": "^0.7.4"
   },
   "engines": {
     "node": ">=20.0.0"

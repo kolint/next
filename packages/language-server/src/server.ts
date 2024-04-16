@@ -1,8 +1,11 @@
 import { Compiler, Snapshot } from "@kolint/compiler";
-import { dirname } from "node:path";
+import {
+  ts,
+  getCompilerOptionsFromTsConfig,
+  findTsConfigFilePath,
+} from "@kolint/ts-utils";
 import { fileURLToPath } from "node:url";
 import { SourceMapConsumer } from "source-map";
-import { ts } from "ts-morph";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import {
   type Connection,
@@ -44,11 +47,11 @@ export function startLanguageServer(options?: LanguageServerOptions) {
       const path = fileURLToPath(document.uri);
 
       // create compiler
-      const tsConfigFilePath = ts.findConfigFile(
-        dirname(path),
-        ts.sys.fileExists,
-      );
-      const compiler = new Compiler(tsConfigFilePath);
+      const tsConfigFilePath = findTsConfigFilePath(path);
+      const compilerOptions = tsConfigFilePath
+        ? getCompilerOptionsFromTsConfig(tsConfigFilePath).options
+        : ts.getDefaultCompilerOptions();
+      const compiler = new Compiler(compilerOptions);
 
       // create snapshot
       snapshot = compiler.createSnapshot(path);
@@ -123,10 +126,7 @@ export function startLanguageServer(options?: LanguageServerOptions) {
       });
 
       const translate = (line: number, character: number) =>
-        snapshot.sourceFile.compilerNode.getPositionOfLineAndCharacter(
-          line,
-          character,
-        );
+        snapshot.sourceFile.getPositionOfLineAndCharacter(line, character);
 
       try {
         console.log(

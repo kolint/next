@@ -1,0 +1,12 @@
+{
+  "name": "@kolint/ts-utils",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "peerDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

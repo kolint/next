@@ -96,6 +96,9 @@ importers:
       '@kolint/compiler':
         specifier: workspace:*
         version: link:../compiler
+      '@kolint/ts-utils':
+        specifier: workspace:*
+        version: link:../ts-utils
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.32
@@ -105,9 +108,6 @@ importers:
       globby:
         specifier: ^14.0.1
         version: 14.0.1
-      ts-morph:
-        specifier: ^22.0.0
-        version: 22.0.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -121,12 +121,12 @@ importers:
       '@kolint/legacy-compiler':
         specifier: workspace:*
         version: link:../legacy-compiler
+      '@kolint/ts-utils':
+        specifier: workspace:*
+        version: link:../ts-utils
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
-      ts-morph:
-        specifier: ^22.0.0
-        version: 22.0.0
 
   packages/eslint-plugin: {}
 
@@ -135,12 +135,12 @@ importers:
       '@kolint/compiler':
         specifier: workspace:*
         version: link:../compiler
+      '@kolint/ts-utils':
+        specifier: workspace:*
+        version: link:../ts-utils
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
-      ts-morph:
-        specifier: ^22.0.0
-        version: 22.0.0
       vscode-languageserver:
         specifier: ^9.0.1
         version: 9.0.1
@@ -150,6 +150,9 @@ importers:
 
   packages/legacy-compiler:
     dependencies:
+      '@kolint/ts-utils':
+        specifier: workspace:*
+        version: link:../ts-utils
       jison:
         specifier: ^0.4.18
         version: 0.4.18
@@ -159,12 +162,6 @@ importers:
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
-      ts-morph:
-        specifier: ^22.0.0
-        version: 22.0.0
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
 
   packages/nx:
     dependencies:
@@ -284,6 +281,12 @@ importers:
         specifier: ^5.89.0
         version: 5.91.0(@swc/core@1.4.13)(esbuild@0.19.12)
 
+  packages/ts-utils:
+    dependencies:
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
   packages/tsconfig:
     dependencies:
       '@tsconfig/strictest':
@@ -323,12 +326,6 @@ importers:
       '@vscode/test-electron':
         specifier: ^2.3.9
         version: 2.3.9
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.4.5
 
   scripts: {}
 
@@ -3296,15 +3293,6 @@ packages:
       - supports-color
     dev: true
 
-  /@ts-morph/common@0.23.0:
-    resolution: {integrity: sha512-m7Lllj9n/S6sOkCkRftpM7L24uvmfXQFedlW/4hENcuJH1HHm9u5EgxZb9uVjQSCGrbBWBkOGgcTxNg36r6ywA==}
-    dependencies:
-      fast-glob: 3.3.2
-      minimatch: 9.0.4
-      mkdirp: 3.0.1
-      path-browserify: 1.0.1
-    dev: false
-
   /@tsconfig/node10@1.0.11:
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
 
@@ -4707,10 +4695,6 @@ packages:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
     dev: true
-
-  /code-block-writer@13.0.1:
-    resolution: {integrity: sha512-c5or4P6erEA69TxaxTNcHUNcIn+oyxSRTOWV+pSYF+z4epXqNvwvJ70XPGjPNgue83oAFAPBRQYwpAJ/Hpe/Sg==}
-    dev: false
 
   /code-point-at@1.1.0:
     resolution: {integrity: sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==}
@@ -7395,12 +7379,6 @@ packages:
     resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==}
     engines: {node: '>=16 || 14 >=14.17'}
 
-  /mkdirp@3.0.1:
-    resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: false
-
   /mocha@10.4.0:
     resolution: {integrity: sha512-eqhGB8JKapEYcC4ytX/xrzKforgEc3j1pGlAXVy3eRwrtAy5/nIfT1SvgGzfN0XZZxeLq0aQWkOUAmqIJiv+bA==}
     engines: {node: '>= 14.0.0'}
@@ -7918,10 +7896,6 @@ packages:
     resolution: {integrity: sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw==}
     dependencies:
       entities: 4.5.0
-    dev: false
-
-  /path-browserify@1.0.1:
-    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
     dev: false
 
   /path-exists@4.0.0:
@@ -8973,13 +8947,6 @@ packages:
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
-
-  /ts-morph@22.0.0:
-    resolution: {integrity: sha512-M9MqFGZREyeb5fTl6gNHKZLqBQA0TjA1lea+CR48R8EBTDuWrNqW6ccC5QvjNR4s6wDumD3LTCjOFSp9iwlzaw==}
-    dependencies:
-      '@ts-morph/common': 0.23.0
-      code-block-writer: 13.0.1
-    dev: false
 
   /ts-node@10.9.1(@swc/core@1.4.13)(@types/node@18.19.31)(typescript@5.4.5):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}

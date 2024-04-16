@@ -1,17 +1,11 @@
 import * as legacyCompiler from "@kolint/legacy-compiler";
+import { ts } from "@kolint/ts-utils";
 import type { RawSourceMap } from "source-map";
-import { Project, SourceFile } from "ts-morph";
 
 export { Diagnostic, Severity } from "@kolint/legacy-compiler";
 
 export class Compiler {
-  readonly project: Project;
-
-  constructor(tsConfigFilePath?: string) {
-    this.project = new Project({
-      tsConfigFilePath,
-    });
-  }
+  constructor(readonly compilerOptions: ts.CompilerOptions) {}
 
   createSnapshot(path: string) {
     return new Snapshot(this, path);
@@ -35,7 +29,7 @@ export class Snapshot {
    */
   _program = legacyCompiler.createProgram();
 
-  #sourceFile: SourceFile;
+  #sourceFile: ts.SourceFile;
   get sourceFile() {
     return this.#sourceFile;
   }
@@ -68,13 +62,7 @@ export class Snapshot {
     readonly compiler: Compiler,
     readonly path: string,
   ) {
-    this.#sourceFile = this.compiler.project.createSourceFile(
-      this.path,
-      undefined,
-      {
-        overwrite: true,
-      },
-    );
+    this.#sourceFile = ts.createSourceFile(path, "", ts.ScriptTarget.Latest);
   }
 
   increment(version = this.#version + 1) {
@@ -98,7 +86,7 @@ export class Snapshot {
 
         // Compile typescript contents
         const compiler = new legacyCompiler.Compiler(
-          this.compiler.project.compilerOptions.get(),
+          this.compiler.compilerOptions,
         );
         const compiled = await compiler.compile(
           [document],
@@ -107,7 +95,16 @@ export class Snapshot {
         );
 
         // Update source file
-        this.#sourceFile.replaceWithText(compiled.code);
+        this.#sourceFile.update(
+          compiled.code,
+          ts.createTextChangeRange(
+            ts.createTextSpan(
+              this.#sourceFile.getFullStart(),
+              this.#sourceFile.getFullWidth(),
+            ),
+            compiled.code.length,
+          ),
+        );
 
         this.#compiled = {
           sourceMap: compiled.map,

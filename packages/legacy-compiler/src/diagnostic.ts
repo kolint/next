@@ -1,5 +1,5 @@
 import { type Location } from "./parser/location.js";
-import ts from "typescript";
+import { ts } from "@kolint/ts-utils";
 
 interface TsDiagnostics {
   code: number;

@@ -10,8 +10,8 @@ import {
 import { type Reporting } from "../program.js";
 import * as utils from "../utils.js";
 import { SourceBuilder } from "./source-builder.js";
+import { ts } from "@kolint/ts-utils";
 import { SourceMapConsumer, type RawSourceMap } from "source-map";
-import ts from "typescript";
 
 function getIdentifier(node: ts.Node, id: string): ts.Identifier | undefined {
   return node.forEachChild((child) => {

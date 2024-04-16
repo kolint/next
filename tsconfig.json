@@ -9,6 +9,7 @@
     { "path": "packages/nx/tsconfig.json" },
     { "path": "packages/parser/tsconfig.json" },
     { "path": "packages/ssr/tsconfig.json" },
+    { "path": "packages/ts-utils/tsconfig.json" },
     { "path": "packages/vscode/tsconfig.json" },
     { "path": "samples/vscode/tsconfig.json" },
     { "path": "scripts/tsconfig.json" }
