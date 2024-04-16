@@ -1,11 +1,6 @@
-// import { Snapshot } from "@kolint/snapshot";
-// import assert from "node:assert/strict";
-// import { basename } from "node:path";
-// import { fileURLToPath } from "node:url";
-import { Snapshot } from "@kolint/snapshot";
-import assert from "node:assert/strict";
-import { basename } from "node:path";
+import { Compiler, Snapshot } from "@kolint/compiler";
 import { fileURLToPath } from "node:url";
+import { SourceMapConsumer } from "source-map";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import {
   type Connection,
@@ -13,7 +8,9 @@ import {
   ProposedFeatures,
   TextDocuments,
   TextDocumentSyncKind,
-  TextDocumentIdentifier, // TextDocumentIdentifier,
+  Diagnostic,
+  Range,
+  Position,
 } from "vscode-languageserver/node.js";
 
 export interface LanguageServerOptions {
@@ -25,33 +22,46 @@ export function startLanguageServer(options?: LanguageServerOptions) {
     options?.connection ?? createConnection(ProposedFeatures.all);
   const documents = new TextDocuments(TextDocument);
 
+  const compiler = new Compiler();
   const snapshots = new WeakMap<TextDocument, Snapshot>();
-  async function getSnapshot(document: TextDocument) {
+
+  documents.onDidOpen(async (event) => {
+    await refreshDocument(event.document);
+  });
+
+  documents.onDidChangeContent(async (event) => {
+    await refreshDocument(event.document);
+  });
+
+  async function refreshDocument(document: TextDocument) {
     let snapshot = snapshots.get(document);
-
-    if (snapshot) {
-      if (snapshot.version !== document.version) {
-        snapshot.update(document.getText(), document.version);
-      }
-    } else {
-      const filename = basename(fileURLToPath(document.uri));
-      snapshot = await Snapshot.from(document.getText(), filename);
-      snapshot.version = document.version;
+    if (!snapshot) {
+      const path = fileURLToPath(document.uri);
+      snapshot = compiler.createSnapshot(path);
+      snapshots.set(document, snapshot);
     }
+    await snapshot.update(document.getText(), document.version);
 
-    return snapshot;
-  }
-
-  async function getDocumentAndSnapshot(
-    textDocument: TextDocumentIdentifier,
-  ): Promise<{
-    document: TextDocument;
-    snapshot: Snapshot;
-  }> {
-    const document = documents.get(textDocument.uri);
-    assert(document);
-    const snapshot = await getSnapshot(document);
-    return { document, snapshot };
+    connection.sendDiagnostics({
+      uri: document.uri,
+      diagnostics: snapshot.diagnostics.map(
+        (diagnostics): Diagnostic => ({
+          message: diagnostics.message,
+          range: diagnostics.location
+            ? Range.create(
+                Position.create(
+                  diagnostics.location.first_line,
+                  diagnostics.location.first_column,
+                ),
+                Position.create(
+                  diagnostics.location.last_line,
+                  diagnostics.location.last_column,
+                ),
+              )
+            : Range.create(Position.create(1, 1), Position.create(1, 2)),
+        }),
+      ),
+    });
   }
 
   connection.onInitialize(() => {
@@ -66,17 +76,65 @@ export function startLanguageServer(options?: LanguageServerOptions) {
   });
 
   connection.onHover(async (params) => {
-    connection.console.log("onHover");
-    const { snapshot } = await getDocumentAndSnapshot(
-      params.textDocument,
-    );
-    connection.console.log("finish");
+    const document = documents.get(params.textDocument.uri)!;
+    const snapshot = snapshots.get(document)!;
 
-    console.log(snapshot.tsContent);
+    await snapshot.synced;
 
-    return {
-      contents: "Hello world!",
-    };
+    if (snapshot.compiled) {
+      const sourceMap = await new SourceMapConsumer(
+        snapshot.compiled.sourceMap,
+      );
+      const text = snapshot.compiled.code;
+
+      console.log({
+        original: {
+          line: params.position.line + 1,
+          column: params.position.character + 1,
+        },
+      });
+
+      const generatedPosition = sourceMap.generatedPositionFor({
+        line: params.position.line + 1,
+        column: params.position.character + 1,
+        source: sourceMap.sources[0]!,
+      });
+
+      console.log({
+        generated: {
+          line: generatedPosition.line,
+          column: generatedPosition.column,
+          lastColumn: generatedPosition.lastColumn!,
+        },
+      });
+
+      const translate = (line: number, character: number) =>
+        snapshot.sourceFile.compilerNode.getPositionOfLineAndCharacter(
+          line,
+          character,
+        );
+
+      try {
+        console.log(
+          '"' +
+            text.slice(
+              translate(generatedPosition.line!, generatedPosition.column!),
+              translate(generatedPosition.line!, generatedPosition.lastColumn!),
+            ) +
+            '"',
+        );
+      } catch (error) {
+        console.error(error);
+      }
+
+      return {
+        contents: `${generatedPosition.line}:${generatedPosition.column}`,
+      };
+    } else {
+      return {
+        contents: "no generated content",
+      };
+    }
   });
 
   documents.listen(connection);

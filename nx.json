@@ -2,23 +2,24 @@
   "defaultBase": "main",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
       "executor": "@kolint/nx:build",
-      "inputs": ["default", "{workspaceRoot}/packages/nx/**"],
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default", "{workspaceRoot}/packages/nx/**"],
       "options": {
         "entry": "{projectRoot}/src/index.ts",
         "exports": "./index.js",
         "types": "./index.d.ts",
         "assets": ["{projectRoot}/README.md", "{workspaceRoot}/LICENSE"],
         "tsconfig": "{projectRoot}/tsconfig.lib.json",
-        "declaration": true
+        "declaration": true,
+        "sourceMap": true,
+        "outputPath": "{projectRoot}/dist"
       },
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": ["{projectRoot}/dist"],
       "cache": true
     },
     "test": {
       "executor": "@kolint/nx:test",
-      "dependsOn": ["^build"],
       "cache": true
     },
     "lint": {

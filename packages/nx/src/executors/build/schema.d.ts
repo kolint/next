@@ -4,10 +4,11 @@ import { Format, Options } from "tsup";
 export interface TsupExecutorSchema {
   format?: Format | readonly Format[];
   entry?: string | readonly string[];
-  outputPath?: string;
+  outputPath: string;
   assets?: (string | AssetGlob)[];
   tsup?: Options | readonly Options[];
   package?: any;
   tsconfig?: string;
   declaration?: boolean;
+  sourceMap?: boolean;
 }

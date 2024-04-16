@@ -1,0 +1,15 @@
+{
+  "name": "@kolint/compiler",
+  "version": "0.1.0",
+  "type": "module",
+  "types": "./src/index.ts",
+"exports": "./dist/index.js",
+  "dependencies": {
+    "@kolint/legacy-compiler": "workspace:*",
+    "source-map": "^0.7.4",
+    "ts-morph": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

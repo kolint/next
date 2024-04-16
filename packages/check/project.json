@@ -1,0 +1,33 @@
+{
+  "name": "@kolint/check",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "targets": {
+    "build": {
+      "options": {
+        "entry": [
+          "{projectRoot}/src/index.ts",
+          "{projectRoot}/src/cli.ts",
+          "{projectRoot}/src/kolint.ts"
+        ],
+        "package": {
+          "exports": {
+            ".": {
+              "types": "./index.d.ts",
+              "default": "./index.js"
+            },
+            "./cli": {
+              "types": "./cli.d.ts",
+              "default": "./cli.js"
+            }
+          },
+          "bin": {
+            "kolint": "./kolint.js"
+          }
+        }
+      }
+    },
+    "test": {},
+    "lint": {}
+  }
+}

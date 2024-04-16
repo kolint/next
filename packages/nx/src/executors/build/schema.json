@@ -69,7 +69,17 @@
       }
     },
     "tsup": {
-      "type": "object"
+      "oneOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      ]
     },
     "package": {
       "type": "object"
@@ -82,6 +92,10 @@
     },
     "watch": {
       "type": "boolean"
+    },
+    "sourceMap": {
+      "type": "boolean"
     }
-  }
+  },
+  "required": ["outputPath"]
 }

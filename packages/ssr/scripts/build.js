@@ -14,7 +14,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import slash from "slash";
 import { build } from "tsup";
 
-const OUTDIR = resolve("../../dist/packages/ssr");
+const OUTDIR = resolve("./dist");
 
 await clean();
 

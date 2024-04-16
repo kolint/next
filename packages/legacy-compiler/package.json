@@ -1,0 +1,14 @@
+{
+  "name": "@kolint/legacy-compiler",
+  "version": "0.1.0",
+  "type": "module",
+  "types": "./src/index.ts",
+"exports": "./dist/index.js",
+  "dependencies": {
+    "jison": "^0.4.18",
+    "meriyah": "^4.4.2",
+    "source-map": "^0.7.4",
+    "ts-morph": "^22.0.0",
+    "typescript": "^5.4.5"
+  }
+}

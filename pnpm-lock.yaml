@@ -91,13 +91,50 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  packages/check:
+    dependencies:
+      '@kolint/compiler':
+        specifier: workspace:*
+        version: link:../compiler
+      '@types/yargs':
+        specifier: ^17.0.32
+        version: 17.0.32
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      globby:
+        specifier: ^14.0.1
+        version: 14.0.1
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
+    devDependencies:
+      source-map:
+        specifier: ^0.7.4
+        version: 0.7.4
+
+  packages/compiler:
+    dependencies:
+      '@kolint/legacy-compiler':
+        specifier: workspace:*
+        version: link:../legacy-compiler
+      source-map:
+        specifier: ^0.7.4
+        version: 0.7.4
+      ts-morph:
+        specifier: ^22.0.0
+        version: 22.0.0
+
   packages/eslint-plugin: {}
 
   packages/language-server:
     dependencies:
-      '@kolint/snapshot':
+      '@kolint/compiler':
         specifier: workspace:*
-        version: link:../snapshot
+        version: link:../compiler
+      source-map:
+        specifier: ^0.7.4
+        version: 0.7.4
       vscode-languageserver:
         specifier: ^9.0.1
         version: 9.0.1
@@ -105,7 +142,23 @@ importers:
         specifier: ^1.0.11
         version: 1.0.11
 
-  packages/linter: {}
+  packages/legacy-compiler:
+    dependencies:
+      jison:
+        specifier: ^0.4.18
+        version: 0.4.18
+      meriyah:
+        specifier: ^4.4.2
+        version: 4.4.2
+      source-map:
+        specifier: ^0.7.4
+        version: 0.7.4
+      ts-morph:
+        specifier: ^22.0.0
+        version: 22.0.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
 
   packages/nx:
     dependencies:
@@ -136,24 +189,6 @@ importers:
       parse5:
         specifier: ^7.1.2
         version: 7.1.2
-
-  packages/snapshot:
-    dependencies:
-      jison:
-        specifier: ^0.4.18
-        version: 0.4.18
-      meriyah:
-        specifier: ^4.4.2
-        version: 4.4.2
-      source-map:
-        specifier: ^0.7.4
-        version: 0.7.4
-      ts-morph:
-        specifier: ^22.0.0
-        version: 22.0.0
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
 
   packages/ssr:
     dependencies:
@@ -249,13 +284,14 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
 
-  packages/type-check: {}
-
   packages/vscode:
     dependencies:
       '@kolint/language-server':
         specifier: workspace:*
         version: link:../language-server
+      source-map:
+        specifier: ^0.7.4
+        version: 0.7.4
       vscode-languageclient:
         specifier: ^9.0.1
         version: 9.0.1
@@ -3056,7 +3092,6 @@ packages:
   /@sindresorhus/merge-streams@2.3.0:
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
-    dev: true
 
   /@sinonjs/commons@3.0.1:
     resolution: {integrity: sha512-K3mCHKQ9sVh8o1C9cxkwxaOmXoAMlDxC1mYyHrjqOWEcBjYr76t96zL2zlj5dUGZ3HSw240X1qgH3Mjf1yJWpQ==}
@@ -3489,13 +3524,11 @@ packages:
 
   /@types/yargs-parser@21.0.3:
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
-    dev: true
 
   /@types/yargs@17.0.32:
     resolution: {integrity: sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==}
     dependencies:
       '@types/yargs-parser': 21.0.3
-    dev: true
 
   /@typescript-eslint/eslint-plugin@7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5):
     resolution: {integrity: sha512-gKmTNwZnblUdnTIJu3e9kmeRRzV2j1a/LUO27KNNAnIC5zjy1aSvXSRp4rVNlmAoHlQ7HzX42NbKpcSr4jF80A==}
@@ -4527,7 +4560,6 @@ packages:
   /chalk@5.3.0:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-    dev: true
 
   /char-regex@1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
@@ -5883,7 +5915,6 @@ packages:
       path-type: 5.0.0
       slash: 5.1.0
       unicorn-magic: 0.1.0
-    dev: true
 
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -7927,7 +7958,6 @@ packages:
   /path-type@5.0.0:
     resolution: {integrity: sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg==}
     engines: {node: '>=12'}
-    dev: true
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -8485,7 +8515,6 @@ packages:
   /slash@5.1.0:
     resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
     engines: {node: '>=14.16'}
-    dev: true
 
   /slice-ansi@0.0.4:
     resolution: {integrity: sha512-up04hB2hR92PgjpyU3y/eg91yIBILyjVY26NvvciY3EVVPjybkMszMpXQ9QAkcS3I5rtJBDLoTxxg+qvW8c7rw==}
@@ -9168,7 +9197,6 @@ packages:
   /unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
-    dev: true
 
   /unique-string@3.0.0:
     resolution: {integrity: sha512-VGXBUVwxKMBUznyffQweQABPRRW1vHZAbadFZud4pLFAqRGvv/96vafgjWFqzourzr8YonlQiPgH0YCJfawoGQ==}

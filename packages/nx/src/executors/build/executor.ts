@@ -14,9 +14,8 @@ const executor: Executor<TsupExecutorSchema> = async (options, context) => {
   const project =
     context.projectsConfigurations!.projects![context.projectName!]!;
   const projectRoot = resolve(context.root, project.root);
-  const relativeProjectRoot = relative(context.root, projectRoot);
-  const outputPath =
-    options.outputPath ?? resolve(context.root, "dist", relativeProjectRoot);
+  // const relativeProjectRoot = relative(context.root, projectRoot);
+  const outputPath = options.outputPath;
 
   // Avoid cleaning the outputPath if misconfigured.
   if (outputPath.includes("dist") || outputPath.includes("build")) {
@@ -37,6 +36,8 @@ const executor: Executor<TsupExecutorSchema> = async (options, context) => {
         outDir: outputPath,
         tsconfig: options.tsconfig,
         dts: options.declaration,
+        sourcemap: options.sourceMap,
+        skipNodeModulesBundle: true,
 
         ...config,
       }),
