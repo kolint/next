@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "ms-playwright.playwright",
-    "ms-vscode.extension-test-runner"
-  ]
+  "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
 }

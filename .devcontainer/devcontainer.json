@@ -16,7 +16,9 @@
         "esbenp.prettier-vscode",
         "redhat.vscode-yaml",
         "yzhang.markdown-all-in-one",
-        "oven.bun-vscode"
+        "oven.bun-vscode",
+        "ms-playwright.playwright",
+        "ms-vscode.extension-test-runner"
       ],
       "settings": {
         "explorer.fileNesting.enabled": true
