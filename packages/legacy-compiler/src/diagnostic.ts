@@ -106,7 +106,6 @@ interface DiagnosticSpecification {
   arguments?: readonly string[];
 }
 
- 
 export const diagnostics = (<K extends string>(
   a: Record<K, DiagnosticSpecification>,
 ) => a)({

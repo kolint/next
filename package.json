@@ -9,12 +9,12 @@
   "type": "module",
   "scripts": {
     "build": "scripts/run-many build",
+    "checks": "scripts/checks",
     "format": "prettier --write .",
     "postinstall": "scripts/prepare",
     "lint": "eslint .",
     "test": "scripts/run-many test,e2e",
-    "type-check": "tsc -b tsconfig.json",
-    "checks": "scripts/checks"
+    "type-check": "tsc -b tsconfig.json"
   },
   "dependencies": {
     "@nx/devkit": "18.3.0",
