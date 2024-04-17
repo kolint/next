@@ -1,4 +1,4 @@
-import { Compiler, Snapshot } from "@kolint/compiler";
+import { Compiler, type Snapshot } from "@kolint/compiler";
 import {
   ts,
   getCompilerOptionsFromTsConfig,
@@ -13,7 +13,7 @@ import {
   ProposedFeatures,
   TextDocuments,
   TextDocumentSyncKind,
-  Diagnostic,
+  type Diagnostic,
   Range,
   Position,
 } from "vscode-languageserver/node.js";

@@ -2,7 +2,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "files.exclude": {
-    // "**/node_modules": true,
+    "**/node_modules": true,
     "**/.nx": true,
     "tmp": true
   },
@@ -26,5 +26,6 @@
   "material-icon-theme.files.associations": {
     "project.json": "nrwl"
   },
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json"],
+  "eslint.experimental.useFlatConfig": true
 }

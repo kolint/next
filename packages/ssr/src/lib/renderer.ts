@@ -1,6 +1,6 @@
 import builtins from "./_built-ins.js";
 import { BindingContext } from "./binding-context.js";
-import { Binding, BindingParseError, parseBindings } from "./binding.js";
+import { type Binding, BindingParseError, parseBindings } from "./binding.js";
 import {
   type Diagnostic,
   type DiagnosticError,
@@ -15,7 +15,7 @@ import { getInnerRange } from "./utils.js";
 import {
   Element,
   type ParentNode,
-  Range,
+  type Range,
   VirtualElement,
   isParentNode,
   parse,
@@ -395,12 +395,9 @@ class Renderer {
     document = this.document,
   ) {
     try {
+      let bindings: Binding[];
       try {
-        var bindings = parseBindings(
-          node,
-          this.document.original,
-          this.attributes,
-        );
+        bindings = parseBindings(node, this.document.original, this.attributes);
       } catch (cause) {
         if (cause instanceof BindingParseError) {
           this.emit(
@@ -504,7 +501,7 @@ class Renderer {
 
     const values = rawValues.map((rawValue) => () => ko.unwrap(rawValue()));
 
-    let bubbles: (() => void | PromiseLike<void>)[] = [];
+    const bubbles: (() => void | PromiseLike<void>)[] = [];
 
     const getSibling = (index: number): Sibling => {
       return {
@@ -572,8 +569,9 @@ class Renderer {
       [];
     for (const [i, plugin] of plugins.entries()) {
       if (!plugin?.extend) continue;
+      let extender: () => BindingContext | PromiseLike<BindingContext>;
       try {
-        var extender = () => plugin.extend!({ parent: getSelf(i) });
+        extender = () => plugin.extend!({ parent: getSelf(i) });
       } catch (cause) {
         throw this.catch(cause, bindings[i]!.range, () => {
           throw this.error({

@@ -1,5 +1,5 @@
-import { Diagnostic } from "./diagnostic.js";
-import { SourceMapGenerator } from "source-map";
+import { type Diagnostic } from "./diagnostic.js";
+import { type SourceMapGenerator } from "source-map";
 
 export interface Reporting {
   diagnostics: Diagnostic[];

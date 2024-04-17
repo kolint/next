@@ -3,7 +3,7 @@ import { ts, getCompilerOptionsFromTsConfig } from "@kolint/ts-utils";
 import { globby } from "globby";
 import { writeFileSync } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
-import { SourceMapGenerator } from "source-map";
+import { type SourceMapGenerator } from "source-map";
 
 export interface CheckOptions {
   include?: readonly string[] | undefined;

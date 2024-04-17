@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/unbound-method */
+ 
 import { Diagnostic } from "../diagnostic.js";
 import {
-  AstNode,
+  type AstNode,
   BindingContext,
   BindingNode,
-  Document,
+  type Document,
   TypeNode,
 } from "../parser/syntax-tree.js";
 import { type Reporting } from "../program.js";

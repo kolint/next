@@ -1,4 +1,4 @@
-import { Range } from "@kolint/parser";
+import { type Range } from "@kolint/parser";
 
 const isDiagnosticSymbol = Symbol("is diagnostic");
 

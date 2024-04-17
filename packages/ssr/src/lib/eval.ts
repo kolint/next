@@ -1,4 +1,4 @@
-import { BindingContext } from "./binding-context.js";
+import { type BindingContext } from "./binding-context.js";
 import { escapeJs } from "./utils.js";
 import * as acorn from "acorn";
 import MagicString from "magic-string";
@@ -12,13 +12,13 @@ export function transform(source: string, quote = '"'): string {
     ecmaVersion: "latest",
     ranges: true,
   });
-  let prefix: string[] = [];
-  let suffix: string[] = [];
+  const prefix: string[] = [];
+  const suffix: string[] = [];
 
   const toAccess = (node: acorn.Identifier) => {
     const q = (s: string) => quote + escapeJs(s) + quote;
-    let prefix2 = prefix.pop() ?? "";
-    let suffix2 = suffix.pop() ?? "";
+    const prefix2 = prefix.pop() ?? "";
+    const suffix2 = suffix.pop() ?? "";
     const wrap = (access: string) => prefix2 + access + suffix2;
 
     let result = "";

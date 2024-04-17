@@ -106,7 +106,7 @@ interface DiagnosticSpecification {
   arguments?: readonly string[];
 }
 
-/* eslint-disable-next-line */
+ 
 export const diagnostics = (<K extends string>(
   a: Record<K, DiagnosticSpecification>,
 ) => a)({

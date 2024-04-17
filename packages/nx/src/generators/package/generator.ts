@@ -1,10 +1,10 @@
-import { PackageGeneratorSchema } from "./schema";
+import { type PackageGeneratorSchema } from "./schema.js";
 import {
   addProjectConfiguration,
   formatFiles,
   generateFiles,
-  Generator,
-  Tree,
+  type Generator,
+  type Tree,
 } from "@nx/devkit";
 import * as path from "path";
 

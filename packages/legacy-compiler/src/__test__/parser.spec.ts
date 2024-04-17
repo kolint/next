@@ -1,4 +1,4 @@
-import * as utils from "./utils";
+import * as utils from "./utils.js";
 import { describe, it } from "bun:test";
 
 describe("Parser", () => {

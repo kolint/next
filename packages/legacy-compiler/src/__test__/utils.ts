@@ -1,4 +1,4 @@
-import * as kolint from "..";
+import * as kolint from "../index.js";
 import * as assert from "assert";
 
 function parse(content: string) {

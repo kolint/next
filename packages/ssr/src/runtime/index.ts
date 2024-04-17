@@ -1,2 +1,2 @@
-import "./bindings/ssr-if";
-import "./bindings/ssr-with";
+import "./bindings/ssr-if.js";
+import "./bindings/ssr-with.js";

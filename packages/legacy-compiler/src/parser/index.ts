@@ -15,6 +15,7 @@ import {
 } from "./syntax-tree.js";
 
 const docParser =
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/consistent-type-imports
   require("../../lib/parser.cjs") as typeof import("../../lib/parser.cjs");
 
 const selfClosingNodeNames = [

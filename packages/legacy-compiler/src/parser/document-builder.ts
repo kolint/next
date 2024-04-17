@@ -2,7 +2,7 @@ import { Diagnostic, diagnostics } from "../diagnostic.js";
 import { type Reporting } from "../program.js";
 import { parseBindingExpression } from "./compile-bindings.js";
 import {
-  Node,
+  type Node,
   Document,
   ImportNode,
   NodeType,

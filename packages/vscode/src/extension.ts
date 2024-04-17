@@ -1,9 +1,9 @@
-import { ExtensionContext } from "vscode";
+import { type ExtensionContext } from "vscode";
 import {
-  ForkOptions,
+  type ForkOptions,
   LanguageClient,
-  LanguageClientOptions,
-  ServerOptions,
+  type LanguageClientOptions,
+  type ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node.js";
 

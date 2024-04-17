@@ -1,5 +1,5 @@
-import { BunTestExecutorSchema } from "./schema";
-import { Executor } from "@nx/devkit";
+import { type BunTestExecutorSchema } from "./schema.js";
+import { type Executor } from "@nx/devkit";
 import { spawn } from "node:child_process";
 import { relative, resolve as resolvePath } from "node:path";
 

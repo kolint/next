@@ -9,7 +9,7 @@ import {
 } from "./parse5-utils.js";
 import {
   Document,
-  Node,
+  type Node,
   Text,
   VirtualElement,
   Comment,
@@ -31,7 +31,7 @@ export function parse(document: string, options?: ParseOptions): Document {
     onParseError: options?.onError,
   });
   const iter = root.childNodes[Symbol.iterator]();
-  let children: Node[] = [];
+  const children: Node[] = [];
   let result: IteratorResult<parse5TreeAdapter.Node> | undefined;
 
   while (!(result = iter.next()).done) {
@@ -59,7 +59,7 @@ function parseNode(
           .slice(1) as [string, string];
 
         let balance = 1;
-        let children: parse5TreeAdapter.Node[] = [];
+        const children: parse5TreeAdapter.Node[] = [];
         let result: IteratorResult<parse5TreeAdapter.Node> | undefined;
         let endComment: parse5TreeAdapter.CommentNode | undefined;
 
@@ -85,7 +85,7 @@ function parseNode(
         }
 
         const iter2 = children[Symbol.iterator]();
-        let children2: Node[] = [];
+        const children2: Node[] = [];
         let result2: IteratorResult<parse5TreeAdapter.Node> | undefined;
 
         while (!(result2 = iter2.next()).done) {

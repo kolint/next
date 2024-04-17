@@ -1,5 +1,5 @@
-import { TsupExecutorSchema } from "./schema";
-import { Executor, readJsonFile, writeJsonFile } from "@nx/devkit";
+import { type TsupExecutorSchema } from "./schema.js";
+import { type Executor, readJsonFile, writeJsonFile } from "@nx/devkit";
 import { copyAssets } from "@nx/js";
 import { rm } from "node:fs/promises";
 import { relative, resolve } from "node:path";

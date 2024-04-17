@@ -1,5 +1,5 @@
 import { transform } from "./eval.js";
-import { Element, Position, Range, VirtualElement } from "@kolint/parser";
+import { Element, Position, Range, type VirtualElement } from "@kolint/parser";
 import * as acorn from "acorn";
 import assert from "node:assert/strict";
 

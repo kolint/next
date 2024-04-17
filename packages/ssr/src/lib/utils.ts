@@ -1,16 +1,16 @@
-import { Binding } from "./binding.js";
+import { type Binding } from "./binding.js";
 import {
   Element,
   Position,
   Range,
-  VirtualElement,
+  type VirtualElement,
   parse5,
   parse5LocationToRange,
   type parse5TreeAdapter,
 } from "@kolint/parser";
 import inlineStyleParser from "inline-style-parser";
 import * as ko from "knockout";
-import MagicString from "magic-string";
+import type MagicString from "magic-string";
 import { createHash } from "node:crypto";
 
 export function getInnerRange(

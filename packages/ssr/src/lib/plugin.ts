@@ -1,6 +1,6 @@
-import { BindingContext } from "./binding-context.js";
-import { Binding } from "./binding.js";
-import MagicString from "magic-string";
+import { type BindingContext } from "./binding-context.js";
+import { type Binding } from "./binding.js";
+import type MagicString from "magic-string";
 
 export interface Sibling {
   /**

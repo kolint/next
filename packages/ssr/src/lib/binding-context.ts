@@ -32,7 +32,7 @@ export class BindingContext {
   $index?: number;
   $parentContext?: BindingContext | null | undefined;
   $rawData: unknown;
-  $ssr?: true = true;
+  $ssr? = true as const;
   $component?: unknown;
   $componentTemplateNodes?: unknown;
 

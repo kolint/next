@@ -1,11 +1,11 @@
 import {
-  Binding,
-  Document as DOMDocument,
+  type Binding,
+  type Document as DOMDocument,
   IdentifierNode,
-  BindingExpression,
-  BindingName,
-  TypeNode,
-  BindingContext,
+  type BindingExpression,
+  type BindingName,
+  type TypeNode,
+  type BindingContext,
   ChildContextNode,
 } from "../parser/syntax-tree.js";
 import { BANNER } from "./banner.js";
