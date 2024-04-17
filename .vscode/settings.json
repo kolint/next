@@ -4,7 +4,8 @@
   "files.exclude": {
     "**/node_modules": true,
     "**/.nx": true,
-    "tmp": true
+    "tmp": true,
+    "**/.pnpm-store": true
   },
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .npmrc",

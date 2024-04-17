@@ -5,3 +5,4 @@ packages/*/dist
 *.tsbuildinfo
 /tmp
 .vscode-test
+.pnpm-store
