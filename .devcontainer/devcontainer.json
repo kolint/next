@@ -1,0 +1,26 @@
+// https://aka.ms/devcontainer.json
+{
+  "name": "Kolint Workspace",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/shyim/devcontainers-features/bun:0": {},
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postStartCommand": "pnpm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "redhat.vscode-yaml",
+        "yzhang.markdown-all-in-one",
+        "oven.bun-vscode"
+      ],
+      "settings": {
+        "explorer.fileNesting.enabled": true
+      }
+    }
+  }
+}
