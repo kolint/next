@@ -9,6 +9,7 @@
   "type": "module",
   "scripts": {
     "build": "scripts/run-many build",
+    "checks": "scripts/checks",
     "format": "prettier --write .",
     "postinstall": "scripts/prepare",
     "lint": "eslint .",

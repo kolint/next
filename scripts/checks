@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# TODO: add type checks
+
+pnpm exec prettier --check . \
+  && pnpm run lint \
+  && pnpm exec nx run-many -t test,build

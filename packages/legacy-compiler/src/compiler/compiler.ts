@@ -1,4 +1,3 @@
- 
 import { Diagnostic } from "../diagnostic.js";
 import {
   type AstNode,

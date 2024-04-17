@@ -7,7 +7,9 @@
     "tmp": true
   },
   "explorer.fileNesting.patterns": {
-    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .npmrc"
+    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .npmrc",
+    "nx.json": ".nxignore",
+    ".prettierrc": ".prettierignore"
   },
   "json.schemas": [
     {

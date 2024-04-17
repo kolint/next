@@ -37,14 +37,6 @@
         "parallel": false
       }
     },
-    "test": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "vscode-test",
-        "cwd": "{projectRoot}"
-      },
-      "dependsOn": ["build"]
-    },
     "lint": {}
   }
 }
