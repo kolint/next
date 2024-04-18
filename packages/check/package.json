@@ -1,6 +1,6 @@
 {
   "name": "@kolint/check",
-  "version": "0.1.0",
+  "version": "0.4.0-beta.0",
   "description": "",
   "keywords": [
     "kolint"
@@ -14,8 +14,8 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@kolint/compiler": "workspace:*",
-    "@kolint/ts-utils": "workspace:*",
+    "@kolint/compiler": "workspace:~",
+    "@kolint/ts-utils": "workspace:~",
     "@types/yargs": "^17.0.32",
     "chalk": "^5.3.0",
     "globby": "^14.0.1",
@@ -26,5 +26,8 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

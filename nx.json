@@ -2,9 +2,9 @@
   "defaultBase": "main",
   "targetDefaults": {
     "build": {
-      "executor": "@kolint/nx:build",
+      "executor": "@kolint-dev/nx:build",
       "dependsOn": ["^build"],
-      "inputs": ["default", "^default", "{workspaceRoot}/packages/nx/**"],
+      "inputs": ["default", "^default", "{workspaceRoot}/tools/nx/**"],
       "options": {
         "entry": "{projectRoot}/src/index.ts",
         "exports": "./index.js",
@@ -19,7 +19,7 @@
       "cache": true
     },
     "test": {
-      "executor": "@kolint/nx:test",
+      "executor": "@kolint-dev/nx:test",
       "cache": true
     },
     "lint": {
@@ -30,6 +30,12 @@
       },
       "outputs": ["{options.outputFile}"],
       "cache": true
+    },
+    "nx-release-publish": {
+      "dependsOn": ["build"],
+      "options": {
+        "packageRoot": "{projectRoot}/dist"
+      }
     }
   },
   "plugins": [
@@ -45,5 +51,8 @@
         "targetName": "lint"
       }
     }
-  ]
+  ],
+  "release": {
+    "projects": ["@kolint/*"]
+  }
 }

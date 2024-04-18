@@ -1,0 +1,5 @@
+{
+  "name": "@kolint-dev/nx",
+  "sourceRoot": "{projectRoot}/src",
+  "projectType": "library"
+}

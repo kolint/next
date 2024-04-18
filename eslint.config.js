@@ -1,5 +1,5 @@
 import js from "@eslint/js";
-import { config, references } from "@kolint/eslint";
+import { config, references } from "@kolint-dev/eslint";
 import nx from "@nx/eslint-plugin";
 import prettier from "eslint-config-prettier";
 import imprt from "eslint-plugin-import";
@@ -20,6 +20,7 @@ export default config([
 
       // projects
       "packages/ssr/e2e/frontend/",
+      "packages/ssr/scripts/**",
     ],
   },
   {
@@ -73,9 +74,9 @@ export default config([
   },
   {
     files: [
-      "packages/nx/package.json",
-      "packages/nx/generators.json",
-      "packages/nx/executors.json",
+      "tools/nx/package.json",
+      "tools/nx/generators.json",
+      "tools/nx/executors.json",
     ],
     plugins: {
       "@nx": nx,
@@ -94,6 +95,12 @@ export default config([
     },
     rules: {
       ...playwright.configs.recommended.rules,
+    },
+  },
+  {
+    files: ["tools/nx/src/**/*.ts"],
+    rules: {
+      "import/extensions": "off",
     },
   },
 ]);

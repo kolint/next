@@ -1,12 +1,15 @@
 {
   "name": "@kolint/legacy-compiler",
-  "version": "0.1.0",
+  "version": "0.4.0-beta.0",
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@kolint/ts-utils": "workspace:*",
+    "@kolint/ts-utils": "workspace:~",
     "jison": "^0.4.18",
     "meriyah": "^4.4.2",
     "source-map": "^0.7.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
