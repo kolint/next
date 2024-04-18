@@ -1,5 +1,12 @@
 # @kolint/ssr
 
+## 0.7.0-beta.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @kolint/parser@0.1.0-beta.1
+
 ## 0.7.0-beta.0
 
 ### Minor Changes

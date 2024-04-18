@@ -15,5 +15,8 @@
     "@kolint-dev/scripts": "0.0.0",
     "@kolint-dev/tsconfig": "0.0.0"
   },
-  "changesets": ["gold-seals-design"]
+  "changesets": [
+    "angry-melons-serve",
+    "gold-seals-design"
+  ]
 }

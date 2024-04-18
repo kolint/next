@@ -1,6 +1,6 @@
 {
   "name": "@kolint/ssr",
-  "version": "0.7.0-beta.0",
+  "version": "0.7.0-beta.1",
   "description": "Server-side rendering for Knockout.js",
   "keywords": [
     "kolint",

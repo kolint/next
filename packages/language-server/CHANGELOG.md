@@ -1,5 +1,14 @@
 # @kolint/language-server
 
+## 0.1.0-beta.1
+
+### Patch Changes
+
+- Fix package exports
+- Updated dependencies
+  - @kolint/compiler@0.4.0-beta.1
+  - @kolint/ts-utils@0.1.0-beta.1
+
 ## 0.1.0-beta.0
 
 ### Minor Changes
