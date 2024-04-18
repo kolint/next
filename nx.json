@@ -34,7 +34,7 @@
     "nx-release-publish": {
       "dependsOn": ["build"],
       "options": {
-        "packageRoot": "build/packages/{projectName}"
+        "packageRoot": "{projectRoot}/dist"
       }
     }
   },

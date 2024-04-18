@@ -1,4 +1,5 @@
 #!/bin/bash
 
 pnpm changeset version \
+&& pnpm nx run-many -t build
 && pnpm nx release publish
