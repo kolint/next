@@ -1,4 +1,3 @@
-import { rm } from "node:fs/promises";
 import { type Options, build, type Format } from "tsup";
 
 export async function buildPackage({
@@ -19,10 +18,6 @@ export async function buildPackage({
   overrides?: Options | readonly Options[] | undefined;
 }) {
   let success = true;
-  // Avoid cleaning the outputPath if misconfigured.
-  if (outputPath.includes("dist") || outputPath.includes("build")) {
-    await rm(outputPath, { force: true, recursive: true });
-  }
   const configs = Array.isArray(overrides) ? overrides : [overrides];
   const results = await Promise.allSettled(
     configs.map((config) =>
