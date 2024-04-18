@@ -7,13 +7,15 @@
       "inputs": ["default", "^default", "{workspaceRoot}/tools/nx/**"],
       "options": {
         "entry": "{projectRoot}/src/index.ts",
-        "exports": "./index.js",
-        "types": "./index.d.ts",
         "assets": ["{projectRoot}/README.md", "{workspaceRoot}/LICENSE"],
         "tsconfig": "{projectRoot}/tsconfig.lib.json",
         "declaration": true,
         "sourceMap": true,
-        "outputPath": "{projectRoot}/dist"
+        "outputPath": "{projectRoot}/dist",
+        "package": {
+          "exports": "./index.js",
+          "types": "./index.d.ts"
+        }
       },
       "outputs": ["{projectRoot}/dist"],
       "cache": true
