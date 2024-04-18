@@ -7,3 +7,4 @@ pnpm-lock.yaml
 package-lock.json
 .pnpm-store
 packages/legacy-compiler/lib/parser.cjs
+.changeset/pre.json
