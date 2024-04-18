@@ -1,0 +1,11 @@
+{
+  "name": "e2e-install",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "knockout": "^3.5.1"
+  },
+  "devDependencies": {
+    "@kolint/check": "beta"
+  }
+}
