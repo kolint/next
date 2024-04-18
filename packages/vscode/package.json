@@ -21,7 +21,7 @@
     "*"
   ],
   "dependencies": {
-    "@kolint/language-server": "workspace:*",
+    "@kolint/language-server": "workspace:~",
     "source-map": "^0.7.4",
     "vscode-languageclient": "^9.0.1"
   },

@@ -14,8 +14,8 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@kolint/compiler": "workspace:*",
-    "@kolint/ts-utils": "workspace:*",
+    "@kolint/compiler": "workspace:~",
+    "@kolint/ts-utils": "workspace:~",
     "source-map": "^0.7.4",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11"

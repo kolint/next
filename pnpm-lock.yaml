@@ -114,10 +114,10 @@ importers:
   packages/check:
     dependencies:
       '@kolint/compiler':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../compiler
       '@kolint/ts-utils':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../ts-utils
       '@types/yargs':
         specifier: ^17.0.32
@@ -139,10 +139,10 @@ importers:
   packages/compiler:
     dependencies:
       '@kolint/legacy-compiler':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../legacy-compiler
       '@kolint/ts-utils':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../ts-utils
       source-map:
         specifier: ^0.7.4
@@ -151,10 +151,10 @@ importers:
   packages/language-server:
     dependencies:
       '@kolint/compiler':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../compiler
       '@kolint/ts-utils':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../ts-utils
       source-map:
         specifier: ^0.7.4
@@ -169,7 +169,7 @@ importers:
   packages/legacy-compiler:
     dependencies:
       '@kolint/ts-utils':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../ts-utils
       jison:
         specifier: ^0.4.18
@@ -190,7 +190,7 @@ importers:
   packages/ssr:
     dependencies:
       '@kolint/parser':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../parser
       '@rollup/pluginutils':
         specifier: ^5.1.0
@@ -284,7 +284,7 @@ importers:
   packages/vscode:
     dependencies:
       '@kolint/language-server':
-        specifier: workspace:*
+        specifier: workspace:~
         version: link:../language-server
       source-map:
         specifier: ^0.7.4
