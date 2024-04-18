@@ -3,12 +3,19 @@
   "tag": "beta",
   "initialVersions": {
     "@kolint/check": "0.3.5",
-    "@kolint/compiler": "0.1.0",
-    "@kolint/language-server": "0.1.0",
-    "@kolint/legacy-compiler": "0.1.0",
-    "@kolint/parser": "0.1.0",
+    "@kolint/compiler": "0.0.0",
+    "@kolint/language-server": "0.0.0",
+    "@kolint/legacy-compiler": "0.0.0",
+    "@kolint/parser": "0.0.0",
     "@kolint/ssr": "0.6.0",
-    "@kolint/ts-utils": "0.1.0",
-    "@kolint/vscode": "0.0.1"
-  }
+    "@kolint/ts-utils": "0.0.0",
+    "@kolint/vscode": "0.0.0",
+    "@kolint-dev/eslint": "0.0.0",
+    "@kolint-dev/nx": "0.0.0",
+    "@kolint-dev/scripts": "0.0.0",
+    "@kolint-dev/tsconfig": "0.0.0"
+  },
+  "changesets": [
+    "gold-seals-design"
+  ]
 }
