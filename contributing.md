@@ -73,7 +73,7 @@ Samples are small project used to manually test the workspace packages. Visit ea
 ### Workspace Structure
 
 - `packages/` - Source code for all public `@kolint` packages.
-- `tools/` - Development (private) packages such as `@kolint/nx` and `@kolint/tsconfig`
+- `tools/` - Development (private) packages such as `@kolint-dev/nx` and `@kolint-dev/tsconfig`
 
 ## Toolchain
 

@@ -9,8 +9,6 @@
     "@kolint/parser": "0.1.0",
     "@kolint/ssr": "0.6.0",
     "@kolint/ts-utils": "0.1.0",
-    "@kolint/vscode": "0.0.1",
-    "@kolint/eslint": "0.1.0"
-  },
-  "changesets": []
+    "@kolint/vscode": "0.0.1"
+  }
 }

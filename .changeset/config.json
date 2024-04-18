@@ -1,10 +1,11 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "changelog": "@changesets/changelog-github",
   "commit": false,
   "fixed": [],
   "linked": [["@kolint/check", "@kolint/compiler", "@kolint/legacy-compiler"]],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch"
+  "updateInternalDependencies": "patch",
+  "privatePackages": false
 }

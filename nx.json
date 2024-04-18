@@ -2,7 +2,7 @@
   "defaultBase": "main",
   "targetDefaults": {
     "build": {
-      "executor": "@kolint/nx:build",
+      "executor": "@kolint-dev/nx:build",
       "dependsOn": ["^build"],
       "inputs": ["default", "^default", "{workspaceRoot}/tools/nx/**"],
       "options": {
@@ -19,7 +19,7 @@
       "cache": true
     },
     "test": {
-      "executor": "@kolint/nx:test",
+      "executor": "@kolint-dev/nx:test",
       "cache": true
     },
     "lint": {

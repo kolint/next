@@ -1,5 +1,5 @@
 {
-  "extends": ["@kolint/tsconfig/node.json"],
+  "extends": ["@kolint-dev/tsconfig/node.json"],
   "include": ["playwright.config.js", "e2e"],
   "exclude": ["e2e/frontend"]
 }

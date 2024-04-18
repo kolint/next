@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pnpm changeset version \
+&& pnpm nx release publish

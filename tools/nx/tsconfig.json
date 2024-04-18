@@ -1,5 +1,5 @@
 {
-  "extends": ["@kolint/tsconfig/base.json"],
+  "extends": ["@kolint-dev/tsconfig/base.json"],
   "compilerOptions": {
     "module": "CommonJS",
     "outDir": "../../dist/out-tsc",

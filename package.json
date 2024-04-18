@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "postinstall": "tools/scripts/prepare",
     "lint": "eslint .",
+    "release": "tools/scripts/release",
     "test": "tools/scripts/run-many test,e2e",
     "type-check": "tsc -b tsconfig.json"
   },
@@ -21,11 +22,12 @@
     "tslib": "^2.6.2"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
     "@eslint/js": "^9.0.0",
-    "@kolint/eslint": "workspace:*",
-    "@kolint/nx": "workspace:*",
-    "@kolint/tsconfig": "workspace:*",
+    "@kolint-dev/eslint": "workspace:*",
+    "@kolint-dev/nx": "workspace:*",
+    "@kolint-dev/tsconfig": "workspace:*",
     "@microsoft/api-extractor": "^7.43.1",
     "@nx/eslint": "18.3.0",
     "@nx/eslint-plugin": "18.3.0",

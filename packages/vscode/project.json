@@ -4,7 +4,7 @@
   "sourceRoot": "{projectRoot}/src",
   "targets": {
     "build-base": {
-      "executor": "@kolint/nx:build",
+      "executor": "@kolint-dev/nx:build",
       "options": {
         "entry": [
           "{projectRoot}/src/extension.ts",

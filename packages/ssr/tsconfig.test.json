@@ -1,5 +1,5 @@
 {
-  "extends": ["@kolint/tsconfig/bun.json"],
+  "extends": ["@kolint-dev/tsconfig/bun.json"],
   "include": ["test"],
   "exclude": ["**/__fixtures__"]
 }
