@@ -1,5 +1,5 @@
 {
   "extends": ["@kolint-dev/tsconfig/bun.json"],
   "compilerOptions": {},
-  "files": ["./prepare", "./run-many"]
+  "files": ["./prepare", "./publish", "./run-many"]
 }
