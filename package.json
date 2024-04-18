@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tools/scripts/run-many build",
     "checks": "tools/scripts/checks",
+    "docs": "pnpm run --filter @kolint-dev/vitepress dev",
     "format": "prettier --write .",
     "postinstall": "tools/scripts/prepare",
     "lint": "eslint .",
