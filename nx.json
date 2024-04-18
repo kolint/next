@@ -55,6 +55,7 @@
     }
   ],
   "release": {
-    "projects": ["@kolint/*"]
+    "projects": ["@kolint/*"],
+    "projectsRelationship": "independent"
   }
 }
