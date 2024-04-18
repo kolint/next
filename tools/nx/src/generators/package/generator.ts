@@ -12,8 +12,11 @@ const generator: Generator<PackageGeneratorSchema> = async (
   tree: Tree,
   options,
 ) => {
-  const projectRoot = `packages/${options.name}`;
-  addProjectConfiguration(tree, `@kolint/${options.name}`, {
+  const directory = options.type === "development" ? "tools" : "packages";
+  const scope = options.type === "development" ? "@kolint-dev" : "@kolint";
+  const projectRoot = `${directory}/${options.name}`;
+  const name = `${scope}/${options.name}`;
+  addProjectConfiguration(tree, name, {
     root: projectRoot,
     projectType: "library",
     sourceRoot: `{projectRoot}/src`,
@@ -23,7 +26,9 @@ const generator: Generator<PackageGeneratorSchema> = async (
       lint: {},
     },
   });
-  generateFiles(tree, path.join(__dirname, "files"), projectRoot, options);
+  generateFiles(tree, path.join(__dirname, "files"), projectRoot, {
+    name,
+  });
   await formatFiles(tree);
 };
 

@@ -4,7 +4,7 @@
     "build": {
       "executor": "@kolint/nx:build",
       "dependsOn": ["^build"],
-      "inputs": ["default", "^default", "{workspaceRoot}/packages/nx/**"],
+      "inputs": ["default", "^default", "{workspaceRoot}/tools/nx/**"],
       "options": {
         "entry": "{projectRoot}/src/index.ts",
         "exports": "./index.js",
@@ -30,6 +30,12 @@
       },
       "outputs": ["{options.outputFile}"],
       "cache": true
+    },
+    "nx-release-publish": {
+      "dependsOn": ["build"],
+      "options": {
+        "packageRoot": "build/packages/{projectName}"
+      }
     }
   },
   "plugins": [
@@ -45,5 +51,8 @@
         "targetName": "lint"
       }
     }
-  ]
+  ],
+  "release": {
+    "projects": ["@kolint/*"]
+  }
 }

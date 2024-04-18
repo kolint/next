@@ -28,13 +28,13 @@ importers:
         version: 9.0.0
       '@kolint/eslint':
         specifier: workspace:*
-        version: link:packages/eslint
+        version: link:tools/eslint
       '@kolint/nx':
         specifier: workspace:*
-        version: link:packages/nx
+        version: link:tools/nx
       '@kolint/tsconfig':
         specifier: workspace:*
-        version: link:packages/tsconfig
+        version: link:tools/tsconfig
       '@microsoft/api-extractor':
         specifier: ^7.43.1
         version: 7.43.1(@types/node@20.12.7)
@@ -145,20 +145,6 @@ importers:
         specifier: ^0.7.4
         version: 0.7.4
 
-  packages/eslint:
-    dependencies:
-      eslint:
-        specifier: ^9.0.0
-        version: 9.0.0
-      strip-json-comments:
-        specifier: ^5.0.1
-        version: 5.0.1
-      typescript-eslint:
-        specifier: ^7.7.0
-        version: 7.7.0(eslint@9.0.0)(typescript@5.4.5)
-
-  packages/eslint-plugin: {}
-
   packages/language-server:
     dependencies:
       '@kolint/compiler':
@@ -191,30 +177,6 @@ importers:
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
-
-  packages/nx:
-    dependencies:
-      '@nx/devkit':
-        specifier: ^18.3.0
-        version: 18.3.0(nx@18.3.0(@swc-node/register@1.9.0(@swc/core@1.4.15)(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.4.15))
-      '@nx/js':
-        specifier: ^18.3.0
-        version: 18.3.0(@babel/traverse@7.24.1)(@swc-node/register@1.9.0(@swc/core@1.4.15)(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.4.15)(@types/node@20.12.7)(nx@18.3.0(@swc-node/register@1.9.0(@swc/core@1.4.15)(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.4.15))(typescript@5.4.5)
-      globby:
-        specifier: ^11.1.0
-        version: 11.1.0
-      slash:
-        specifier: ^3.0.0
-        version: 3.0.0
-      sort-package-json:
-        specifier: ^1.57.0
-        version: 1.57.0
-      tslib:
-        specifier: ^2.6.2
-        version: 2.6.2
-      tsup:
-        specifier: ^8.0.2
-        version: 8.0.2(@microsoft/api-extractor@7.43.1(@types/node@20.12.7))(@swc/core@1.4.15)(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
 
   packages/parser:
     dependencies:
@@ -316,12 +278,6 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  packages/tsconfig:
-    dependencies:
-      '@tsconfig/strictest':
-        specifier: ^2.0.5
-        version: 2.0.5
-
   packages/vscode:
     dependencies:
       '@kolint/language-server':
@@ -356,7 +312,49 @@ importers:
         specifier: ^2.3.9
         version: 2.3.9
 
-  scripts: {}
+  tools/eslint:
+    dependencies:
+      eslint:
+        specifier: ^9.0.0
+        version: 9.0.0
+      strip-json-comments:
+        specifier: ^5.0.1
+        version: 5.0.1
+      typescript-eslint:
+        specifier: ^7.7.0
+        version: 7.7.0(eslint@9.0.0)(typescript@5.4.5)
+
+  tools/nx:
+    dependencies:
+      '@nx/devkit':
+        specifier: ^18.3.0
+        version: 18.3.0(nx@18.3.0(@swc-node/register@1.9.0(@swc/core@1.4.15)(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.4.15))
+      '@nx/js':
+        specifier: ^18.3.0
+        version: 18.3.0(@babel/traverse@7.24.1)(@swc-node/register@1.9.0(@swc/core@1.4.15)(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.4.15)(@types/node@20.12.7)(nx@18.3.0(@swc-node/register@1.9.0(@swc/core@1.4.15)(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.4.15))(typescript@5.4.5)
+      globby:
+        specifier: ^11.1.0
+        version: 11.1.0
+      slash:
+        specifier: ^3.0.0
+        version: 3.0.0
+      sort-package-json:
+        specifier: ^1.57.0
+        version: 1.57.0
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(@microsoft/api-extractor@7.43.1(@types/node@20.12.7))(@swc/core@1.4.15)(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.4.15)(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
+
+  tools/scripts: {}
+
+  tools/tsconfig:
+    dependencies:
+      '@tsconfig/strictest':
+        specifier: ^2.0.5
+        version: 2.0.5
 
 packages:
 

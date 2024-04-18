@@ -2,6 +2,7 @@
   "name": "@kolint/vscode",
   "displayName": "kolint",
   "version": "0.0.1",
+  "private": true,
   "description": "",
   "categories": [
     "Other"

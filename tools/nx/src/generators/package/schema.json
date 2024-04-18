@@ -13,6 +13,12 @@
         "index": 0
       },
       "x-prompt": "Enter package name without scope: "
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of package (production or development).",
+      "enum": ["production", "development"],
+      "x-prompt": "Type of package: "
     }
   },
   "required": ["name"]

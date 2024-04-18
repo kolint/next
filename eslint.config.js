@@ -73,9 +73,9 @@ export default config([
   },
   {
     files: [
-      "packages/nx/package.json",
-      "packages/nx/generators.json",
-      "packages/nx/executors.json",
+      "tools/nx/package.json",
+      "tools/nx/generators.json",
+      "tools/nx/executors.json",
     ],
     plugins: {
       "@nx": nx,

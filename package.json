@@ -8,12 +8,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "scripts/run-many build",
-    "checks": "scripts/checks",
+    "build": "tools/scripts/run-many build",
+    "checks": "tools/scripts/checks",
     "format": "prettier --write .",
-    "postinstall": "scripts/prepare",
+    "postinstall": "tools/scripts/prepare",
     "lint": "eslint .",
-    "test": "scripts/run-many test,e2e",
+    "test": "tools/scripts/run-many test,e2e",
     "type-check": "tsc -b tsconfig.json"
   },
   "dependencies": {
