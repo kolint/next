@@ -20,6 +20,7 @@ export default config([
 
       // projects
       "packages/ssr/e2e/frontend/",
+      "packages/ssr/scripts/**",
     ],
   },
   {
@@ -94,6 +95,12 @@ export default config([
     },
     rules: {
       ...playwright.configs.recommended.rules,
+    },
+  },
+  {
+    files: ["tools/nx/src/**/*.ts"],
+    rules: {
+      "import/extensions": "off",
     },
   },
 ]);

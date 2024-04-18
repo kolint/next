@@ -1,3 +1,4 @@
+import { generatePackage } from "@kolint-dev/nx/src/lib/package-json";
 import { parse } from "es-module-lexer";
 import { globby } from "globby";
 import MagicString from "magic-string";
@@ -25,31 +26,21 @@ await Promise.all([
   ]).then(() => {
     console.log("Successfully copied static files.");
   }),
-  generatePackage(),
+  generatePackage({
+    outputPath: OUTDIR,
+    projectRoot: resolve("."),
+    root: resolve("../.."),
+  }),
   Promise.all([runNodeBuild(), runBrowserBuild()]).then(() =>
     moveDeclarationsToBuild(),
   ),
 ]);
 
+process.exit(0);
+
 async function clean() {
   await rm(OUTDIR, { recursive: true, force: true });
   await mkdir(join(OUTDIR, "bin"), { recursive: true });
-}
-
-async function generatePackage() {
-  const pkg = JSON.parse(await readFile("package.json", "utf-8"));
-  pkg.devDependencies = Object.fromEntries(
-    Object.entries(pkg.devDependencies).filter(([key]) =>
-      pkg.publishConfig.includeDependencies.includes(key),
-    ),
-  );
-  delete pkg.scripts;
-  delete pkg.private;
-  delete pkg.publishConfig;
-  delete pkg.np;
-  delete pkg.overrides;
-  await writeFile(join(OUTDIR, "package.json"), JSON.stringify(pkg, null, 2));
-  console.log("Successfully generated package.json!");
 }
 
 async function runNodeBuild() {
@@ -135,7 +126,7 @@ async function moveDeclarationsToBuild() {
       const magicString = new MagicString(content);
       for (const { n, s, e } of imports) {
         const i = oldPaths.findIndex((p) =>
-          n.includes(basename(p).replace(".d.ts", "")),
+          n!.includes(basename(p).replace(".d.ts", "")),
         );
         if (i !== -1) {
           const newPath = newPaths[i];

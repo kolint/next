@@ -1,7 +1,7 @@
 import { AssetGlob } from "@nx/js/src/utils/assets/assets";
 import { Format, Options } from "tsup";
 
-export interface TsupExecutorSchema {
+export interface BuildExecutorSchema {
   format?: Format | readonly Format[];
   entry?: string | readonly string[];
   outputPath: string;

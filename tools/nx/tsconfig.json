@@ -1,6 +1,7 @@
 {
   "extends": ["@kolint-dev/tsconfig/base.json"],
   "compilerOptions": {
+    "target": "ESNext",
     "module": "CommonJS",
     "outDir": "../../dist/out-tsc",
     "declaration": true,

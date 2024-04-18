@@ -6,7 +6,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node ./scripts/build.js",
+        "command": "bun ./scripts/build.ts",
         "cwd": "{projectRoot}"
       }
     },
