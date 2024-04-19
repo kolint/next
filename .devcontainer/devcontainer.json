@@ -18,7 +18,8 @@
         "yzhang.markdown-all-in-one",
         "oven.bun-vscode",
         "ms-playwright.playwright",
-        "ms-vscode.extension-test-runner"
+        "ms-vscode.extension-test-runner",
+        "github.vscode-github-actions"
       ],
       "settings": {
         "explorer.fileNesting.enabled": true
