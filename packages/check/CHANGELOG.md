@@ -1,5 +1,11 @@
 # @kolint/check
 
+## 0.4.0-beta.2
+
+### Patch Changes
+
+- 8f63f18: Fix interop of config module (default export)
+
 ## 0.4.0-beta.1
 
 ### Patch Changes
