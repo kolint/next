@@ -27,4 +27,6 @@ export function getCompilerOptionsFromTsConfig(tsConfigFilePath: string) {
   return result;
 }
 
+function unusedOnPurpose() {}
+
 export { ts };
