@@ -27,7 +27,7 @@
     }
   ],
   "material-icon-theme.files.associations": {
-    "project.json": "nrwl"
+    "project.json": "nx"
   },
   "eslint.validate": ["json"],
   "eslint.experimental.useFlatConfig": true
