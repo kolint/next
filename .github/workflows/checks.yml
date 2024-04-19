@@ -1,0 +1,105 @@
+name: Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository (deep)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: pnpm
+
+      - name: Setup Bun 1.x
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Analyze
+        run: pnpm exec eslint --output-file eslint_report.json --format json .
+        continue-on-error: true
+
+      - name: Annotate
+        uses: ataylorme/eslint-annotate-action@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          report-json: "eslint_report.json"
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository (deep)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: pnpm
+
+      - name: Setup Bun 1.x
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Test
+        run: pnpm run test
+
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository (deep)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: pnpm
+
+      - name: Setup Bun 1.x
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Check Format
+        run: pnpm exec prettier --check .
