@@ -29,6 +29,9 @@ jobs:
         with:
           bun-version: 1
 
+      - name: Authenticate NPM
+        run: npm set "//<registry>/:_authToken=${{ secrets.NPM_TOKEN }}"
+
       - name: Install
         run: pnpm install --frozen-lockfile
 
