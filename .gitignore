@@ -6,3 +6,5 @@ packages/*/dist
 /tmp
 .vscode-test
 .pnpm-store
+**/.vitepress/cache
+**/.vitepress/dist

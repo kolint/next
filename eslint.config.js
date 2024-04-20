@@ -18,6 +18,7 @@ export default config([
       "**/samples/",
       "**/dist/",
       "**/.vscode-test/",
+      "docs/",
 
       // projects
       "packages/ssr/e2e/frontend/",

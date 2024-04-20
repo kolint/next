@@ -30,6 +30,11 @@ await Promise.all([
     outputPath: OUTDIR,
     projectRoot: resolve("."),
     root: resolve("../.."),
+    overrides: {
+      bin: {
+        kossr: "./kossr.js",
+      },
+    },
   }),
   Promise.all([runNodeBuild(), runBrowserBuild()]).then(() =>
     moveDeclarationsToBuild(),
@@ -47,7 +52,7 @@ async function runNodeBuild() {
   await build({
     entry: {
       index: "src/lib/exports.ts",
-      "bin/knockout-ssr": "src/cli/main.ts",
+      "bin/kossr": "src/cli/main.ts",
       "rollup/index": "src/rollup/plugin.ts",
       "vite/index": "src/vite/plugin.ts",
       "webpack/index": "src/webpack/loader.ts",
@@ -85,7 +90,7 @@ async function runBrowserBuild() {
     },
   });
 
-  await rm(join(OUTDIR, "bin/knockout-ssr.d.ts"), { force: true });
+  await rm(join(OUTDIR, "bin/kossr.d.ts"), { force: true });
 
   console.log("Successfully built browser runtime entries!");
 }
