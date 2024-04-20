@@ -132,6 +132,9 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
     devDependencies:
+      knockout:
+        specifier: ^3.5.1
+        version: 3.5.1
       source-map:
         specifier: ^0.7.4
         version: 0.7.4

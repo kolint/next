@@ -22,6 +22,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "knockout": "^3.5.1",
     "source-map": "^0.7.4"
   },
   "engines": {

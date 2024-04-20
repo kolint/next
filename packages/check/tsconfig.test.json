@@ -6,5 +6,6 @@
     "src/**/__test__",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
-  ]
+  ],
+  "exclude": ["**/samples"]
 }
