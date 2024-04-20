@@ -32,18 +32,18 @@ const executor: Executor<BunTestExecutorSchema> = (options, context) =>
           ...(options.timeout !== undefined
             ? [`--timeout=${options.timeout}`]
             : []),
-          ...(options.updateSnapshots !== undefined
-            ? [`--update-snapshots=${options.updateSnapshots}`]
-            : []),
+          ...(options.updateSnapshots ? ["--update-snapshots"] : []),
           ...(options.rerunEach !== undefined
             ? [`--rerun-each=${options.rerunEach}`]
             : []),
-          ...(options.only !== undefined ? [`--only=${options.only}`] : []),
-          ...(options.todo !== undefined ? [`--todo=${options.todo}`] : []),
-          ...(options.coverage !== undefined
-            ? [`--coverage=${options.coverage}`]
-            : []),
-          ...(options.bail !== undefined ? [`--bail=${options.bail}`] : []),
+          ...(options.only ? ["--only="] : []),
+          ...(options.todo ? ["--todo="] : []),
+          ...(options.coverage ? ["--coverage"] : []),
+          ...(options.bail === true
+            ? [`--bail`]
+            : options.bail !== undefined
+              ? [`--bail=${options.bail}`]
+              : []),
           ...(options.testNamePattern !== undefined
             ? [`--test-name-pattern=${options.testNamePattern}`]
             : []),
