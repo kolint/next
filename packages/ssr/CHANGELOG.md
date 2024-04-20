@@ -1,5 +1,11 @@
 # @kolint/ssr
 
+## 0.7.0-beta.2
+
+### Patch Changes
+
+- 4f8d1fb: Rename knockout-lint to @kolint/ssr
+
 ## 0.7.0-beta.1
 
 ### Patch Changes
