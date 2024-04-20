@@ -34,8 +34,16 @@ features:
 
 <style>
 :root {
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, #BD5C28 50%, #CA712C 50%);
-  --vp-home-hero-image-filter: blur(44px) opacity(0.5);
+  /* from rollupjs.org */
+	--vp-home-hero-image-background-image: linear-gradient(
+		-45deg,
+		hsl(0 100% 60% / 80%),
+		hsl(15 100% 60% / 80%) 40%,
+		hsl(23 96% 62% / 80%) 45%,
+		hsl(0 100% 60% / 80%) 60%,
+		hsl(358 58% 47% / 80%)
+	);
+	--vp-home-hero-image-filter: blur(40px) opacity(0.5);
 }
 
 @media (min-width: 640px) {
