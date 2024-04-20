@@ -15,8 +15,9 @@ export default config([
       "**/node_modules/",
       ".nx/cache/",
       "**/*.d.ts",
-      "samples/",
+      "**/samples/",
       "**/dist/",
+      "**/.vscode-test/",
 
       // projects
       "packages/ssr/e2e/frontend/",
