@@ -70,4 +70,3 @@ The module specified should be capable of running server-side. You have two opti
 - [Rollup](https://rollupjs.org/) - `@kolint/ssr/rollup`
 - [Vite](https://vitejs.dev/) - `@kolint/ssr/vite`
 - [Webpack](https://webpack.js.org/) - `@kolint/ssr/`
-
