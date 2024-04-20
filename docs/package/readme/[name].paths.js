@@ -4,12 +4,10 @@ import { join } from "node:path";
 export default {
   paths() {
     return readdirSync("packages", { withFileTypes: true }).map((entry) => {
-      let content;
+      const path = join(entry.path, entry.name, "README.md");
+      let content = `_Missing file \`${path}\`._`;
       try {
-        content = readFileSync(
-          join(entry.path, entry.name, "README.md"),
-          "utf8",
-        );
+        content = readFileSync(path, "utf8");
       } catch (error) {
         if (error.code !== "ENOENT") {
           throw error;
