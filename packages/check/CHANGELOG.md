@@ -1,5 +1,11 @@
 # @kolint/check
 
+## 0.4.0-beta.3
+
+### Minor Changes
+
+- 9f067fa: Add Checker class
+
 ## 0.4.0-beta.2
 
 ### Patch Changes
