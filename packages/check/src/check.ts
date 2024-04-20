@@ -59,8 +59,8 @@ export class Checker {
           await snapshot.update(text);
           diagnostics.push(...snapshot.diagnostics);
         }
-      } catch (error: any) {
-        if (error.code !== "ENOENT") {
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
           throw error;
         }
       }
