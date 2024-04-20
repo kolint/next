@@ -9,7 +9,7 @@ import footnote from "markdown-it-footnote";
 // https://vitepress.dev/reference/site-config
 const config: UserConfig<ThemeConfig> = {
   title: "Kolint",
-  outDir: "../public",
+  base: "/next/",
   lastUpdated: true,
 
   // prettier-ignore
