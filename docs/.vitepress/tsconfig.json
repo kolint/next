@@ -1,4 +1,0 @@
-{
-  "extends": ["@kolint-dev/tsconfig/node.json"],
-  "exclude": ["cache"]
-}

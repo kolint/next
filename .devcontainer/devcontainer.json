@@ -19,7 +19,8 @@
         "oven.bun-vscode",
         "ms-playwright.playwright",
         "ms-vscode.extension-test-runner",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "Vue.volar"
       ],
       "settings": {
         "explorer.fileNesting.enabled": true
