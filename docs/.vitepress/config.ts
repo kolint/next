@@ -4,6 +4,7 @@ import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { UserConfig } from "vitepress";
+import footnote from "markdown-it-footnote";
 
 // https://vitepress.dev/reference/site-config
 const config: UserConfig<ThemeConfig> = {
@@ -58,6 +59,10 @@ const config: UserConfig<ThemeConfig> = {
             items: [
               //
               { text: "Introduction", link: "intro" },
+              { text: "Installation", link: "installation" },
+              { text: "Usage", link: "usage" },
+              { text: "SSR Support", link: "support" },
+              { text: "Plugins", link: "plugins" },
             ],
           },
         ],
@@ -116,6 +121,12 @@ const config: UserConfig<ThemeConfig> = {
       ],
       disclaimer:
         "Released under MIT License | Copyright © 2024 Elias Skogevall",
+    },
+  },
+
+  markdown: {
+    config: (md) => {
+      md.use(footnote);
     },
   },
 

@@ -3,3 +3,7 @@
   --vp-c-brand-2: #d38054;
   --vp-c-brand-3: #bd5c28;
 }
+
+a.footnote-backref {
+  text-decoration: none;
+}
