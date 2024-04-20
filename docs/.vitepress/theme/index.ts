@@ -1,6 +1,7 @@
 // https://vitepress.dev/guide/extending-default-theme
-import "./custom.css";
+
 import DefaultTheme, { DefaultTheme as DefaultThemeNs } from "vitepress/theme";
+import "./custom.css";
 
 export default DefaultTheme;
 
