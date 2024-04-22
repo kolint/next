@@ -20,7 +20,8 @@
         "ms-playwright.playwright",
         "ms-vscode.extension-test-runner",
         "github.vscode-github-actions",
-        "Vue.volar"
+        "Vue.volar",
+        "GitHub.vscode-pull-request-github"
       ],
       "settings": {
         "explorer.fileNesting.enabled": true
