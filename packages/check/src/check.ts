@@ -2,7 +2,7 @@ import { Compiler, Severity, type Diagnostic } from "@kolint/compiler";
 import { ts, getCompilerOptionsFromTsConfig } from "@kolint/ts-utils";
 import { globby } from "globby";
 import { writeFileSync } from "node:fs";
-import { readFile, stat } from "node:fs/promises";
+import { access, readFile, stat } from "node:fs/promises";
 import { type SourceMapGenerator } from "source-map";
 
 const DEFAULT_EXCLUDE = ["**/node_modules/**"];
@@ -44,27 +44,32 @@ export class Checker {
 
     for (const path of paths) {
       try {
-        const stats = await stat(path);
-        const files = stats.isDirectory()
-          ? await globby(this.#options?.include ?? "**/*.html", {
-              dot: true,
-              ignore: [...DEFAULT_EXCLUDE, ...(this.#options?.exclude ?? [])],
-              cwd: path,
-              absolute: true,
-            })
-          : [path];
-
-        for (const file of files) {
-          const snapshot = this.compiler.createSnapshot(file);
-          snapshot._program.registerOutput = registerOutput;
-          const text = await readFile(file, "utf8");
-          await snapshot.update(text);
-          diagnostics.push(...snapshot.diagnostics);
-        }
+        await access(path);
       } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+        if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+          console.error(`Path '${path}' does not exist.`);
+          process.exit(1);
+        } else {
           throw error;
         }
+      }
+
+      const stats = await stat(path);
+      const files = stats.isDirectory()
+        ? await globby(this.#options?.include ?? "**/*.html", {
+            dot: true,
+            ignore: [...DEFAULT_EXCLUDE, ...(this.#options?.exclude ?? [])],
+            cwd: path,
+            absolute: true,
+          })
+        : [path];
+
+      for (const file of files) {
+        const snapshot = this.compiler.createSnapshot(file);
+        snapshot._program.registerOutput = registerOutput;
+        const text = await readFile(file, "utf8");
+        await snapshot.update(text);
+        diagnostics.push(...snapshot.diagnostics);
       }
     }
 
