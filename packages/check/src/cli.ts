@@ -23,7 +23,11 @@ export default async function (
 
   let configPath: string | undefined;
 
-  if (args.config === true || args.config === "true") {
+  if (
+    args.config === undefined ||
+    args.config === true ||
+    args.config === "true"
+  ) {
     configPath = "kolint.config.js";
   } else if (args.config === false || args.config === "false") {
     configPath = undefined;
