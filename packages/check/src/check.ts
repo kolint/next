@@ -5,6 +5,8 @@ import { writeFileSync } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
 import { type SourceMapGenerator } from "source-map";
 
+const DEFAULT_EXCLUDE = ["**/node_modules/**"];
+
 export interface CheckOptions {
   include?: readonly string[] | undefined;
   exclude?: readonly string[] | undefined;
@@ -46,7 +48,7 @@ export class Checker {
         const files = stats.isDirectory()
           ? await globby(this.#options?.include ?? "**/*.html", {
               dot: true,
-              ignore: this.#options?.exclude?.slice(),
+              ignore: [...DEFAULT_EXCLUDE, ...(this.#options?.exclude ?? [])],
               cwd: path,
               absolute: true,
             })
