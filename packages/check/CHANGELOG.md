@@ -1,5 +1,13 @@
 # @kolint/check
 
+## 0.4.0-beta.4
+
+### Patch Changes
+
+- 9e36a52: Automatically detect config file when `--config` flag is not passed.
+- 51891ad: Fail when passing path that does not exist to checker.
+- 931e7eb: Ignore `node_modules/` directory by default.
+
 ## 0.4.0-beta.3
 
 ### Minor Changes
