@@ -98,7 +98,7 @@ function getTypeOfIdentifier(
 }
 
 function createSimpleDiagnostic(diag: ts.Diagnostic): Diagnostic {
-  const filename = diag.file?.fileName ?? "unknown";
+  const fileName = diag.file?.fileName ?? "unknown";
   if (diag.file && diag.start) {
     const start = ts.getLineAndCharacterOfPosition(diag.file, diag.start);
     const end = ts.getLineAndCharacterOfPosition(
@@ -108,7 +108,7 @@ function createSimpleDiagnostic(diag: ts.Diagnostic): Diagnostic {
     const range = diag.start
       ? ([diag.start, diag.start + (diag.length ?? 0)] as const)
       : ([-1, -1] as const);
-    return new Diagnostic(filename, diag, {
+    return new Diagnostic(fileName, diag, {
       first_line: start.line + 1,
       first_column: start.character,
       last_line: end.line + 1,
@@ -116,7 +116,7 @@ function createSimpleDiagnostic(diag: ts.Diagnostic): Diagnostic {
       range: [range[0], range[1]],
     });
   }
-  return new Diagnostic(filename, diag, {
+  return new Diagnostic(fileName, diag, {
     first_line: 0,
     first_column: 0,
     last_line: 0,
@@ -129,7 +129,7 @@ function createMappedDiagnostic(
   diag: ts.Diagnostic,
   consumer: SourceMapConsumer,
 ): Diagnostic {
-  const filename = diag.file?.fileName ?? "unknown";
+  const fileName = diag.file?.fileName ?? "unknown";
   if (diag.file && diag.start) {
     const generatedStart = ts.getLineAndCharacterOfPosition(
       diag.file,
@@ -147,7 +147,7 @@ function createMappedDiagnostic(
       line: generatedEnd.line + 1,
       column: generatedEnd.character,
     });
-    const sourceName = start.source ?? filename;
+    const sourceName = start.source ?? fileName;
     if (
       start.line !== null &&
       end.line !== null &&
@@ -168,7 +168,7 @@ function createMappedDiagnostic(
     const range = diag.start
       ? ([diag.start, diag.start + (diag.length ?? 0)] as const)
       : ([-1, -1] as const);
-    return new Diagnostic(filename, diag, {
+    return new Diagnostic(fileName, diag, {
       first_line: generatedStart.line + 1,
       first_column: generatedStart.character,
       last_line: generatedEnd.line + 1,
@@ -176,7 +176,7 @@ function createMappedDiagnostic(
       range: [range[0], range[1]],
     });
   }
-  return new Diagnostic(filename, diag, {
+  return new Diagnostic(fileName, diag, {
     first_line: 0,
     first_column: 0,
     last_line: 0,
@@ -185,6 +185,38 @@ function createMappedDiagnostic(
   });
 }
 
+export interface LegacyCompilerSnapshot {
+  fileName: string;
+  program?: ts.Program;
+  builder: SourceBuilder;
+  nodeQueue: BindingNode[];
+  reporting: Reporting;
+}
+
+export interface LegacyCompilerOutput {
+  code: string;
+  map: RawSourceMap;
+}
+
+/**
+ * @example ```ts
+ * // Instanciation is performancy heavy.
+ * const compiler = new Compiler(options);
+ *
+ * // Create "scaffholding" for compiler to use.
+ * const snapshot1 = await compiler.createSnapshot(document1, program);
+ * const snapshot2 = await compiler.createSnapshot(document2, program);
+ *
+ * // Snapshots must be compiled before. This function is performance heavy.
+ * await compiler.compile([snapshot1, snapshot2], program);
+ *
+ * // Optionally type check a snapshot.
+ * await compiler.typeCheck(snapshot1, program);
+ *
+ * // Optionally emit transpiled typescript content (debug purposes).
+ * await compiler.emit(snapshot2, program);
+ * ```
+ */
 export class Compiler {
   readonly compilerHost: ts.CompilerHost;
   readonly sourceFiles = new Map<string, ts.SourceFile>();
@@ -217,11 +249,10 @@ export class Compiler {
     };
   }
 
-  async compile(
-    documents: [Document],
+  async createSnapshot(
+    document: Document,
     reporting: Reporting,
-    typeCheck = false,
-  ): Promise<{ code: string; map: RawSourceMap }> {
+  ): Promise<LegacyCompilerSnapshot> {
     // Start with root TypeNode
     // NodeQueue = reachableBindingNodes(rootNode) // Direct child to a type Node or indirect via a type node (recursively)
     // Foreach node in queue assign to context (create context if necessary)
@@ -234,87 +265,87 @@ export class Compiler {
 
     // * read scaffold
     // * inject imports for viewmodel and bindinghandlers
-    for (const doc of documents.filter(
-      (doc) => !(doc.rootNode instanceof TypeNode),
-    )) {
-      reporting.addDiagnostic(
-        new Diagnostic(
-          doc.viewFilePath,
-          "no-viewmodel-reference",
-          undefined,
-          "Document must have a defined type at the root node",
-        ),
+    if (!(document.rootNode instanceof TypeNode)) {
+      throw new Diagnostic(
+        document.viewFilePath,
+        "no-viewmodel-reference",
+        undefined,
+        "Document must have a defined type at the root node",
       );
     }
 
-    //#region build typescript file
-    const sources = documents
-      .filter((doc) => doc.rootNode instanceof TypeNode)
-      .map((document) => {
-        const viewFilePath = document.viewFilePath;
-        const builder = new SourceBuilder(viewFilePath, document);
+    const viewFilePath = document.viewFilePath;
+    const builder = new SourceBuilder(viewFilePath, document);
 
-        // * inject binding context (reference to viewmodel)
-        // * store the name of the injected binding context identifier into the bindingQueue's binding object (for reference in the next iteration)
+    // * inject binding context (reference to viewmodel)
+    // * store the name of the injected binding context identifier into the bindingQueue's binding object (for reference in the next iteration)
 
-        // Create child contexts (if type is known), or collect all child binding candidates
-        // (we need to investigate it's type before we know if it creates a new context or not).
-        document.rootContext = BindingContext.createRoot(document.rootNode);
-        document.rootNode.childContext = document.rootContext;
-        // document.rootContext = this.processImmediateChildNodes(document.rootNode, rootContext)
-        const nodeQueue = reachableBindingNodes([document.rootNode], () => {
-          /* empty */
-        });
+    // Create child contexts (if type is known), or collect all child binding candidates
+    // (we need to investigate it's type before we know if it creates a new context or not).
+    document.rootContext = BindingContext.createRoot(document.rootNode);
+    document.rootNode.childContext = document.rootContext;
+    // document.rootContext = this.processImmediateChildNodes(document.rootNode, rootContext)
+    const nodeQueue = reachableBindingNodes([document.rootNode], () => {
+      /* empty */
+    });
 
-        const importedBindings = document.imports
-          .map((imp) =>
-            imp.importSymbols
-              .map((symb) => symb.alias.value)
-              .filter((alias) =>
-                document.bindingNames.find((name) => name === alias),
-              ),
-          )
-          .flat();
-        builder.createBindinghandlerImports(importedBindings);
-        builder.createRootBindingContexts(document.rootContext);
-        const code = builder.changes().toString();
-        builder.commit();
-
-        // The source file filename is required by the TypeScript compiler to end with .ts,
-        // or and other valid TypeScript(/JavaScript) extension
-        const filename = document.viewFilePath + ".ts";
-        // Create initial SourceFile to use in the CompilerHost (to avoid having to write the content to disk first)
-        this.sourceFiles.set(
-          filename,
-          ts.createSourceFile(
-            filename,
-            code,
-            ts.ScriptTarget.ES2018,
-            true,
-            ts.ScriptKind.TS,
+    const importedBindings = document.imports
+      .map((imp) =>
+        imp.importSymbols
+          .map((symb) => symb.alias.value)
+          .filter((alias) =>
+            document.bindingNames.find((name) => name === alias),
           ),
-        );
+      )
+      .flat();
+    builder.createBindinghandlerImports(importedBindings);
+    builder.createRootBindingContexts(document.rootContext);
+    const code = builder.changes().toString();
+    builder.commit();
 
-        // * initialize bindingQueue to [root bindings] (binding queue represents all bindings on a specific level in the binding hierarchy, since we are processing bindings in breadth-first ordering)
-        // const contextQueue = [document.rootContext]
-        return { filename, builder, /*contextQueue,*/ nodeQueue };
-      });
+    // The source file fileName is required by the TypeScript compiler to end with .ts,
+    // or and other valid TypeScript(/JavaScript) extension
+    const fileName = document.viewFilePath + ".ts";
 
-    const filenames = sources.map((source) => source.filename);
+    // Create initial SourceFile to use in the CompilerHost (to avoid having to write the content to disk first)
+    this.sourceFiles.set(
+      fileName,
+      ts.createSourceFile(
+        fileName,
+        code,
+        ts.ScriptTarget.ES2018,
+        true,
+        ts.ScriptKind.TS,
+      ),
+    );
+
+    // * initialize bindingQueue to [root bindings] (binding queue represents all bindings on a specific level in the binding hierarchy, since we are processing bindings in breadth-first ordering)
+    // const contextQueue = [document.rootContext]
+
+    return {
+      fileName,
+      builder,
+      nodeQueue,
+      reporting,
+    };
+  }
+
+  async compile(snapshots: readonly LegacyCompilerSnapshot[]) {
+    const fileNames = snapshots.map((snapshot) => snapshot.fileName);
     let program = ts.createProgram(
-      filenames,
+      fileNames,
       this.compilerOptions,
       this.compilerHost,
     );
 
     // Loop while there is a bindingQueue which is not empty:
-    while (sources.some((source) => source.nodeQueue.length)) {
+    while (snapshots.some((snapshot) => snapshot.nodeQueue.length)) {
       const checker = program.getTypeChecker();
 
       // Emit context transformations for all contexts (all known bindings for a context)
-      for (const source of sources) {
-        const { nodeQueue, filename, builder } = source;
-        const src = program.getSourceFile(filename);
+      for (const snapshot of snapshots) {
+        const { nodeQueue, fileName, builder } = snapshot;
+        const src = program.getSourceFile(fileName);
         // * foreach binding object in bindingQueue
         // 	- inject context transformation with expanded objects for $context and $context.$data
         // 	(the binding context identifier is what was stored in the binding object in one of the previous steps)
@@ -367,7 +398,7 @@ export class Compiler {
         const diff = builder.changes();
         const newText = src.getText() + diff.toString();
         this.sourceFiles.set(
-          filename,
+          fileName,
           src.update(
             newText,
             ts.createTextChangeRange(
@@ -380,17 +411,17 @@ export class Compiler {
       }
 
       program = ts.createProgram(
-        filenames,
+        fileNames,
         this.compilerOptions,
         this.compilerHost,
         program,
       );
 
       // Inspect the transformations if they create new contexts. Update known bindings.
-      for (const source of sources) {
+      for (const snapshot of snapshots) {
         const checker = program.getTypeChecker();
-        const { nodeQueue, filename, builder } = source;
-        const src = program.getSourceFile(filename);
+        const { nodeQueue, fileName, builder } = snapshot;
+        const src = program.getSourceFile(fileName);
 
         if (!src) throw new Error("missing parsed source");
 
@@ -415,9 +446,9 @@ export class Compiler {
             (t) => t.type?.flags === ts.TypeFlags.Unknown,
           );
           for (const b of unknownBindings)
-            reporting.addDiagnostic(
+            snapshot.reporting.addDiagnostic(
               new Diagnostic(
-                source.builder.markupFileName,
+                snapshot.builder.markupFileName,
                 "binding-unknown",
                 b.binding.bindingHandler.loc,
                 b.binding.bindingHandler.name,
@@ -429,7 +460,7 @@ export class Compiler {
               .length > 1
           )
             throw new Diagnostic(
-              source.builder.markupFileName,
+              snapshot.builder.markupFileName,
               "multiple-context-bindings",
               translations[0]!.binding.expression.loc,
               translations.map((t) => t.binding.bindingHandler.name).join(", "),
@@ -443,7 +474,7 @@ export class Compiler {
           }
         }
 
-        source.nodeQueue = reachableBindingNodes(
+        snapshot.nodeQueue = reachableBindingNodes(
           nodeQueue,
           (typeNode: TypeNode) => {
             builder.emitContextDefinition2(typeNode);
@@ -453,7 +484,7 @@ export class Compiler {
         const diff = builder.changes();
         const newText = src.getText() + diff.toString();
         this.sourceFiles.set(
-          filename,
+          fileName,
           src.update(
             newText,
             ts.createTextChangeRange(
@@ -466,39 +497,72 @@ export class Compiler {
       }
 
       program = ts.createProgram(
-        filenames,
+        fileNames,
         this.compilerOptions,
         this.compilerHost,
         program,
       );
     }
-    //#endregion
 
-    if (typeCheck) {
-      const source = sources[0]!;
-      const sourceFile = this.sourceFiles.get(source.filename);
-      const map = source.builder.getContent().map;
-      const consumer = map
-        ? await SourceMapConsumer.fromSourceMap(map)
-        : undefined;
-      const diags = ts.getPreEmitDiagnostics(program, sourceFile);
-      for (const diag of diags) {
-        // TODO: send additional location information for the generated file etc.. the "reporting" (or whatever it's name should be) will have the information available for debug output etc.
-        if (consumer)
-          reporting.addDiagnostic(createMappedDiagnostic(diag, consumer));
-        else reporting.addDiagnostic(createSimpleDiagnostic(diag));
+    for (const snapshot of snapshots) {
+      snapshot.program = program;
+    }
+  }
+
+  #assertCompiled(snapshot: LegacyCompilerSnapshot) {
+    if (!snapshot.program) {
+      throw new Error(
+        `Snapshot '${snapshot.fileName}' is not compiled. Run \`compiler.compile(snapshot)\` first.`,
+      );
+    }
+  }
+
+  async typeCheck(snapshot: LegacyCompilerSnapshot) {
+    this.#assertCompiled(snapshot);
+
+    // source map consumer
+    const map = snapshot.builder.getContent().map;
+    const consumer = map
+      ? await SourceMapConsumer.fromSourceMap(map)
+      : undefined;
+
+    const sourceFile = this.sourceFiles.get(snapshot.fileName)!;
+
+    const diags = ts.getPreEmitDiagnostics(snapshot.program!, sourceFile);
+    for (const diag of diags) {
+      // TODO: send additional location information for the generated file
+      // etc.. the "reporting" (or whatever it's name should be) will have
+      // the information available for debug output etc.
+      if (consumer) {
+        snapshot.reporting.addDiagnostic(
+          createMappedDiagnostic(diag, consumer),
+        );
+      } else {
+        snapshot.reporting.addDiagnostic(createSimpleDiagnostic(diag));
       }
     }
 
-    // Call sinks with file information for source maps, generated ts-files, etc. (send a file type hint in the call to reporting)
-    for (const source of sources) {
-      const { code, map } = source.builder.getContent();
-      // The source file always contains .ts in the end of the filename.
-      reporting.registerOutput(source.filename.slice(0, -3), code, map);
+    return snapshot.reporting.diagnostics;
+  }
 
-      // Only once source should exists, because the input array is limited to one.
-      return { code, map: map.toJSON() };
-    }
-    return undefined!;
+  async emit(snapshot: LegacyCompilerSnapshot): Promise<LegacyCompilerOutput> {
+    this.#assertCompiled(snapshot);
+
+    // Call sinks with file information for source maps, generated ts-files,
+    // etc. (send a file type hint in the call to reporting)
+    const { code, map } = snapshot.builder.getContent();
+    // The source file always contains .ts in the end of the fileName.
+    snapshot.reporting.registerOutput(
+      snapshot.fileName.slice(0, -3),
+      code,
+      map,
+    );
+
+    // Only once source should exists, because the input array is limited to
+    // one.
+    return {
+      code,
+      map: map.toJSON(),
+    };
   }
 }

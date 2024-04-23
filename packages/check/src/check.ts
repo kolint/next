@@ -1,4 +1,4 @@
-import { Compiler, Severity, type Diagnostic } from "@kolint/compiler";
+import { Compiler, Severity } from "@kolint/compiler";
 import { ts, getCompilerOptionsFromTsConfig } from "@kolint/ts-utils";
 import { globby } from "globby";
 import { writeFileSync } from "node:fs";
@@ -33,8 +33,6 @@ export class Checker {
   }
 
   async check(paths: readonly string[]) {
-    const diagnostics: Diagnostic[] = [];
-
     const registerOutput = this.#options?.debug
       ? (filename: string, code: string, map: SourceMapGenerator) => {
           writeFileSync(filename + ".debug.ts", code);
@@ -42,36 +40,44 @@ export class Checker {
         }
       : () => {};
 
-    for (const path of paths) {
-      try {
-        await access(path);
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-          console.error(`Path '${path}' does not exist.`);
-          process.exit(1);
-        } else {
-          throw error;
-        }
-      }
+    const snapshots = (
+      await Promise.all(
+        paths.map(async (path) => {
+          try {
+            await access(path);
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+              console.error(`Path '${path}' does not exist.`);
+              process.exit(1);
+            } else {
+              throw error;
+            }
+          }
 
-      const stats = await stat(path);
-      const files = stats.isDirectory()
-        ? await globby(this.#options?.include ?? "**/*.html", {
-            dot: true,
-            ignore: [...DEFAULT_EXCLUDE, ...(this.#options?.exclude ?? [])],
-            cwd: path,
-            absolute: true,
-          })
-        : [path];
+          const stats = await stat(path);
+          const files = stats.isDirectory()
+            ? await globby(this.#options?.include ?? "**/*.html", {
+                dot: true,
+                ignore: [...DEFAULT_EXCLUDE, ...(this.#options?.exclude ?? [])],
+                cwd: path,
+                absolute: true,
+              })
+            : [path];
 
-      for (const file of files) {
-        const snapshot = this.compiler.createSnapshot(file);
-        snapshot._program.registerOutput = registerOutput;
-        const text = await readFile(file, "utf8");
-        await snapshot.update(text);
-        diagnostics.push(...snapshot.diagnostics);
-      }
-    }
+          return await Promise.all(
+            files.map(async (file) => {
+              const text = await readFile(file, "utf8");
+              const snapshot = await this.compiler.createSnapshot(file, text);
+              snapshot._legacy!.reporting.registerOutput = registerOutput;
+              return snapshot;
+            }),
+          );
+        }),
+      )
+    ).flat();
+
+    await this.compiler.compile(snapshots);
+    const diagnostics = await this.compiler.check(snapshots);
 
     if (this.#options?.severity) {
       for (const diagnostic of diagnostics) {

@@ -1,20 +1,59 @@
 import * as legacyCompiler from "@kolint/legacy-compiler";
-import { ts } from "@kolint/ts-utils";
+import { type ts } from "@kolint/ts-utils";
 import type { RawSourceMap } from "source-map";
 
 export { Diagnostic, Severity } from "@kolint/legacy-compiler";
 
-export class Compiler {
-  constructor(readonly compilerOptions: ts.CompilerOptions) {}
+export interface CompilerOutput {
+  code: string;
+  map: RawSourceMap;
+}
 
-  createSnapshot(path: string) {
-    return new Snapshot(this, path);
+export class Compiler {
+  /**
+   * @deprecated
+   */
+  _legacy: legacyCompiler.Compiler;
+
+  constructor(readonly compilerOptions: ts.CompilerOptions) {
+    this._legacy = new legacyCompiler.Compiler(this.compilerOptions);
   }
 
-  async check(path: string, text: string) {
-    const snapshot = this.createSnapshot(path);
-    await snapshot.update(text);
-    return snapshot.diagnostics;
+  async createSnapshot(path: string, text: string) {
+    const snapshot = new Snapshot(this, path);
+    snapshot.update(text);
+    return snapshot;
+  }
+
+  async compile(snapshots: readonly Snapshot[]) {
+    await this._legacy.compile(
+      snapshots
+        .map((snapshot) => snapshot._legacy)
+        .filter(
+          (legacy): legacy is NonNullable<typeof legacy> =>
+            !!(legacy && !legacy.program),
+        ),
+    );
+  }
+
+  async check(...snapshots: (Snapshot | readonly Snapshot[])[]) {
+    const flat = snapshots.flat();
+    await this.compile(flat);
+    return (
+      await Promise.all(
+        flat
+          .filter((snapshot) => snapshot._legacy)
+          .map((snapshot) => this._legacy.typeCheck(snapshot._legacy!)),
+      )
+    ).flat();
+  }
+
+  async emit(snapshot: Snapshot): Promise<CompilerOutput | null> {
+    if (!snapshot._legacy) {
+      return null;
+    }
+    await this.compile([snapshot]);
+    return await this._legacy.emit(snapshot._legacy);
   }
 }
 
@@ -27,25 +66,11 @@ export class Snapshot {
   /**
    * @deprecated
    */
-  _program = legacyCompiler.createProgram();
-
-  #sourceFile: ts.SourceFile;
-  get sourceFile() {
-    return this.#sourceFile;
-  }
+  _legacy?: legacyCompiler.LegacyCompilerSnapshot;
 
   #text: string | null = null;
   get text() {
     return this.#text;
-  }
-
-  #compiled: Compiled | null = null;
-  get compiled() {
-    return this.#compiled;
-  }
-
-  get diagnostics(): readonly legacyCompiler.Diagnostic[] {
-    return this._program.diagnostics.slice();
   }
 
   #version = 0;
@@ -61,9 +86,7 @@ export class Snapshot {
   constructor(
     readonly compiler: Compiler,
     readonly path: string,
-  ) {
-    this.#sourceFile = ts.createSourceFile(path, "", ts.ScriptTarget.Latest);
-  }
+  ) {}
 
   increment(version = this.#version + 1) {
     this.#version = version;
@@ -71,51 +94,28 @@ export class Snapshot {
 
   update(text: string, version?: number) {
     return (this.#synced = (async () => {
-      this._program.diagnostics = [];
+      const program = legacyCompiler.createProgram();
       this.#text = text;
-      this.#compiled = null;
 
       try {
         // Parse document
-        const tokens = legacyCompiler.parse(this.path, text, this._program);
+        const tokens = legacyCompiler.parse(this.path, text, program);
         const document = legacyCompiler.createDocument(
           this.path,
           tokens,
-          this._program,
+          program,
+        );
+        this._legacy = await this.compiler._legacy.createSnapshot(
+          document,
+          program,
         );
 
-        // Compile typescript contents
-        const compiler = new legacyCompiler.Compiler(
-          this.compiler.compilerOptions,
-        );
-        const compiled = await compiler.compile(
-          [document],
-          this._program,
-          true,
-        );
-
-        // Update source file
-        this.#sourceFile.update(
-          compiled.code,
-          ts.createTextChangeRange(
-            ts.createTextSpan(
-              this.#sourceFile.getFullStart(),
-              this.#sourceFile.getFullWidth(),
-            ),
-            compiled.code.length,
-          ),
-        );
-
-        this.#compiled = {
-          sourceMap: compiled.map,
-          code: compiled.code,
-        };
         this.increment(version);
 
         return true;
       } catch (error) {
         if (error instanceof legacyCompiler.Diagnostic) {
-          this._program.addDiagnostic(error);
+          program.addDiagnostic(error);
         }
         return false;
       }
