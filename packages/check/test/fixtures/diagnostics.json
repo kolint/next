@@ -1,13 +1,77 @@
 [
   {
-    "todo": true,
+    "todo": false,
     "sample": "TS2345.html",
-    "code": "TS2345",
-    "location": {
-      "first_line": 3,
-      "first_column": 25,
-      "last_line": 3,
-      "last_column": 25
-    }
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
+  },
+  {
+    "todo": false,
+    "sample": "TS2345.html",
+    "code": "TS2345"
   }
 ]

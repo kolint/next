@@ -9,7 +9,7 @@ export { createProgram, Program, type Reporting } from "./program.js";
 export * as utils from "./utils.js";
 
 // src/compiler
-export { Compiler } from "./compiler/compiler.js";
+export * from "./compiler/compiler.js";
 
 // src/parser
 export { parse } from "./parser/index.js";
