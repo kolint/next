@@ -49,6 +49,8 @@ const config: UserConfig<ThemeConfig> = {
             items: [
               //
               { text: "Introduction", link: "intro" },
+              { text: "Installation", link: "installation" },
+              { text: "Usage", link: "usage" },
               { text: "Configuration", link: "config" },
             ],
           },
