@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: KOLint
-  text: Modern Toolchain for Knockout.js
+  text: The Modern Toolchain for Knockout.js
   tagline: The modern toolchain for enhancing usage of Knockout.js and improving runtime performance.
   image:
     src: /logo.png
@@ -15,21 +15,6 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/kolint/next
-
-features:
-  - title: Linting
-    details: Find common errors in your knockout views and type-check view with <b>TypeScript</b>.
-    icon:
-      src: /assets/icons/typescript.svg
-      wrap: true
-      width: 26px
-      height: 26px
-  - title: SSR
-    details: Pre-render your views on the server to improve runtime performance and SEO.
-    icon: ⚙️
-  - title: Language Support
-    details: The language server provides in-editor features.
-    icon: 🔣
 ---
 
 <style>
@@ -62,9 +47,57 @@ features:
   scale: 0.8;
   transform-origin: top left;
 }
+
+.index-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.index-content h2:first-child {
+  border: none;
+}
+
 </style>
 
-<br />
-<br />
 <hr />
-<br />
+
+<div class="index-content">
+
+## Linting
+
+<!-- @include: @/parts/features/linting/description.md -->
+
+<div align="center">
+
+[Read more ›](/linting/intro)
+
+</div>
+
+<!-- @include: @/parts/features/linting/example.md -->
+
+## Server-side Render {#ssr}
+
+<!-- @include: @/parts/features/ssr/description.md -->
+
+<div align="center">
+
+[Read more ›](/ssr/intro)
+
+</div>
+
+<!-- @include: @/parts/features/ssr/example.md -->
+
+## Language Support
+
+<!-- @include: @/parts/features/language-support/description.md -->
+
+<div align="center">
+
+[Read more ›](/ssr/intro)
+
+</div>
+
+<!-- @include: @/parts/features/language-support/example.md -->
+
+</div>
