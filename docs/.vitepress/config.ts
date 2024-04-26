@@ -1,6 +1,6 @@
 import { ThemeConfig } from "./theme";
 import escapeStringRegexp from "escape-string-regexp";
-import { readdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { UserConfig } from "vitepress";
@@ -49,7 +49,7 @@ const config: UserConfig<ThemeConfig> = {
             items: [
               //
               { text: "Introduction", link: "intro" },
-              { text: "Installation", link: "installation" },
+              { text: "Setup", link: "setup" },
               { text: "Usage", link: "usage" },
               { text: "Configuration", link: "config" },
             ],
@@ -61,9 +61,9 @@ const config: UserConfig<ThemeConfig> = {
             items: [
               //
               { text: "Introduction", link: "intro" },
-              { text: "Installation", link: "installation" },
+              { text: "Setup", link: "setup" },
               { text: "Usage", link: "usage" },
-              { text: "SSR Support", link: "support" },
+              { text: "Support", link: "support" },
               { text: "Plugins", link: "plugins" },
             ],
           },
@@ -96,8 +96,12 @@ const config: UserConfig<ThemeConfig> = {
             link: `/package/readme/${name}`,
             collapsed: true,
             items: [
-              { text: "Readme", link: `/package/readme/${name}` },
-              { text: "Changelog", link: `/package/changelog/${name}` },
+              ...(existsSync(`packages/${name}/README.md`)
+                ? [{ text: "Readme", link: `/package/readme/${name}` }]
+                : []),
+              ...(existsSync(`packages/${name}/CHANGELOG.md`)
+                ? [{ text: "Changelog", link: `/package/changelog/${name}` }]
+                : []),
             ],
           };
         }),

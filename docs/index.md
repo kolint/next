@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: KOLint
-  text: Modern Toolchain for Knockout.js
+  text: The Modern Toolchain for Knockout.js
   tagline: The modern toolchain for enhancing usage of Knockout.js and improving runtime performance.
   image:
     src: /logo.png
