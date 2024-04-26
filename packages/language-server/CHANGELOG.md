@@ -1,5 +1,12 @@
 # @kolint/language-server
 
+## 0.1.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [c4a892d]
+  - @kolint/compiler@0.4.0-beta.5
+
 ## 0.1.0-beta.1
 
 ### Patch Changes
