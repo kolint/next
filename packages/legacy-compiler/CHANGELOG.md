@@ -1,5 +1,11 @@
 # @kolint/legacy-compiler
 
+## 0.4.0-beta.5
+
+### Minor Changes
+
+- c4a892d: Optimize usage of internal typescript compiler to improve performance (#18)
+
 ## 0.4.0-beta.1
 
 ### Patch Changes
