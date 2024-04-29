@@ -3,7 +3,7 @@ import { Format, Options } from "tsup";
 
 export interface BuildExecutorSchema {
   format?: Format | readonly Format[];
-  entry?: string | readonly string[];
+  entry?: string | readonly string[] | Readonly<Record<string, string>>;
   outputPath: string;
   assets?: (string | AssetGlob)[];
   tsup?: Options | readonly Options[];
