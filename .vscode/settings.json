@@ -13,7 +13,7 @@
     ".prettierrc": ".prettierignore",
     "*.ts": "$(basename).test.ts, $(basename).spec.ts",
     "*.js": "$(basename).test.js, $(basename).spec.js, , $(basename).d.ts, $(basename).js.map",
-    "*.json": "$(basename).schema.json",
+    "*.json": "$(basename).schema.json"
   },
   "json.schemas": [
     {
