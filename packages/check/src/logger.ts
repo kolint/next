@@ -26,7 +26,7 @@ export const createDebugFile = () =>
     filename: "kolint.debug.log",
     level: "debug",
     options: {
-      flags: 'w'
+      flags: "w",
     },
     format: winston.format.combine(
       winston.format.uncolorize(),
