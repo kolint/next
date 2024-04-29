@@ -1,0 +1,12 @@
+{
+  "name": "@samples/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "knockout": "^3.5.1"
+  },
+  "devDependencies": {
+    "@kolint/check": "workspace:*"
+  }
+}

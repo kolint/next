@@ -13,12 +13,16 @@
   "license": "MIT",
   "type": "module",
   "exports": "./src/index.ts",
+  "bin": {
+    "kolint": "./src/kolint.ts"
+  },
   "dependencies": {
     "@kolint/compiler": "workspace:~",
     "@kolint/ts-utils": "workspace:~",
     "@types/yargs": "^17.0.32",
     "chalk": "^5.3.0",
     "globby": "^14.0.1",
+    "winston": "^3.13.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
