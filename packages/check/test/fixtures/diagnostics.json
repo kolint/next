@@ -1,77 +1,20 @@
-[
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  },
-  {
-    "todo": false,
-    "sample": "TS2345.html",
-    "code": "TS2345"
-  }
-]
+{
+  "$schema": "./diagnostics.schema.json",
+  "fixtures": [
+    {
+      "sample": "TS2345.html",
+      "code": "TS2345"
+    },
+    {
+      "todo": true,
+      "sample": "TS2345.html",
+      "code": "TS2345",
+      "location": {
+        "first_line": 3,
+        "first_column": 25,
+        "last_line": 3,
+        "last_column": 34
+      }
+    }
+  ]
+}
