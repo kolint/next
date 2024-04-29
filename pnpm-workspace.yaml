@@ -2,3 +2,6 @@ packages:
   - packages/*
   - tools/*
   - docs/.vitepress
+  - samples/*
+  - "!samples/e2e-install"
+  - "!samples/vscode"
