@@ -14,7 +14,7 @@
   "type": "module",
   "exports": "./src/index.ts",
   "bin": {
-    "kolint": "./src/kolint.ts"
+    "kolint": "./src/cli/main.ts"
   },
   "dependencies": {
     "@kolint/compiler": "workspace:~",
