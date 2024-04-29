@@ -1,5 +1,12 @@
 # @kolint/check
 
+## 0.4.0-beta.6
+
+### Minor Changes
+
+- 720f021: Add additional logging to cli
+- 1a0d880: Rework checker and CLI
+
 ## 0.4.0-beta.5
 
 ### Minor Changes
