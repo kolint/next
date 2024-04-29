@@ -10,7 +10,10 @@
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .npmrc",
     "nx.json": ".nxignore",
-    ".prettierrc": ".prettierignore"
+    ".prettierrc": ".prettierignore",
+    "*.ts": "$(basename).test.ts, $(basename).spec.ts",
+    "*.js": "$(basename).test.js, $(basename).spec.js, , $(basename).d.ts, $(basename).js.map",
+    "*.json": "$(basename).schema.json",
   },
   "json.schemas": [
     {
