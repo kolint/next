@@ -5,11 +5,11 @@
   "targets": {
     "build": {
       "options": {
-        "entry": [
-          "{projectRoot}/src/index.ts",
-          "{projectRoot}/src/cli.ts",
-          "{projectRoot}/src/kolint.ts"
-        ],
+        "entry": {
+          "index": "{projectRoot}/src/index.ts",
+          "cli": "{projectRoot}/src/cli/cli.ts",
+          "bin/kolint": "{projectRoot}/src/cli/main.ts"
+        },
         "package": {
           "exports": {
             ".": {
@@ -22,7 +22,7 @@
             }
           },
           "bin": {
-            "kolint": "./kolint.js"
+            "kolint": "./bin/kolint.js"
           }
         }
       }
