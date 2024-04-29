@@ -8,3 +8,4 @@ packages/*/dist
 .pnpm-store
 **/.vitepress/cache
 **/.vitepress/dist
+**/kolint.*.log
