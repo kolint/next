@@ -13,7 +13,8 @@
     "@kolint-dev/eslint": "0.0.0",
     "@kolint-dev/nx": "0.0.0",
     "@kolint-dev/scripts": "0.0.0",
-    "@kolint-dev/tsconfig": "0.0.0"
+    "@kolint-dev/tsconfig": "0.0.0",
+    "@samples/config": "0.0.0"
   },
   "changesets": [
     "angry-melons-serve",
@@ -21,6 +22,8 @@
     "famous-pets-rescue",
     "gold-seals-design",
     "lovely-cycles-shake",
+    "many-games-fail",
+    "pretty-fishes-attack",
     "serious-pears-wait",
     "six-snails-wonder",
     "small-rabbits-poke",
