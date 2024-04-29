@@ -1,6 +1,6 @@
 import { check, type CheckOptions } from "../checker.js";
-import logger, { createDebugFile, levels } from "../logger.js";
 import { formatDiagnostic } from "../format-diagnostic.js";
+import logger, { createDebugFile, levels } from "../logger.js";
 import { importConfig, resolveConfigPath } from "./config.js";
 import { Severity } from "@kolint/compiler";
 import yargs from "yargs";
