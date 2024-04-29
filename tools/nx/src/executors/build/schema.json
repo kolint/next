@@ -28,6 +28,13 @@
           "items": {
             "type": "string"
           }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "minProperties": 1
         }
       ]
     },

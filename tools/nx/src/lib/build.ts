@@ -10,7 +10,11 @@ export async function buildPackage({
   tsconfig,
 }: {
   outputPath: string;
-  entry?: string | readonly string[] | undefined;
+  entry?:
+    | string
+    | readonly string[]
+    | Readonly<Record<string, string>>
+    | undefined;
   format?: Format | readonly Format[] | undefined;
   tsconfig?: string | undefined;
   declaration?: boolean | undefined;
@@ -24,7 +28,7 @@ export async function buildPackage({
       build({
         // entry
         ...(entry && {
-          entry: Array.isArray(entry) ? entry : [entry],
+          entry: typeof entry === "object" ? entry : [entry],
         }),
 
         format: format ?? "esm",
