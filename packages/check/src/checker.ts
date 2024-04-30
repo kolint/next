@@ -84,7 +84,7 @@ export class Checker {
     );
 
     await this.compiler.compile(snapshots);
-    const diagnostics = await this.compiler.check(snapshots);
+    let diagnostics = await this.compiler.check(snapshots);
 
     if (this.#options?.severity) {
       for (const diagnostic of diagnostics) {
@@ -120,6 +120,10 @@ export class Checker {
         (a.location?.first_column ?? -1) - (b.location?.first_column ?? -1);
       return byLine || byCol;
     });
+
+    diagnostics = diagnostics.filter(
+      (diagnostic) => diagnostic.severity > Severity.Off,
+    );
 
     return diagnostics;
   }
