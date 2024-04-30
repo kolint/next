@@ -1,5 +1,13 @@
 # @kolint/check
 
+## 0.4.0-beta.7
+
+### Patch Changes
+
+- 2789f26: Supress ignored diagnostics in checker
+- 08dc6f9: Only colorize console when supported (tty)
+- 6fb284e: Log (debug) files resolved by checker
+
 ## 0.4.0-beta.6
 
 ### Minor Changes
