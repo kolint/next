@@ -1,3 +1,4 @@
+import logger from "./logger.js";
 import { Compiler, Severity } from "@kolint/compiler";
 import { ts, getCompilerOptionsFromTsConfig } from "@kolint/ts-utils";
 import { globby } from "globby";
@@ -40,7 +41,7 @@ export class Checker {
         }
       : () => {};
 
-    const snapshots = (
+    const files = (
       await Promise.all(
         paths.map(async (path) => {
           try {
@@ -63,18 +64,24 @@ export class Checker {
                 absolute: true,
               })
             : [path];
-
-          return await Promise.all(
-            files.map(async (file) => {
-              const text = await readFile(file, "utf8");
-              const snapshot = await this.compiler.createSnapshot(file, text);
-              snapshot._legacy!.reporting.registerOutput = registerOutput;
-              return snapshot;
-            }),
-          );
+          return files;
         }),
       )
     ).flat();
+
+    logger.debug(
+      "Checking files:",
+      files.map((file) => `\n  - ${file}`),
+    );
+
+    const snapshots = await Promise.all(
+      files.map(async (file) => {
+        const text = await readFile(file, "utf8");
+        const snapshot = await this.compiler.createSnapshot(file, text);
+        snapshot._legacy!.reporting.registerOutput = registerOutput;
+        return snapshot;
+      }),
+    );
 
     await this.compiler.compile(snapshots);
     const diagnostics = await this.compiler.check(snapshots);
