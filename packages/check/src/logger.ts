@@ -1,3 +1,4 @@
+import { supportsColor } from "chalk";
 import winston from "winston";
 
 export const levels = {
@@ -14,7 +15,7 @@ export default winston.createLogger({
     new winston.transports.Console({
       level: "info",
       format: winston.format.combine(
-        winston.format.colorize(),
+        ...(supportsColor ? [winston.format.colorize()] : []),
         winston.format.simple(),
       ),
     }),
