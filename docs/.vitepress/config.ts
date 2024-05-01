@@ -40,33 +40,28 @@ const config: UserConfig<ThemeConfig> = {
         ],
       },
       {
-        text: "Tools",
+        text: "Linting",
+        collapsed: false,
+        base: "/linting/",
         items: [
-          {
-            text: "Linting",
-            collapsed: false,
-            base: "/linting/",
-            items: [
-              //
-              { text: "Introduction", link: "intro" },
-              { text: "Setup", link: "setup" },
-              { text: "Usage", link: "usage" },
-              { text: "Configuration", link: "config" },
-            ],
-          },
-          {
-            text: "SSR",
-            collapsed: false,
-            base: "/ssr/",
-            items: [
-              //
-              { text: "Introduction", link: "intro" },
-              { text: "Setup", link: "setup" },
-              { text: "Usage", link: "usage" },
-              { text: "Support", link: "support" },
-              { text: "Plugins", link: "plugins" },
-            ],
-          },
+          //
+          { text: "Introduction", link: "intro" },
+          { text: "Getting Started", link: "setup" },
+          { text: "Usage", link: "usage" },
+          { text: "Configuration", link: "config" },
+        ],
+      },
+      {
+        text: "SSR",
+        collapsed: false,
+        base: "/ssr/",
+        items: [
+          //
+          { text: "Introduction", link: "intro" },
+          { text: "Getting Started", link: "setup" },
+          { text: "Usage", link: "usage" },
+          { text: "Support", link: "support" },
+          { text: "Plugins", link: "plugins" },
         ],
       },
       {

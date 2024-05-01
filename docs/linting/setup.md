@@ -1,11 +1,34 @@
 # Installation
 
+The package supports NodeJS compatible runtimes.
+
 ::: warning
-The `@kolint/check` may be renamed in the future.
+The `@kolint/check` is likely to be renamed in the future.
 :::
 
-::: tip NOTE
-Ensure `typescript` is installed as a dependency, as the package relies on it as a [peer dependency](https://nodejs.org/en/blog/npm/peer-dependencies).
+::: code-group
+
+```sh [npm]
+$ npm add -D @kolint/check
+```
+
+```sh [pnpm]
+$ pnpm add -D @kolint/check
+```
+
+```sh [yarn]
+$ yarn add -D @kolint/check
+```
+
+```sh [bun]
+$ bun add -D @kolint/check
+```
+
+:::
+
+## TypeScript
+
+The linter depends on TypeScript as a [peer dependency](https://nodejs.org/en/blog/npm/peer-dependencies); Meaning that you can configure which version of TypeScript to use. Ensure you have it installed.
 
 ::: code-group
 
@@ -27,22 +50,30 @@ $ bun add -D typescript
 
 :::
 
+## Usage
+
+After you have [linked a viewmodel](#viewmodels) to a view, you can lint the file. You can choose to pass a directory or file to `kolint`.
+
+:::tip
+See `kolint --help` for all flags. You can also choose to [create a config file](/linting/config).
+:::
+
 ::: code-group
 
 ```sh [npm]
-$ npm add -D @kolint/check
+$ npx kolint [options] [...paths]
 ```
 
 ```sh [pnpm]
-$ pnpm add -D @kolint/check
+$ pnpm kolint [options] [...paths]
 ```
 
 ```sh [yarn]
-$ yarn add -D @kolint/check
+$ yarn kolint [options] [...paths]
 ```
 
 ```sh [bun]
-$ bun add -D @kolint/check
+$ bun kolint [options] [...paths]
 ```
 
 :::

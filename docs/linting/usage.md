@@ -1,33 +1,5 @@
 # Usage
 
-## Linting
-
-After you have [linked a viewmodel](#viewmodels) to a view, you can lint the file. You can choose to pass a directory or file to `kolint`.
-
-:::tip
-See `kolint --help` for all flags. You can also choose to [create a config file](/linting/config).
-:::
-
-::: code-group
-
-```sh [npm]
-$ npx kolint [options] [...paths]
-```
-
-```sh [pnpm]
-$ pnpm kolint [options] [...paths]
-```
-
-```sh [yarn]
-$ yarn kolint [options] [...paths]
-```
-
-```sh [bun]
-$ bun kolint [options] [...paths]
-```
-
-:::
-
 ## Syntax
 
 :::warning Subject to change!
