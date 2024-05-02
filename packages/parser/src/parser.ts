@@ -17,7 +17,7 @@ import {
   Attribute,
 } from "./syntax-tree.js";
 
-const virtualElementStart = /\s*ko\s+([^\s]+)\s*:([^]*)/;
+const virtualElementStart = /\s*(#?)ko\s+([^\s]+)\s*:([^]*)/;
 const virtualElementEnd = /\s*\/ko\s([^]*)/;
 
 export interface ParseOptions {
@@ -54,9 +54,11 @@ function parseNode(
     }
     case isParse5CommentNode(node): {
       if (virtualElementStart.test(node.data)) {
-        const [binding, param] = virtualElementStart
+        const [prefix, binding, param] = virtualElementStart
           .exec(node.data)!
-          .slice(1) as [string, string];
+          .slice(1) as [string, string, string];
+
+        const hidden = prefix === "#";
 
         let balance = 1;
         const children: parse5TreeAdapter.Node[] = [];
@@ -95,6 +97,7 @@ function parseNode(
         return new VirtualElement(
           binding,
           param,
+          hidden,
           children2,
           new Comment(
             node.data,

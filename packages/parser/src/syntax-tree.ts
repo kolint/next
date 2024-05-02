@@ -47,6 +47,7 @@ export class VirtualElement extends Node {
   constructor(
     public readonly binding: string,
     public readonly param: string,
+    public readonly hidden: boolean,
     public readonly children: readonly Node[],
     public readonly start: Comment,
     public readonly end: Comment,

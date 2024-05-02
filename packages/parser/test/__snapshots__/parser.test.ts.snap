@@ -1,0 +1,184 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parser Deep virtual elements 1`] = `
+Document {
+  "children": [
+    VirtualElement {
+      "binding": "foo",
+      "children": [
+        VirtualElement {
+          "binding": "bar",
+          "children": [],
+          "end": Comment {
+            "content": " /ko ",
+            "range": Range {
+              "end": Position {
+                "column": 52,
+                "line": 0,
+                "offset": 52,
+              },
+              "start": Position {
+                "column": 40,
+                "line": 0,
+                "offset": 40,
+              },
+            },
+          },
+          "hidden": false,
+          "param": " bar ",
+          "range": Range {
+            "end": Position {
+              "column": 52,
+              "line": 0,
+              "offset": 52,
+            },
+            "start": Position {
+              "column": 20,
+              "line": 0,
+              "offset": 20,
+            },
+          },
+          "start": Comment {
+            "content": " ko bar: bar ",
+            "range": Range {
+              "end": Position {
+                "column": 40,
+                "line": 0,
+                "offset": 40,
+              },
+              "start": Position {
+                "column": 20,
+                "line": 0,
+                "offset": 20,
+              },
+            },
+          },
+        },
+      ],
+      "end": Comment {
+        "content": " /ko ",
+        "range": Range {
+          "end": Position {
+            "column": 64,
+            "line": 0,
+            "offset": 64,
+          },
+          "start": Position {
+            "column": 52,
+            "line": 0,
+            "offset": 52,
+          },
+        },
+      },
+      "hidden": false,
+      "param": " foo ",
+      "range": Range {
+        "end": Position {
+          "column": 64,
+          "line": 0,
+          "offset": 64,
+        },
+        "start": Position {
+          "column": 0,
+          "line": 0,
+          "offset": 0,
+        },
+      },
+      "start": Comment {
+        "content": " ko foo: foo ",
+        "range": Range {
+          "end": Position {
+            "column": 20,
+            "line": 0,
+            "offset": 20,
+          },
+          "start": Position {
+            "column": 0,
+            "line": 0,
+            "offset": 0,
+          },
+        },
+      },
+    },
+  ],
+  "range": Range {
+    "end": Position {
+      "column": 0,
+      "line": 0,
+      "offset": 0,
+    },
+    "start": Position {
+      "column": 0,
+      "line": 0,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`parser Hidden virtual element 1`] = `
+Document {
+  "children": [
+    VirtualElement {
+      "binding": "foo",
+      "children": [],
+      "end": Comment {
+        "content": " /ko ",
+        "range": Range {
+          "end": Position {
+            "column": 33,
+            "line": 0,
+            "offset": 33,
+          },
+          "start": Position {
+            "column": 21,
+            "line": 0,
+            "offset": 21,
+          },
+        },
+      },
+      "hidden": true,
+      "param": " foo ",
+      "range": Range {
+        "end": Position {
+          "column": 33,
+          "line": 0,
+          "offset": 33,
+        },
+        "start": Position {
+          "column": 0,
+          "line": 0,
+          "offset": 0,
+        },
+      },
+      "start": Comment {
+        "content": " #ko foo: foo ",
+        "range": Range {
+          "end": Position {
+            "column": 21,
+            "line": 0,
+            "offset": 21,
+          },
+          "start": Position {
+            "column": 0,
+            "line": 0,
+            "offset": 0,
+          },
+        },
+      },
+    },
+  ],
+  "range": Range {
+    "end": Position {
+      "column": 0,
+      "line": 0,
+      "offset": 0,
+    },
+    "start": Position {
+      "column": 0,
+      "line": 0,
+      "offset": 0,
+    },
+  },
+}
+`;
