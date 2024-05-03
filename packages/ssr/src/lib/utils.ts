@@ -84,7 +84,7 @@ export function setStyle(
   property: string,
   value: string | null,
 ) {
-  const attr = element.attributes.find((attr) => attr.name === "style");
+  const attr = element.attributes.find((attr) => attr.name.text === "style");
 
   if (attr) {
     const styles = (inlineStyleParser as any)(attr.value);
@@ -95,12 +95,12 @@ export function setStyle(
           Position.fromLineAndColumn(
             style.position.start.line,
             style.position.start.column,
-            attr.value,
+            attr.value.text,
           ),
           Position.fromLineAndColumn(
             style.position.end.line,
             style.position.end.column,
-            attr.value,
+            attr.value.text,
           ),
         );
         range.translate(
