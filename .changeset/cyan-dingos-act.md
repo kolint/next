@@ -1,5 +1,4 @@
 ---
-"@kolint/legacy-compiler": minor
 "@kolint/compiler": minor
 "@kolint/check": minor
 ---
