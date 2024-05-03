@@ -1,0 +1,19 @@
+{
+  "name": "@kolint/internal",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./loose": {
+      "types": "./loose.d.ts"
+    },
+    "./strict": {
+      "types": "./strict.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "knockout": "^3.5.1"
+  }
+}

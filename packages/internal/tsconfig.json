@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "Preserve",
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "types": [],
+    "skipLibCheck": false,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["lib"]
+}
