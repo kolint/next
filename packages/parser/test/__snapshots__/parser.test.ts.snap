@@ -4,10 +4,40 @@ exports[`parser Deep virtual elements 1`] = `
 Document {
   "children": [
     VirtualElement {
-      "binding": "foo",
+      "binding": Binding {
+        "name": "foo",
+        "param": " foo ",
+        "range": Range {
+          "end": Position {
+            "column": 20,
+            "line": 0,
+            "offset": 20,
+          },
+          "start": Position {
+            "column": 0,
+            "line": 0,
+            "offset": 0,
+          },
+        },
+      },
       "children": [
         VirtualElement {
-          "binding": "bar",
+          "binding": Binding {
+            "name": "bar",
+            "param": " bar ",
+            "range": Range {
+              "end": Position {
+                "column": 40,
+                "line": 0,
+                "offset": 40,
+              },
+              "start": Position {
+                "column": 20,
+                "line": 0,
+                "offset": 20,
+              },
+            },
+          },
           "children": [],
           "end": Comment {
             "content": " /ko ",
@@ -25,7 +55,6 @@ Document {
             },
           },
           "hidden": false,
-          "param": " bar ",
           "range": Range {
             "end": Position {
               "column": 52,
@@ -71,7 +100,6 @@ Document {
         },
       },
       "hidden": false,
-      "param": " foo ",
       "range": Range {
         "end": Position {
           "column": 64,
@@ -120,7 +148,22 @@ exports[`parser Hidden virtual element 1`] = `
 Document {
   "children": [
     VirtualElement {
-      "binding": "foo",
+      "binding": Binding {
+        "name": "foo",
+        "param": " foo ",
+        "range": Range {
+          "end": Position {
+            "column": 21,
+            "line": 0,
+            "offset": 21,
+          },
+          "start": Position {
+            "column": 0,
+            "line": 0,
+            "offset": 0,
+          },
+        },
+      },
       "children": [],
       "end": Comment {
         "content": " /ko ",
@@ -138,7 +181,6 @@ Document {
         },
       },
       "hidden": true,
-      "param": " foo ",
       "range": Range {
         "end": Position {
           "column": 33,
@@ -166,6 +208,79 @@ Document {
           },
         },
       },
+    },
+  ],
+  "range": Range {
+    "end": Position {
+      "column": 0,
+      "line": 0,
+      "offset": 0,
+    },
+    "start": Position {
+      "column": 0,
+      "line": 0,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`parser Element bindings 1`] = `
+Document {
+  "children": [
+    Element {
+      "attributes": [
+        Attribute {
+          "name": "data-bind",
+          "namespace": undefined,
+          "prefix": undefined,
+          "range": Range {
+            "end": Position {
+              "column": 23,
+              "line": 0,
+              "offset": 23,
+            },
+            "start": Position {
+              "column": 5,
+              "line": 0,
+              "offset": 5,
+            },
+          },
+          "value": "0: bar",
+        },
+      ],
+      "bindings": [
+        Binding {
+          "name": "0",
+          "param": "bar",
+          "range": Range {
+            "end": Position {
+              "column": 22,
+              "line": 0,
+              "offset": 22,
+            },
+            "start": Position {
+              "column": 16,
+              "line": 0,
+              "offset": 16,
+            },
+          },
+        },
+      ],
+      "children": [],
+      "range": Range {
+        "end": Position {
+          "column": 30,
+          "line": 0,
+          "offset": 30,
+        },
+        "start": Position {
+          "column": 0,
+          "line": 0,
+          "offset": 0,
+        },
+      },
+      "tagName": "div",
     },
   ],
   "range": Range {

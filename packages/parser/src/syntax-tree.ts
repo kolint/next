@@ -22,12 +22,29 @@ export class Comment extends Node {
   }
 }
 
+export class Scope {
+  constructor(
+    public readonly text: string,
+    public readonly range: Range,
+  ) {}
+}
+
 export class Attribute {
   constructor(
-    public readonly name: string,
-    public readonly value: string,
+    public readonly name: Scope,
+    public readonly value: Scope,
     public readonly namespace: string | undefined,
     public readonly prefix: string | undefined,
+    public readonly quote: "'" | '"' | null,
+    public readonly range: Range,
+  ) {}
+}
+
+export class Binding {
+  constructor(
+    public readonly name: Scope,
+    public readonly param: Scope,
+    public readonly parent: Attribute | VirtualElement,
     public readonly range: Range,
   ) {}
 }
@@ -36,6 +53,7 @@ export class Element extends Node {
   constructor(
     public readonly tagName: string,
     public readonly attributes: readonly Attribute[],
+    public readonly bindings: readonly Binding[],
     public readonly children: readonly Node[],
     range: Range,
   ) {
@@ -45,8 +63,7 @@ export class Element extends Node {
 
 export class VirtualElement extends Node {
   constructor(
-    public readonly binding: string,
-    public readonly param: string,
+    public readonly binding: Binding,
     public readonly hidden: boolean,
     public readonly children: readonly Node[],
     public readonly start: Comment,

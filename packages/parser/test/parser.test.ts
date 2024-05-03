@@ -17,4 +17,9 @@ describe("parser", () => {
     assert(document.children[0] instanceof VirtualElement);
     expect(document.children[0].hidden).toBe(true);
   });
+
+  test("Element bindings", () => {
+    const document = parse("<div data-bind='0: bar'></div>");
+    expect(document).toMatchSnapshot();
+  });
 });
