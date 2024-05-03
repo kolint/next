@@ -4,9 +4,14 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@kolint/legacy-compiler": "workspace:~",
+    "@kolint/parser": "workspace:~",
     "@kolint/ts-utils": "workspace:~",
-    "source-map": "^0.7.4"
+    "dedent": "^1.5.3",
+    "source-map": "^0.7.4",
+    "ts-morph": "^22.0.0"
+  },
+  "peerDependencies": {
+    "@kolint/internal": "workspace:~"
   },
   "engines": {
     "node": ">=20.0.0"
