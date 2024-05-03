@@ -36,8 +36,8 @@ const executor: Executor<BunTestExecutorSchema> = (options, context) =>
           ...(options.rerunEach !== undefined
             ? [`--rerun-each=${options.rerunEach}`]
             : []),
-          ...(options.only ? ["--only="] : []),
-          ...(options.todo ? ["--todo="] : []),
+          ...(options.only ? ["--only"] : []),
+          ...(options.todo ? ["--todo"] : []),
           ...(options.coverage ? ["--coverage"] : []),
           ...(options.bail === true
             ? [`--bail`]
