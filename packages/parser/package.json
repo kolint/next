@@ -4,8 +4,8 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "parse5": "^7.1.2",
-    "acorn": "^8.11.3"
+    "acorn": "^8.11.3",
+    "parse5": "^7.1.2"
   },
   "publishConfig": {
     "access": "public"
