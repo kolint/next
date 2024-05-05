@@ -1,4 +1,13 @@
+import { Snapshot } from "@kolint/analyzer";
+import {
+  defaultConfig,
+  discoverConfigFile,
+  readConfigFile,
+} from "@kolint/config";
+import { Transpiler } from "@kolint/typescript";
 import { fileURLToPath } from "node:url";
+import { type LanguageService, type SourceFile } from "ts-morph";
+import * as ts from "typescript/lib/tsserverlibrary.js";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import {
   type Connection,
@@ -6,13 +15,124 @@ import {
   ProposedFeatures,
   TextDocuments,
   TextDocumentSyncKind,
-  type Diagnostic,
-  Range,
-  Position,
 } from "vscode-languageserver/node.js";
+
+const UPDATE_DEBOUNCE = 1000;
 
 export interface LanguageServerOptions {
   connection?: Connection;
+}
+
+class SharedResourcesProvider {
+  async getConfig(path: string) {
+    const koConfigFilePath = await discoverConfigFile(path);
+    const koConfig = koConfigFilePath
+      ? await readConfigFile(koConfigFilePath)
+      : defaultConfig;
+    return koConfig;
+  }
+
+  getTranspiler(path: string) {
+    const tsConfigFilePath = ts.findConfigFile(path, ts.sys.fileExists);
+
+    const transpiler = new Transpiler({
+      tsConfig: tsConfigFilePath,
+    });
+
+    return transpiler;
+  }
+}
+
+interface DocumentState {
+  snapshot: Snapshot;
+  sourceFile: SourceFile;
+  service: LanguageService;
+  document: TextDocument;
+}
+
+interface DocumentStateProvider {
+  getState(): Promise<DocumentState>;
+  onChange(): void;
+  dispose(): void;
+}
+
+async function updateDocumentState(
+  provider: SharedResourcesProvider,
+  document: TextDocument,
+): Promise<DocumentState> {
+  const path = fileURLToPath(document.uri);
+  const original = document.getText();
+
+  const config = await provider.getConfig(path);
+
+  const transpiler = provider.getTranspiler(path);
+  const { generated, sourceMap, sourceFile } = transpiler.transpile(
+    path,
+    original,
+    config.analyzer.mode,
+  );
+
+  const snapshot = await new Snapshot({
+    fileName: path,
+    original,
+    generated,
+    sourceMap,
+  });
+
+  const project = sourceFile.getProject();
+  const service = project.getLanguageService();
+
+  return {
+    document,
+    snapshot,
+    sourceFile,
+    service,
+  };
+}
+
+function createDocumentStateProvider(
+  provider: SharedResourcesProvider,
+  document: TextDocument,
+): DocumentStateProvider {
+  let statePromise = updateDocumentState(provider, document);
+
+  const onChange = createDebounce(() => {
+    statePromise = updateDocumentState(provider, document);
+  }, UPDATE_DEBOUNCE);
+
+  const documentStateProvider: DocumentStateProvider = {
+    getState: () => {
+      return statePromise;
+    },
+
+    onChange,
+
+    dispose: () => {
+      onChange.cancel();
+    },
+  };
+
+  return documentStateProvider;
+}
+
+interface Debounce {
+  (): void;
+  cancel(): void;
+}
+
+function createDebounce(callback: () => void, timeout: number): Debounce {
+  let id: ReturnType<typeof setTimeout> | undefined;
+  const cancel = () => clearTimeout(id);
+
+  return Object.assign(
+    () => {
+      cancel();
+      id = setTimeout(callback, timeout);
+    },
+    {
+      cancel,
+    },
+  );
 }
 
 export function startLanguageServer(options?: LanguageServerOptions) {
@@ -20,67 +140,44 @@ export function startLanguageServer(options?: LanguageServerOptions) {
     options?.connection ?? createConnection(ProposedFeatures.all);
   const documents = new TextDocuments(TextDocument);
 
-  const snapshots = new WeakMap<TextDocument, Snapshot>();
+  const sharedResourcesProvider = new SharedResourcesProvider();
+  const snapshotProviderMap = new WeakMap<
+    TextDocument,
+    DocumentStateProvider
+  >();
+
+  // const getDocumentState = (documentId: TextDocumentIdentifier) => {
+  //   const document = documents.get(documentId.uri)!;
+  //   const provider = createDocumentStateProvider(
+  //     sharedResourcesProvider,
+  //     document,
+  //   );
+  //   return provider.getState();
+  // };
 
   documents.onDidOpen(async (event) => {
-    await refreshDocument(event.document);
+    const provider = createDocumentStateProvider(
+      sharedResourcesProvider,
+      event.document,
+    );
+    snapshotProviderMap.set(event.document, provider);
   });
 
   documents.onDidChangeContent(async (event) => {
-    await refreshDocument(event.document);
+    const provider = snapshotProviderMap.get(event.document);
+    provider?.onChange();
   });
 
   documents.onDidClose((event) => {
-    snapshots.delete(event.document);
+    const provider = snapshotProviderMap.get(event.document);
+    provider?.dispose();
+    snapshotProviderMap.delete(event.document);
   });
 
-  async function refreshDocument(document: TextDocument) {
-    let snapshot = snapshots.get(document);
-    if (!snapshot) {
-      const path = fileURLToPath(document.uri);
-
-      // create compiler
-      const tsConfigFilePath = findTsConfigFilePath(path);
-      const compilerOptions = tsConfigFilePath
-        ? getCompilerOptionsFromTsConfig(tsConfigFilePath).options
-        : ts.getDefaultCompilerOptions();
-      const compiler = new Compiler(compilerOptions);
-
-      // create snapshot
-      snapshot = await compiler.createSnapshot(path, document.getText());
-      snapshots.set(document, snapshot);
-    }
-    const diagnostics = await snapshot.compiler.check(snapshot);
-
-    connection.sendDiagnostics({
-      uri: document.uri,
-      diagnostics: diagnostics.map(
-        (diagnostics): Diagnostic => ({
-          message: diagnostics.message,
-          range: diagnostics.location
-            ? Range.create(
-                Position.create(
-                  diagnostics.location.first_line,
-                  diagnostics.location.first_column,
-                ),
-                Position.create(
-                  diagnostics.location.last_line,
-                  diagnostics.location.last_column,
-                ),
-              )
-            : Range.create(Position.create(1, 1), Position.create(1, 2)),
-        }),
-      ),
-    });
-  }
-
   connection.onInitialize(() => {
-    connection.console.log("onInitialize");
-
     return {
       capabilities: {
         textDocumentSync: TextDocumentSyncKind.Incremental,
-        hoverProvider: true,
       },
     };
   });

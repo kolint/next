@@ -1,14 +1,6 @@
 import { globby } from "globby";
 import { access, stat } from "node:fs/promises";
 
-const DEFAULT_EXCLUDE = [
-  "**/node_modules/**",
-  "**/web_modules/**",
-  "**/bower_components/**",
-  "**/.DS_Store/**",
-  "**/.git/**",
-];
-
 export interface ResolveFilesOptions {
   include?: string | readonly string[];
   exclude?: string | readonly string[];
@@ -36,7 +28,11 @@ export async function resolveFiles(
         const files = stats.isDirectory()
           ? await globby(options?.include ?? "**/*.html", {
               dot: true,
-              ignore: [...DEFAULT_EXCLUDE, ...(options?.exclude ?? [])],
+              ignore: Array.isArray(options?.exclude)
+                ? options.exclude.slice()
+                : options?.exclude
+                  ? [options.exclude]
+                  : undefined,
               cwd: arg,
               absolute: true,
             })

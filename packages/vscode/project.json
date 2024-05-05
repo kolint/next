@@ -24,7 +24,9 @@
         },
         "assets": ["{projectRoot}/README.md", "{workspaceRoot}/LICENSE"],
         "outputPath": "{projectRoot}/dist"
-      }
+      },
+      "cache": true,
+      "outputs": ["{projectRoot}/dist"]
     },
     "build": {
       "dependsOn": ["build-base"],

@@ -19,6 +19,7 @@
   },
   "peerDependencies": {
     "@kolint/analyzer": "workspace:^",
+    "@kolint/config": "workspace:^",
     "@kolint/ssr": "workspace:^",
     "@kolint/typescript": "workspace:^"
   },

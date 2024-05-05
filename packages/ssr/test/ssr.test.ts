@@ -92,7 +92,7 @@ describe("server-side rendering", () => {
         if (inner.isEmpty) {
           generated.appendLeft(inner.start.offset, asHtml);
         } else {
-          generated.update(...inner.offset, asHtml);
+          generated.update(...inner.offsets, asHtml);
         }
       },
     };

@@ -1,5 +1,9 @@
 import type { AnalyzerIssue } from "./issue.js";
-import type { AnalyzerPlugin, AnalyzeContext } from "./plugin.js";
+import type {
+  AnalyzerPlugin,
+  AnalyzeContext,
+  AnalyzerSnapshots,
+} from "./plugin.js";
 import standard from "./standard/plugin.js";
 import { parse } from "@kolint/parser";
 
@@ -8,7 +12,11 @@ export interface AnalyzerOptions {
   attributes?: readonly string[];
 }
 
-export default class Analyzer {
+export interface AnalyzeCache {
+  snapshots?: Partial<AnalyzerSnapshots>;
+}
+
+export class Analyzer {
   #plugins = new Set<AnalyzerPlugin>();
   #attributes: readonly string[];
 
@@ -41,7 +49,11 @@ export default class Analyzer {
     }
   }
 
-  async analyze(fileName: string, text: string): Promise<AnalyzerIssue[]> {
+  async analyze(
+    fileName: string,
+    text: string,
+    cache?: AnalyzeCache,
+  ): Promise<AnalyzerIssue[]> {
     const issues: AnalyzerIssue[] = [];
 
     const document = parse(text, {
@@ -54,6 +66,7 @@ export default class Analyzer {
       document,
       snapshots: {
         javascript: undefined!,
+        ...cache?.snapshots,
       },
       report(issue) {
         issues.push(issue);

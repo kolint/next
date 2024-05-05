@@ -265,3 +265,7 @@ export function extractIntoTemplate(binding: Binding, generated: MagicString) {
 export function unwrap<T>(value: ko.MaybeSubscribable<T>): T {
   return ko.unwrap(value);
 }
+
+export function invertQuote(quote: '"' | "'"): '"' | "'" {
+  return quote === '"' ? "'" : '"';
+}

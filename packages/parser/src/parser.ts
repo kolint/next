@@ -294,11 +294,6 @@ class Parser {
                 throw new Error("Unsupported property key in binding.");
               }
 
-              const param = expressionText.slice(
-                translate(prop.value.range![0]),
-                translate(prop.value.range![1]),
-              );
-
               return new Binding(
                 new Scope(
                   name,
@@ -314,7 +309,7 @@ class Parser {
                   ),
                 ),
                 new Scope(
-                  param,
+                  expressionText.slice(...prop.value.range!),
                   new Range(
                     Position.fromOffset(
                       translate(prop.value.range![0]),

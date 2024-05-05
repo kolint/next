@@ -51,7 +51,7 @@ export const Snapshot: SnapshotConstructor = class Snapshot {
       return null;
     }
     return Position.fromLineAndColumn(
-      sourceMapPosition.line,
+      sourceMapPosition.line - 1,
       sourceMapPosition.column,
       this.original,
     );
@@ -67,9 +67,9 @@ export const Snapshot: SnapshotConstructor = class Snapshot {
       return null;
     }
     return Position.fromLineAndColumn(
-      sourceMapPosition.line,
+      sourceMapPosition.line - 1,
       sourceMapPosition.column,
-      this.original,
+      this.generated,
     );
   }
 } as unknown as SnapshotConstructor;

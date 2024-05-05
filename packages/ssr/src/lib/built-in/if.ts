@@ -25,7 +25,7 @@ function createIfPlugin(filter: Plugin["filter"], test: boolean): Plugin {
         const q = binding.quote;
         generated.overwrite(
           ...binding.range.offsets,
-          `_ssr_if: { ${tmpl ? `template: ${q}${tmpl}${q},` : ""}value: ${
+          `_ssr_if: { ${tmpl ? `template: ${q}${tmpl}${q}, ` : ""}value: ${
             binding.expression
           } }`,
         );

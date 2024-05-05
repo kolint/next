@@ -7,25 +7,26 @@ export default class Position {
     const nl = detectNewline(text);
 
     let line = 0,
-      column = 0;
+      column = 0,
+      i = offset;
 
     if (nl) {
       for (const s of text.split(nl)) {
-        if (offset - s.length <= 0) {
-          column = offset;
-          offset = 0;
+        if (i - s.length <= 0) {
+          column = i;
+          i = 0;
           break;
         } else {
           ++line;
-          offset -= s.length + nl.length;
+          i -= s.length + nl.length;
         }
       }
 
-      if (offset > 0) {
+      if (i > 0) {
         throw new Error(`Offset is out of bounds.`);
       }
     } else {
-      column = offset;
+      column = i;
     }
 
     return new Position(line, column, offset);

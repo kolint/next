@@ -1,14 +1,7 @@
 import { type AnalyzerPlugin } from "../plugin.js";
 import { Snapshot } from "../snapshot.js";
-import type { Rule } from "./rule.js";
+import rules from "./rules.js";
 import { transpile } from "./transpile.js";
-
-const modules: {
-  default: Rule;
-}[] = [
-  //
-  await import("./rules/virtual-element-end-notation.js"),
-];
 
 export default function (): AnalyzerPlugin {
   return {
@@ -28,8 +21,8 @@ export default function (): AnalyzerPlugin {
         process.stderr.write(snapshot.generated + "\n");
       }
 
-      for (const module of modules) {
-        module.default.check(c);
+      for (const module of rules) {
+        module.check(c);
       }
     },
   };

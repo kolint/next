@@ -143,9 +143,6 @@ importers:
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
-      globby:
-        specifier: ^14.0.1
-        version: 14.0.1
       source-map:
         specifier: ~0.7.4
         version: 0.7.4
@@ -161,6 +158,9 @@ importers:
       '@kolint/analyzer':
         specifier: workspace:^
         version: link:../analyzer
+      '@kolint/config':
+        specifier: workspace:^
+        version: link:../config
       '@kolint/ssr':
         specifier: workspace:^
         version: link:../ssr
@@ -189,6 +189,12 @@ importers:
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.32
+
+  packages/config:
+    dependencies:
+      '@kolint/analyzer':
+        specifier: workspace:~
+        version: link:../analyzer
 
   packages/eslint:
     dependencies:
@@ -220,15 +226,31 @@ importers:
       '@kolint/analyzer':
         specifier: workspace:~
         version: link:../analyzer
-      source-map:
-        specifier: ^0.7.4
-        version: 0.7.4
+      '@kolint/config':
+        specifier: workspace:~
+        version: link:../config
+      '@kolint/location':
+        specifier: workspace:~
+        version: link:../location
+      '@kolint/typescript':
+        specifier: workspace:~
+        version: link:../typescript
+      minimatch:
+        specifier: ^9.0.4
+        version: 9.0.4
+      ts-morph:
+        specifier: ^22.0.0
+        version: 22.0.0
       vscode-languageserver:
         specifier: ^9.0.1
         version: 9.0.1
       vscode-languageserver-textdocument:
         specifier: ^1.0.11
         version: 1.0.11
+    devDependencies:
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
 
   packages/location:
     dependencies:
@@ -404,17 +426,7 @@ importers:
         specifier: ^2.3.9
         version: 2.3.9
 
-  samples/config:
-    dependencies:
-      knockout:
-        specifier: ^3.5.1
-        version: 3.5.1
-    devDependencies:
-      '@kolint/analyzer':
-        specifier: workspace:*
-        version: link:../../packages/analyzer
-
-  samples/simple:
+  samples/analyzer:
     devDependencies:
       '@kolint/cli':
         specifier: workspace:^

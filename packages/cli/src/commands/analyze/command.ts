@@ -1,10 +1,5 @@
 import command from "../../command.js";
 import logger from "../../logger.js";
-import {
-  getConfigResolution,
-  importConfig,
-  resolveConfigPath,
-} from "./config.js";
 import { formatIssue } from "./format.js";
 import { resolveFiles } from "./resolve-files.js";
 import {
@@ -13,6 +8,7 @@ import {
   type AnalyzerSeverity,
   type AnalyzerPlugin,
 } from "@kolint/analyzer";
+import { findConfigFile, readConfigFile, defaultConfig } from "@kolint/config";
 import { readFile } from "node:fs/promises";
 
 export default command({
@@ -32,17 +28,49 @@ export default command({
         },
       }),
   handler: async (args) => {
-    // Resolve config
-    const configPath = await resolveConfigPath(
-      getConfigResolution(args.config),
-    );
-    const config = configPath ? await importConfig(configPath) : null;
+    let configResolution: "force" | "auto" | "disabled";
+    let configFileName: string | undefined;
+
+    switch (args.config) {
+      case undefined:
+        configResolution = "auto";
+        break;
+
+      case true:
+      case "true":
+        configResolution = "force";
+        break;
+
+      case false:
+      case "false":
+        configResolution = "disabled";
+        break;
+
+      default:
+        configResolution = "force";
+        configFileName = String(args.config);
+        break;
+    }
+
+    let config = defaultConfig;
+
+    if (configResolution !== "disabled") {
+      const configFilePath = await findConfigFile(".", configFileName);
+
+      if (configFilePath) {
+        config = await readConfigFile(configFilePath);
+      } else if (configResolution === "force") {
+        logger.error("Could not find config file.");
+        process.exit(1);
+      }
+    }
+
     logger.debug("Config:", config);
 
     // Setup analyzer
     const options: AnalyzerOptions = {
-      attributes: config?.attributes,
-      plugins: (await Promise.all(config?.plugins ?? [])).filter(
+      attributes: config.attributes,
+      plugins: (await Promise.all(config.analyzer.plugins)).filter(
         (value): value is AnalyzerPlugin => !!value,
       ),
     };
@@ -70,8 +98,8 @@ export default command({
       process.exit(1);
     }
     const files = await resolveFiles(args.entries, {
-      include: config?.include,
-      exclude: config?.exclude,
+      include: config.analyzer.include,
+      exclude: config.analyzer.exclude,
     });
     logger.debug("Files:", files);
 
@@ -84,7 +112,7 @@ export default command({
 
       // Report issues
       for (const issue of issues) {
-        const setting = config?.rules?.[issue.name] ?? "on";
+        const setting = config.analyzer.rules[issue.name] ?? "on";
         if (setting === "off") continue;
 
         // Update issue severity

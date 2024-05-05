@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/analyzer/tsconfig.json" },
     { "path": "packages/cli/tsconfig.json" },
+    { "path": "packages/config/tsconfig.json" },
     { "path": "packages/eslint/tsconfig.json" },
     { "path": "packages/fabricator/tsconfig.json" },
     { "path": "packages/language-server/tsconfig.json" },

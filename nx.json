@@ -24,6 +24,9 @@
       "executor": "@kolint-dev/nx:test",
       "cache": true
     },
+    "e2e": {
+      "cache": true
+    },
     "lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
       "executor": "@nx/eslint:lint",

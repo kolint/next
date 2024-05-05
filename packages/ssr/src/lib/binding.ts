@@ -1,4 +1,5 @@
 import { transform } from "./eval.js";
+import { invertQuote } from "./utils.js";
 import type { Range } from "@kolint/location";
 import {
   type Attribute,
@@ -26,13 +27,13 @@ export function parseBindings(node: Element | VirtualElement) {
 
 function parseFromElement(node: Element) {
   return node.bindings.map((binding) => {
-    const quote = (binding.parent as Attribute).quote ?? '"';
+    const quote = invertQuote((binding.parent as Attribute).quote ?? '"');
     return new Binding(
       binding.name.text,
       transform(binding.param.text, quote),
       quote,
       node,
-      node.range,
+      binding.range,
     );
   });
 }

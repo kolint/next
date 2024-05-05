@@ -15,9 +15,16 @@
   "exports": "./src/index.ts",
   "dependencies": {
     "@kolint/analyzer": "workspace:~",
-    "source-map": "^0.7.4",
+    "@kolint/config": "workspace:~",
+    "@kolint/location": "workspace:~",
+    "@kolint/typescript": "workspace:~",
+    "minimatch": "^9.0.4",
+    "ts-morph": "^22.0.0",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=20.0.0"
