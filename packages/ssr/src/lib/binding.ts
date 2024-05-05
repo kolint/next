@@ -1,10 +1,10 @@
 import { transform } from "./eval.js";
+import type { Range } from "@kolint/location";
 import {
   type Attribute,
   Element,
-  type Range,
   type VirtualElement,
-} from "@kolint/parser";
+} from "@kolint/syntax-tree";
 
 export class Binding {
   constructor(

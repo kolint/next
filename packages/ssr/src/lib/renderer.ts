@@ -12,16 +12,18 @@ import {
 import { evaluateBinding, evaluateInlineData } from "./eval.js";
 import type { Plugin, Self, Sibling } from "./plugin.js";
 import { getInnerRange } from "./utils.js";
+import { type Range } from "@kolint/location";
 import {
-  Element,
-  type ParentNode,
-  type Range,
-  VirtualElement,
-  isParentNode,
   parse,
   formatParse5Error,
   parse5LocationToRange,
 } from "@kolint/parser";
+import {
+  Element,
+  type ParentNode,
+  VirtualElement,
+  isParentNode,
+} from "@kolint/syntax-tree";
 import { resolve as importMetaResolve } from "import-meta-resolve";
 import ko from "knockout";
 import MagicString from "magic-string";
@@ -543,7 +545,7 @@ class Renderer {
             const clone = document.clone();
             this.renderDecendants(node, childContext, clone);
             const inner = getInnerRange(node, clone.original);
-            return clone.slice(...inner.offset);
+            return clone.slice(...inner.offsets);
           },
         });
       } catch (cause) {

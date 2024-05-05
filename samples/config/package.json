@@ -7,6 +7,6 @@
     "knockout": "^3.5.1"
   },
   "devDependencies": {
-    "@kolint/check": "workspace:*"
+    "@kolint/analyzer": "workspace:*"
   }
 }

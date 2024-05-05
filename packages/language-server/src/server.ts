@@ -1,9 +1,3 @@
-import { Compiler, type Snapshot } from "@kolint/compiler";
-import {
-  ts,
-  getCompilerOptionsFromTsConfig,
-  findTsConfigFilePath,
-} from "@kolint/ts-utils";
 import { fileURLToPath } from "node:url";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import {

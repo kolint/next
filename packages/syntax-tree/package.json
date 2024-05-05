@@ -1,0 +1,12 @@
+{
+  "name": "@kolint/syntax-tree",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@kolint/location": "workspace:^"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

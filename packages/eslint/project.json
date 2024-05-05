@@ -1,0 +1,24 @@
+{
+  "name": "@kolint/eslint",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "targets": {
+    "build": {
+      "options": {
+        "entry": {
+          "index": "{projectRoot}/src/index.ts",
+          "analyzer": "{projectRoot}/src/analyzer.ts"
+        },
+        "package": {
+          "exports": {
+            ".": "./index.js",
+            "./analyzer": "./analyzer.js"
+          }
+        }
+      }
+    },
+    "test": {},
+    "lint": {}
+  }
+}

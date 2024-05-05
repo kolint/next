@@ -12,6 +12,7 @@
     "checks": "tools/scripts/checks",
     "docs": "vitepress dev docs",
     "format": "prettier --write .",
+    "generate": "nx g @kolint-dev/nx:package",
     "postinstall": "tools/scripts/prepare",
     "lint": "eslint .",
     "release": "tools/scripts/release",

@@ -123,14 +123,20 @@ importers:
         specifier: ^3.4.23
         version: 3.4.23(typescript@5.4.5)
 
-  packages/check:
+  packages/analyzer:
     dependencies:
-      '@kolint/compiler':
-        specifier: workspace:~
-        version: link:../compiler
-      '@kolint/ts-utils':
-        specifier: workspace:~
-        version: link:../ts-utils
+      '@kolint/fabricator':
+        specifier: workspace:^
+        version: link:../fabricator
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
+      '@kolint/parser':
+        specifier: workspace:^
+        version: link:../parser
+      '@kolint/syntax-tree':
+        specifier: workspace:^
+        version: link:../syntax-tree
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.32
@@ -140,6 +146,39 @@ importers:
       globby:
         specifier: ^14.0.1
         version: 14.0.1
+      source-map:
+        specifier: ~0.7.4
+        version: 0.7.4
+      winston:
+        specifier: ^3.13.0
+        version: 3.13.0
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
+
+  packages/cli:
+    dependencies:
+      '@kolint/analyzer':
+        specifier: workspace:^
+        version: link:../analyzer
+      '@kolint/ssr':
+        specifier: workspace:^
+        version: link:../ssr
+      '@kolint/typescript':
+        specifier: workspace:^
+        version: link:../typescript
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      globby:
+        specifier: ^14.0.1
+        version: 14.0.1
+      import-meta-resolve:
+        specifier: ^4.0.0
+        version: 4.0.0
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
       winston:
         specifier: ^3.13.0
         version: 3.13.0
@@ -147,48 +186,40 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
     devDependencies:
-      knockout:
-        specifier: ^3.5.1
-        version: 3.5.1
-      source-map:
-        specifier: ^0.7.4
-        version: 0.7.4
+      '@types/yargs':
+        specifier: ^17.0.32
+        version: 17.0.32
 
-  packages/compiler:
+  packages/eslint:
     dependencies:
-      '@kolint/internal':
-        specifier: workspace:~
-        version: link:../internal
-      '@kolint/parser':
-        specifier: workspace:~
-        version: link:../parser
-      '@kolint/ts-utils':
-        specifier: workspace:~
-        version: link:../ts-utils
-      dedent:
-        specifier: ^1.5.3
-        version: 1.5.3(babel-plugin-macros@2.8.0)
-      source-map:
-        specifier: ^0.7.4
-        version: 0.7.4
-      ts-morph:
-        specifier: ^22.0.0
-        version: 22.0.0
+      '@kolint/analyzer':
+        specifier: workspace:^
+        version: link:../analyzer
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
+      eslint:
+        specifier: ^9.2.0
+        version: 9.2.0
+    devDependencies:
+      '@kolint/typescript':
+        specifier: workspace:^
+        version: link:../typescript
 
-  packages/internal:
+  packages/fabricator:
     dependencies:
-      knockout:
-        specifier: ^3.5.1
-        version: 3.5.1
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
+      source-map:
+        specifier: ~0.7.4
+        version: 0.7.4
 
   packages/language-server:
     dependencies:
-      '@kolint/compiler':
+      '@kolint/analyzer':
         specifier: workspace:~
-        version: link:../compiler
-      '@kolint/ts-utils':
-        specifier: workspace:~
-        version: link:../ts-utils
+        version: link:../analyzer
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
@@ -199,8 +230,20 @@ importers:
         specifier: ^1.0.11
         version: 1.0.11
 
+  packages/location:
+    dependencies:
+      detect-newline:
+        specifier: ^4.0.1
+        version: 4.0.1
+
   packages/parser:
     dependencies:
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
+      '@kolint/syntax-tree':
+        specifier: workspace:^
+        version: link:../syntax-tree
       acorn:
         specifier: ^8.11.3
         version: 8.11.3
@@ -210,9 +253,15 @@ importers:
 
   packages/ssr:
     dependencies:
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
       '@kolint/parser':
-        specifier: workspace:~
+        specifier: workspace:^
         version: link:../parser
+      '@kolint/syntax-tree':
+        specifier: workspace:^
+        version: link:../syntax-tree
       '@rollup/pluginutils':
         specifier: ^5.1.0
         version: 5.1.0(rollup@4.14.3)
@@ -234,15 +283,9 @@ importers:
       magic-string:
         specifier: ^0.30.9
         version: 0.30.9
-      prettier:
-        specifier: ^3.2.5
-        version: 3.2.5
       schema-utils:
         specifier: ^4.2.0
         version: 4.2.0
-      yargs:
-        specifier: ^17.7.2
-        version: 17.7.2
     devDependencies:
       '@types/is-ci':
         specifier: ^3.0.4
@@ -250,9 +293,6 @@ importers:
       '@types/loader-utils':
         specifier: ^2.0.6
         version: 2.0.6
-      '@types/yargs':
-        specifier: ^17.0.32
-        version: 17.0.32
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -296,11 +336,39 @@ importers:
         specifier: ^5.91.0
         version: 5.91.0(@swc/core@1.4.15)(esbuild@0.19.12)
 
-  packages/ts-utils:
+  packages/syntax-tree:
     dependencies:
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
+
+  packages/typescript:
+    dependencies:
+      '@kolint/analyzer':
+        specifier: workspace:^
+        version: link:../analyzer
+      '@kolint/fabricator':
+        specifier: workspace:^
+        version: link:../fabricator
+      '@kolint/location':
+        specifier: workspace:^
+        version: link:../location
+      '@kolint/syntax-tree':
+        specifier: workspace:^
+        version: link:../syntax-tree
+      source-map:
+        specifier: ~0.7.4
+        version: 0.7.4
+      ts-morph:
+        specifier: ^22.0.0
+        version: 22.0.0
+    devDependencies:
+      '@kolint/parser':
+        specifier: workspace:^
+        version: link:../parser
+      knockout:
+        specifier: 3.5.1
+        version: 3.5.1
 
   packages/vscode:
     dependencies:
@@ -325,10 +393,10 @@ importers:
         version: 1.88.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.7.0
-        version: 7.7.0(@typescript-eslint/parser@7.7.0(eslint@9.0.0)(typescript@5.4.5))(eslint@9.0.0)(typescript@5.4.5)
+        version: 7.7.0(@typescript-eslint/parser@7.7.0(eslint@9.2.0)(typescript@5.4.5))(eslint@9.2.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
         specifier: ^7.7.0
-        version: 7.7.0(eslint@9.0.0)(typescript@5.4.5)
+        version: 7.7.0(eslint@9.2.0)(typescript@5.4.5)
       '@vscode/test-cli':
         specifier: ^0.0.9
         version: 0.0.9
@@ -342,15 +410,18 @@ importers:
         specifier: ^3.5.1
         version: 3.5.1
     devDependencies:
-      '@kolint/check':
+      '@kolint/analyzer':
         specifier: workspace:*
-        version: link:../../packages/check
+        version: link:../../packages/analyzer
 
-  samples/new:
-    dependencies:
-      '@kolint/internal':
-        specifier: workspace:*
-        version: link:../../packages/internal
+  samples/simple:
+    devDependencies:
+      '@kolint/cli':
+        specifier: workspace:^
+        version: link:../../packages/cli
+      '@kolint/typescript':
+        specifier: workspace:^
+        version: link:../../packages/typescript
 
   tools/eslint:
     dependencies:
@@ -1506,6 +1577,10 @@ packages:
     resolution: {integrity: sha512-RThY/MnKrhubF6+s1JflwUjPEsnCEmYCWwqa/aRISKWNXGZ9epUwft4bUMM35SdKF9xvBrLydAM1RDHd1Z//ZQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@eslint/js@9.2.0':
+    resolution: {integrity: sha512-ESiIudvhoYni+MdsI8oD7skpprZ89qKocwRM2KEvhhBJ9nl5MRh7BXU5GTod7Mdygq+AUl+QzId6iWJKR/wABA==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
@@ -1514,12 +1589,20 @@ packages:
     resolution: {integrity: sha512-jsNnTBlMWuTpDkeE3on7+dWJi0D6fdDfeANj/w7MpS8ztROCoLvIO2nG0CcFj+E4k8j4QrSTh4Oryi3i2G669g==}
     engines: {node: '>=10.10.0'}
 
+  '@humanwhocodes/config-array@0.13.0':
+    resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
+    engines: {node: '>=10.10.0'}
+
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
     engines: {node: '>=12.22'}
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+
+  '@humanwhocodes/retry@0.2.4':
+    resolution: {integrity: sha512-Ttl/jHpxfS3st5sxwICYfk4pOH0WrLI1SpW283GgQL7sCWU7EHIOhX4b4fkIxr3tkfzwg8+FNojtzsIEE7Ecgg==}
+    engines: {node: '>=18.18'}
 
   '@inquirer/figures@1.0.0':
     resolution: {integrity: sha512-3fw+7+77/duTnMJTeSS44wneszghI4tkr0m0xdIJabbYRe36ElzmsqyboMZ1nFRon6sT+ckVvYDVjwapKv+2sw==}
@@ -3391,6 +3474,11 @@ packages:
 
   eslint@9.0.0:
     resolution: {integrity: sha512-IMryZ5SudxzQvuod6rUdIUz29qFItWx281VhtFVc2Psy/ZhlCeD/5DT6lBIJ4H3G+iamGJoTln1v+QSuPw0p7Q==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    hasBin: true
+
+  eslint@9.2.0:
+    resolution: {integrity: sha512-0n/I88vZpCOzO+PQpt0lbsqmn9AsnsJAQseIqhZFI8ibQT0U1AkEKRxA3EVMos0BoHSXDQvCXY25TUjB5tr8Og==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     hasBin: true
 
@@ -7437,6 +7525,11 @@ snapshots:
       eslint: 9.0.0
       eslint-visitor-keys: 3.4.3
 
+  '@eslint-community/eslint-utils@4.4.0(eslint@9.2.0)':
+    dependencies:
+      eslint: 9.2.0
+      eslint-visitor-keys: 3.4.3
+
   '@eslint-community/regexpp@4.10.0': {}
 
   '@eslint/eslintrc@2.1.4':
@@ -7471,6 +7564,8 @@ snapshots:
 
   '@eslint/js@9.0.0': {}
 
+  '@eslint/js@9.2.0': {}
+
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -7487,9 +7582,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@humanwhocodes/config-array@0.13.0':
+    dependencies:
+      '@humanwhocodes/object-schema': 2.0.3
+      debug: 4.3.4(supports-color@8.1.1)
+      minimatch: 3.1.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/object-schema@2.0.3': {}
+
+  '@humanwhocodes/retry@0.2.4': {}
 
   '@inquirer/figures@1.0.0': {}
 
@@ -8490,6 +8595,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0(eslint@9.2.0)(typescript@5.4.5))(eslint@9.2.0)(typescript@5.4.5)':
+    dependencies:
+      '@eslint-community/regexpp': 4.10.0
+      '@typescript-eslint/parser': 7.7.0(eslint@9.2.0)(typescript@5.4.5)
+      '@typescript-eslint/scope-manager': 7.7.0
+      '@typescript-eslint/type-utils': 7.7.0(eslint@9.2.0)(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.7.0(eslint@9.2.0)(typescript@5.4.5)
+      '@typescript-eslint/visitor-keys': 7.7.0
+      debug: 4.3.4(supports-color@8.1.1)
+      eslint: 9.2.0
+      graphemer: 1.4.0
+      ignore: 5.3.1
+      natural-compare: 1.4.0
+      semver: 7.6.0
+      ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - supports-color
+
   '@typescript-eslint/parser@7.7.0(eslint@9.0.0)(typescript@5.4.5)':
     dependencies:
       '@typescript-eslint/scope-manager': 7.7.0
@@ -8498,6 +8623,19 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.7.0
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 9.0.0
+    optionalDependencies:
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - supports-color
+
+  '@typescript-eslint/parser@7.7.0(eslint@9.2.0)(typescript@5.4.5)':
+    dependencies:
+      '@typescript-eslint/scope-manager': 7.7.0
+      '@typescript-eslint/types': 7.7.0
+      '@typescript-eslint/typescript-estree': 7.7.0(typescript@5.4.5)
+      '@typescript-eslint/visitor-keys': 7.7.0
+      debug: 4.3.4(supports-color@8.1.1)
+      eslint: 9.2.0
     optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -8514,6 +8652,18 @@ snapshots:
       '@typescript-eslint/utils': 7.7.0(eslint@9.0.0)(typescript@5.4.5)
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 9.0.0
+      ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - supports-color
+
+  '@typescript-eslint/type-utils@7.7.0(eslint@9.2.0)(typescript@5.4.5)':
+    dependencies:
+      '@typescript-eslint/typescript-estree': 7.7.0(typescript@5.4.5)
+      '@typescript-eslint/utils': 7.7.0(eslint@9.2.0)(typescript@5.4.5)
+      debug: 4.3.4(supports-color@8.1.1)
+      eslint: 9.2.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
     optionalDependencies:
       typescript: 5.4.5
@@ -8546,6 +8696,20 @@ snapshots:
       '@typescript-eslint/types': 7.7.0
       '@typescript-eslint/typescript-estree': 7.7.0(typescript@5.4.5)
       eslint: 9.0.0
+      semver: 7.6.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@typescript-eslint/utils@7.7.0(eslint@9.2.0)(typescript@5.4.5)':
+    dependencies:
+      '@eslint-community/eslint-utils': 4.4.0(eslint@9.2.0)
+      '@types/json-schema': 7.0.15
+      '@types/semver': 7.5.8
+      '@typescript-eslint/scope-manager': 7.7.0
+      '@typescript-eslint/types': 7.7.0
+      '@typescript-eslint/typescript-estree': 7.7.0(typescript@5.4.5)
+      eslint: 9.2.0
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
@@ -9907,6 +10071,45 @@ snapshots:
       find-up: 5.0.0
       glob-parent: 6.0.2
       graphemer: 1.4.0
+      ignore: 5.3.1
+      imurmurhash: 0.1.4
+      is-glob: 4.0.3
+      is-path-inside: 3.0.3
+      json-stable-stringify-without-jsonify: 1.0.1
+      levn: 0.4.1
+      lodash.merge: 4.6.2
+      minimatch: 3.1.2
+      natural-compare: 1.4.0
+      optionator: 0.9.3
+      strip-ansi: 6.0.1
+      text-table: 0.2.0
+    transitivePeerDependencies:
+      - supports-color
+
+  eslint@9.2.0:
+    dependencies:
+      '@eslint-community/eslint-utils': 4.4.0(eslint@9.2.0)
+      '@eslint-community/regexpp': 4.10.0
+      '@eslint/eslintrc': 3.0.2
+      '@eslint/js': 9.2.0
+      '@humanwhocodes/config-array': 0.13.0
+      '@humanwhocodes/module-importer': 1.0.1
+      '@humanwhocodes/retry': 0.2.4
+      '@nodelib/fs.walk': 1.2.8
+      ajv: 6.12.6
+      chalk: 4.1.2
+      cross-spawn: 7.0.3
+      debug: 4.3.4(supports-color@8.1.1)
+      escape-string-regexp: 4.0.0
+      eslint-scope: 8.0.1
+      eslint-visitor-keys: 4.0.0
+      espree: 10.0.1
+      esquery: 1.5.0
+      esutils: 2.0.3
+      fast-deep-equal: 3.1.3
+      file-entry-cache: 8.0.0
+      find-up: 5.0.0
+      glob-parent: 6.0.2
       ignore: 5.3.1
       imurmurhash: 0.1.4
       is-glob: 4.0.3

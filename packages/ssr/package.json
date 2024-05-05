@@ -1,6 +1,6 @@
 {
   "name": "@kolint/ssr",
-  "version": "0.7.0-beta.2",
+  "version": "0.1.0",
   "description": "Server-side rendering for Knockout.js",
   "keywords": [
     "kolint",
@@ -8,22 +8,28 @@
     "ssr"
   ],
   "type": "module",
+  "exports": {
+    ".": "./src/lib/exports.ts",
+    "./rollup": "./src/rollup/plugin.ts",
+    "./vite": "./src/vite/plugin.ts",
+    "./webpack": "./src/webpack/loader.ts",
+    "./runtime": "./src/runtime/index.ts"
+  },
   "dependencies": {
-    "@kolint/parser": "workspace:~",
+    "@kolint/location": "workspace:^",
+    "@kolint/parser": "workspace:^",
+    "@kolint/syntax-tree": "workspace:^",
     "@rollup/pluginutils": "^5.1.0",
     "acorn": "^8.11.3",
     "import-meta-resolve": "^4.0.0",
     "inline-style-parser": "^0.2.3",
     "loader-utils": "^3.2.1",
     "magic-string": "^0.30.9",
-    "prettier": "^3.2.5",
-    "schema-utils": "^4.2.0",
-    "yargs": "^17.7.2"
+    "schema-utils": "^4.2.0"
   },
   "devDependencies": {
     "@types/is-ci": "^3.0.4",
     "@types/loader-utils": "^2.0.6",
-    "@types/yargs": "^17.0.32",
     "chalk": "^5.3.0",
     "es-module-lexer": "^1.5.0",
     "globby": "^14.0.1",

@@ -1,0 +1,27 @@
+{
+  "name": "@kolint/analyzer",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cli": "./src/cli/cli.ts"
+  },
+  "dependencies": {
+    "@kolint/fabricator": "workspace:^",
+    "@kolint/location": "workspace:^",
+    "@kolint/parser": "workspace:^",
+    "@kolint/syntax-tree": "workspace:^",
+    "@types/yargs": "^17.0.32",
+    "chalk": "^5.3.0",
+    "globby": "^14.0.1",
+    "source-map": "~0.7.4",
+    "winston": "^3.13.0",
+    "yargs": "^17.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

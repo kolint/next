@@ -1,13 +1,11 @@
 import { type Binding } from "./binding.js";
+import { Position, Range } from "@kolint/location";
 import {
-  Element,
-  Position,
-  Range,
-  type VirtualElement,
   parse5,
   parse5LocationToRange,
   type parse5TreeAdapter,
 } from "@kolint/parser";
+import { Element, type VirtualElement } from "@kolint/syntax-tree";
 import inlineStyleParser from "inline-style-parser";
 import * as ko from "knockout";
 import type MagicString from "magic-string";
@@ -91,7 +89,7 @@ export function setStyle(
 
     for (const style of styles) {
       if (style.type === "declaration" && style.property === property) {
-        const range = new Range(
+        let range = new Range(
           Position.fromLineAndColumn(
             style.position.start.line,
             style.position.start.column,
@@ -103,10 +101,12 @@ export function setStyle(
             attr.value.text,
           ),
         );
-        range.translate(
-          Position.fromOffset(attr.range.start.offset, generated.original),
+        range = Range.translate(
+          range,
+          attr.range.start.offset,
+          generated.original,
         );
-        generated.remove(...range.offset);
+        generated.remove(...range.offsets);
       }
     }
 
@@ -175,7 +175,7 @@ export function getAttribute(
   name: string,
 ): string | null {
   const fragment5 = parse5.parseFragment(
-    generated.slice(...element.range.offset),
+    generated.slice(...element.range.offsets),
     {
       sourceCodeLocationInfo: true,
     },
@@ -192,7 +192,7 @@ export function setAttribute(
   value: string | null,
 ) {
   const fragment5 = parse5.parseFragment(
-    generated.slice(...element.range.offset),
+    generated.slice(...element.range.offsets),
     {
       sourceCodeLocationInfo: true,
     },
@@ -251,7 +251,7 @@ export function extractIntoTemplate(binding: Binding, generated: MagicString) {
   const id = randomId(innerHtml.replace(/\s+/g, " "));
 
   // Remove contents
-  generated.remove(...inner.offset);
+  generated.remove(...inner.offsets);
 
   // Append template above element
   generated.appendLeft(

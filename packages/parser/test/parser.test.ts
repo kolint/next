@@ -1,5 +1,5 @@
 import { parse } from "../src/parser.js";
-import { VirtualElement } from "../src/syntax-tree.js";
+import { VirtualElement } from "@kolint/syntax-tree";
 import { describe, test, expect } from "bun:test";
 import assert from "node:assert/strict";
 

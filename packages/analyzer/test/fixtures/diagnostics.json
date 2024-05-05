@@ -1,0 +1,14 @@
+{
+  "$schema": "./diagnostics.schema.json",
+  "fixtures": [
+    {
+      "sample": "TS2345.html",
+      "name": "ts/2345"
+    },
+    {
+      "todo": true,
+      "sample": "TS2345.html",
+      "name": "ts/2345"
+    }
+  ]
+}

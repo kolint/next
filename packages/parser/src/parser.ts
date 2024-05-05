@@ -1,4 +1,3 @@
-import { Range, Position } from "./location.js";
 import {
   isParse5CommentNode,
   isParse5Element,
@@ -7,6 +6,7 @@ import {
   parse5LocationToRange,
   type parse5TreeAdapter,
 } from "./parse5-utils.js";
+import { Range, Position } from "@kolint/location";
 import {
   Document,
   type Node,
@@ -17,7 +17,7 @@ import {
   Attribute,
   Binding,
   Scope,
-} from "./syntax-tree.js";
+} from "@kolint/syntax-tree";
 import * as acorn from "acorn";
 
 const virtualElementStart = /^(\s*(#?)ko\s+)([^\s]+)(\s*:\s*)([^]*?)(\s*)$/;
@@ -253,15 +253,12 @@ class Parser {
         const bindings = attributes
           .filter((attr) => this.#bindingAttributes.includes(attr.name.text))
           .flatMap((attr): Binding[] => {
-            const expression = acorn.parseExpressionAt(
-              `({${attr.value.text}})`,
-              0,
-              {
-                ecmaVersion: "latest",
-                sourceType: "script",
-                ranges: true,
-              },
-            );
+            const expressionText = `({${attr.value.text}})`;
+            const expression = acorn.parseExpressionAt(expressionText, 0, {
+              ecmaVersion: "latest",
+              sourceType: "script",
+              ranges: true,
+            });
             if (expression.type !== "ObjectExpression") {
               throw new Error("Expected ObjectExpression.");
             }
@@ -297,7 +294,7 @@ class Parser {
                 throw new Error("Unsupported property key in binding.");
               }
 
-              const param = this.#source.slice(
+              const param = expressionText.slice(
                 translate(prop.value.range![0]),
                 translate(prop.value.range![1]),
               );
