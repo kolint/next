@@ -4,9 +4,15 @@ import {
   discoverConfigFile,
   readConfigFile,
 } from "@kolint/config";
+import { Position, Range } from "@kolint/location";
 import { Transpiler } from "@kolint/typescript";
-import { fileURLToPath } from "node:url";
-import { type LanguageService, type SourceFile } from "ts-morph";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  type SourceFile,
+  type DefinitionInfo,
+  type LanguageService,
+  type TypeChecker,
+} from "ts-morph";
 import * as ts from "typescript/lib/tsserverlibrary.js";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import {
@@ -15,6 +21,11 @@ import {
   ProposedFeatures,
   TextDocuments,
   TextDocumentSyncKind,
+  type TextDocumentIdentifier,
+  type Location,
+  Range as VSCodeRange,
+  Position as VSCodePosition,
+  type CompletionItem,
 } from "vscode-languageserver/node.js";
 
 const UPDATE_DEBOUNCE = 1000;
@@ -48,6 +59,7 @@ interface DocumentState {
   sourceFile: SourceFile;
   service: LanguageService;
   document: TextDocument;
+  checker: TypeChecker;
 }
 
 interface DocumentStateProvider {
@@ -81,12 +93,14 @@ async function updateDocumentState(
 
   const project = sourceFile.getProject();
   const service = project.getLanguageService();
+  const checker = project.getTypeChecker();
 
   return {
     document,
     snapshot,
     sourceFile,
     service,
+    checker,
   };
 }
 
@@ -146,14 +160,14 @@ export function startLanguageServer(options?: LanguageServerOptions) {
     DocumentStateProvider
   >();
 
-  // const getDocumentState = (documentId: TextDocumentIdentifier) => {
-  //   const document = documents.get(documentId.uri)!;
-  //   const provider = createDocumentStateProvider(
-  //     sharedResourcesProvider,
-  //     document,
-  //   );
-  //   return provider.getState();
-  // };
+  const getDocumentState = (documentId: TextDocumentIdentifier) => {
+    const document = documents.get(documentId.uri)!;
+    const provider = createDocumentStateProvider(
+      sharedResourcesProvider,
+      document,
+    );
+    return provider.getState();
+  };
 
   documents.onDidOpen(async (event) => {
     const provider = createDocumentStateProvider(
@@ -178,8 +192,200 @@ export function startLanguageServer(options?: LanguageServerOptions) {
     return {
       capabilities: {
         textDocumentSync: TextDocumentSyncKind.Incremental,
+        definitionProvider: true,
+        hoverProvider: true,
+        completionProvider: {},
       },
     };
+  });
+
+  connection.onDefinition(async (params) => {
+    const state = await getDocumentState(params.textDocument);
+
+    const originalPosition = Position.fromLineAndColumn(
+      params.position.line,
+      params.position.character,
+      state.snapshot.original,
+    );
+    const generatedPosition =
+      state.snapshot.getGeneratedPosition(originalPosition);
+
+    if (generatedPosition) {
+      const definitions = state.service.getDefinitionsAtPosition(
+        state.sourceFile,
+        generatedPosition.offset,
+      );
+
+      return definitions.flatMap((definition): Location[] => {
+        const node = definition.getNode();
+
+        const definitionToLocation = (definition: DefinitionInfo): Location => {
+          const sourceFile = definition.getSourceFile();
+          const path = sourceFile.getFilePath();
+          const uri = pathToFileURL(path).toString();
+          const span = definition.getTextSpan();
+          const range1 = Range.fromOffset(
+            span.getStart(),
+            span.getEnd(),
+            sourceFile.getFullText(),
+          );
+          const range2 = VSCodeRange.create(
+            VSCodePosition.create(range1.start.line, range1.start.column),
+            VSCodePosition.create(range1.end.line, range1.end.column),
+          );
+
+          return {
+            uri: uri,
+            range: range2,
+          };
+        };
+
+        if (
+          node.getSourceFile().getFilePath() === state.sourceFile.getFilePath()
+        ) {
+          const generatedStartOffset = node.getStart();
+          const generatedPosition = Position.fromOffset(
+            generatedStartOffset,
+            state.snapshot.generated,
+          );
+          const originalPosition =
+            state.snapshot.getOriginalPosition(generatedPosition);
+
+          if (originalPosition) {
+            const generatedEndOffset = node.getEnd();
+            // TODO: don't assume the original length is the same as the generated.
+            const length = generatedEndOffset - generatedStartOffset;
+            const range = new Range(
+              originalPosition,
+              Position.fromOffset(
+                originalPosition.offset + length,
+                state.snapshot.original,
+              ),
+            );
+            return [
+              {
+                uri: state.document.uri,
+                range: VSCodeRange.create(
+                  VSCodePosition.create(range.start.line, range.start.column),
+                  VSCodePosition.create(range.end.line, range.end.column),
+                ),
+              },
+            ];
+          } else {
+            const definitions = state.service.getDefinitions(node);
+            return definitions.map((definition) =>
+              definitionToLocation(definition),
+            );
+          }
+        } else {
+          return [definitionToLocation(definition)];
+        }
+      });
+    } else {
+      return [];
+    }
+  });
+
+  connection.onHover(async (params) => {
+    const state = await getDocumentState(params.textDocument);
+
+    const originalPosition = Position.fromLineAndColumn(
+      params.position.line,
+      params.position.character,
+      state.snapshot.original,
+    );
+    const generatedPosition =
+      state.snapshot.getGeneratedPosition(originalPosition);
+
+    if (generatedPosition) {
+      let quickInfo: ts.QuickInfo | undefined;
+
+      const [definition] = state.service.getDefinitionsAtPosition(
+        state.sourceFile,
+        generatedPosition.offset,
+      );
+
+      if (definition) {
+        const node = definition.getNode();
+
+        if (
+          node.getSourceFile().getFilePath() === state.sourceFile.getFilePath()
+        ) {
+          const generatedStartOffset = node.getStart();
+          const generatedPosition = Position.fromOffset(
+            generatedStartOffset,
+            state.snapshot.generated,
+          );
+          const originalPosition =
+            state.snapshot.getOriginalPosition(generatedPosition);
+
+          if (!originalPosition) {
+            const [definition] = state.service.getDefinitions(node);
+
+            if (definition) {
+              quickInfo = state.service.compilerObject.getQuickInfoAtPosition(
+                definition.getSourceFile().getFilePath(),
+                definition.getTextSpan().getStart(),
+              );
+            }
+          }
+        }
+      }
+
+      quickInfo ??= state.service.compilerObject.getQuickInfoAtPosition(
+        state.sourceFile.getFilePath(),
+        generatedPosition.offset,
+      );
+
+      if (quickInfo) {
+        return {
+          contents: [
+            ...(quickInfo.displayParts
+              ? [
+                  {
+                    language: "typescript",
+                    value: quickInfo.displayParts
+                      .map((part) => part.text)
+                      .join(""),
+                  },
+                ]
+              : []),
+          ],
+        };
+      }
+    }
+
+    return null;
+  });
+
+  connection.onCompletion(async (params) => {
+    const state = await getDocumentState(params.textDocument);
+
+    const originalPosition = Position.fromLineAndColumn(
+      params.position.line,
+      params.position.character,
+      state.snapshot.original,
+    );
+    const generatedPosition =
+      state.snapshot.getGeneratedPosition(originalPosition);
+
+    if (generatedPosition) {
+      const completions = state.service.compilerObject.getCompletionsAtPosition(
+        state.sourceFile.getFilePath(),
+        generatedPosition.offset,
+        {},
+      );
+
+      if (completions) {
+        return completions.entries.map((entry): CompletionItem => {
+          return {
+            label: entry.name,
+          };
+        });
+      }
+    }
+
+    return null;
   });
 
   documents.listen(connection);

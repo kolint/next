@@ -140,8 +140,10 @@ export default class Scaffold {
     }
 
     chunk //
+      .write("((")
       .map(binding.param.range.start.offset)
-      .write(`((${binding.param.text}), $context)`)
+      .write(binding.param.text)
+      .write("), $context)")
       .map(binding.range.end.offset)
       .write(";")
       .dedent()
