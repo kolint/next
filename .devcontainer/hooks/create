@@ -1,0 +1,12 @@
+#!/bin/bash -i
+
+export SHELL=bash
+
+# SETUP PNPM
+npm config set update-notifier false
+npm i -g pnpm
+pnpm setup
+source /home/vscode/.bashrc
+
+# INSTALL NX
+pnpm i -g nx
