@@ -1,6 +1,6 @@
 import { ThemeConfig } from "./theme";
 import escapeStringRegexp from "escape-string-regexp";
-import { existsSync, readdirSync } from "node:fs";
+import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { UserConfig } from "vitepress";
@@ -28,80 +28,82 @@ const config: UserConfig<ThemeConfig> = {
 
     nav: [
       //
-      { text: "Docs", link: "/intro" },
+      { text: "Guide", link: "/guide/intro" },
+      { text: "Packages", link: "/packages/index" },
     ],
 
-    sidebar: [
-      {
-        text: "Toolchain",
-        items: [
-          //
-          { text: "Introduction", link: "/intro" },
-        ],
-      },
-      {
-        text: "Linting",
-        collapsed: false,
-        base: "/linting/",
-        items: [
-          //
-          { text: "Introduction", link: "intro" },
-          { text: "Getting Started", link: "setup" },
-          { text: "Usage", link: "usage" },
-          { text: "Configuration", link: "config" },
-        ],
-      },
-      {
-        text: "SSR",
-        collapsed: false,
-        base: "/ssr/",
-        items: [
-          //
-          { text: "Introduction", link: "intro" },
-          { text: "Getting Started", link: "setup" },
-          { text: "Usage", link: "usage" },
-          { text: "Support", link: "support" },
-          { text: "Plugins", link: "plugins" },
-        ],
-      },
-      {
-        text: "Editors",
-        collapsed: false,
-        items: [
-          {
-            text: "VSCode Extension",
-            link: "/package/readme/vscode",
-          },
-        ],
-      },
-      {
-        text: "Development",
-        collapsed: false,
-        items: [
-          //
-          { text: "Contributing", link: "/contributing" },
-        ],
-      },
-      {
-        text: "Packages",
-        collapsed: true,
-        items: readdirSync("packages").map((name) => {
-          return {
-            text: name,
-            link: `/package/readme/${name}`,
-            collapsed: true,
-            items: [
-              ...(existsSync(`packages/${name}/README.md`)
-                ? [{ text: "Readme", link: `/package/readme/${name}` }]
-                : []),
-              ...(existsSync(`packages/${name}/CHANGELOG.md`)
-                ? [{ text: "Changelog", link: `/package/changelog/${name}` }]
-                : []),
-            ],
-          };
-        }),
-      },
-    ],
+    sidebar: {
+      "/guide/": [
+        {
+          text: "Toolchain",
+          base: "/guide/",
+          items: [
+            //
+            { text: "Introduction", link: "intro" },
+            { text: "Configuration", link: "config" },
+          ],
+        },
+        {
+          text: "Analyzer 🛡️",
+          base: "/guide/analyzer/",
+          items: [
+            //
+            { text: "Introduction", link: "intro" },
+            { text: "Getting Started", link: "setup" },
+            { text: "Usage", link: "usage" },
+            { text: "Configuration", link: "config" },
+          ],
+        },
+        {
+          text: "Server-Side Rendering",
+          base: "/guide/ssr/",
+          items: [
+            //
+            { text: "Introduction", link: "intro" },
+            { text: "Getting Started", link: "setup" },
+            { text: "Usage", link: "usage" },
+            { text: "Support", link: "support" },
+            { text: "Plugins", link: "plugins" },
+          ],
+        },
+        {
+          text: "Editors",
+          items: [
+            {
+              text: "VSCode Extension",
+              link: "/guide/editors/vscode",
+            },
+          ],
+        },
+        {
+          text: "Development",
+          items: [
+            //
+            { text: "Contributing", link: "/guide/contributing" },
+          ],
+        },
+      ],
+      "/package": [
+        {
+          text: "Documentation",
+          items: readdirSync("packages").map((name) => {
+            return {
+              text: name,
+              link: `/packages/readme/${name}`,
+            };
+          }),
+        },
+        {
+          text: "Changelogs",
+          items: readdirSync("packages").map((name) => {
+            return {
+              text: name,
+              link: `/packages/changelog/${name}`,
+            };
+          }),
+        },
+      ],
+    },
 
     socialLinks: [{ icon: "github", link: "https://github.com/kolint/next" }],
 

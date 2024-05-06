@@ -2,15 +2,21 @@
 
 **The modern toolchain for enhancing usage of Knockout.js and improving runtime performance. [Read more ›](https://kolint.github.io/next/)**
 
-## Linting
+## Analyzer
+
+<!-- @include docs/parts/packages/analyzer/description.md -->
 
 Code analyzer that can detect common issues in the code. The linter can also spit out type-checking errors provided by [TypeScript](https://www.typescriptlang.org/).
 
+<!-- /include -->
+
 <div align="center">
 
-[Read more ›](https://kolint.github.io/next/linting/intro)
+[Read more ›](https://kolint.github.io/next/analyzer/intro)
 
 </div>
+
+<!-- @include docs/parts/features/analyzer/gh-example.md -->
 
 <!-- prettier-ignore -->
 ```html
@@ -19,9 +25,15 @@ Code analyzer that can detect common issues in the code. The linter can also spi
 Argument of type 'number' is not assignable to parameter of type 'boolean'.
 ```
 
-## Server-side Render
+<!-- /include -->
+
+## Server-Side Rendering
+
+<!-- @include docs/parts/packages/ssr/description.md -->
 
 Pre-render knockout views on the server to optimize runtime performance and SEO.
+
+<!-- /include -->
 
 <div align="center">
 
@@ -29,18 +41,26 @@ Pre-render knockout views on the server to optimize runtime performance and SEO.
 
 </div>
 
+<!-- @include docs/parts/features/ssr/gh-example.md -->
+
 <!-- prettier-ignore -->
 ```diff
 - <!-- ko foreach: users -->
--   <p>{{ name }}</p>
+-   <p>{name}</p>
 - <!-- /ko -->
 + <p>John Doe</p>
 + <p>Albert Einstein</p>
 ```
 
+<!-- /include -->
+
 ## Language Support
 
-A language server (implementing the [language server protocol](#https://microsoft.github.io/language-server-protocol/)) for Knockout.js to provide language features, such as intellisense, diagnostics, syntax highlighting, etc. mainly for editors.
+<!-- @include docs/parts/packages/analyzer/description.md -->
+
+Code analyzer that can detect common issues in the code. The linter can also spit out type-checking errors provided by [TypeScript](https://www.typescriptlang.org/).
+
+<!-- /include -->
 
 <div align="center">
 

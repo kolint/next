@@ -39,19 +39,4 @@ describe("Position", () => {
       offset: 6,
     });
   });
-
-  it.only("Converts line and column to position", () => {
-    const position = Position.fromLineAndColumn(
-      1,
-      24,
-      `<!-- #ko use: ./viewmodel.js -->
-<div data-bind="text: tex"></div>
-<!-- /ko -->
-`,
-    );
-    console.log(position);
-    // expect(position).toMatchObject({
-    //   offset: 6,
-    // });
-  });
 });

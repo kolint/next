@@ -1,0 +1,1 @@
+[**Documentation**](https://kolint.github.io/next) | [Package (npm)](https://npmjs.com/package/@kolint/{{name}}) | [Repository](https://github.com/kolint/next) | [Source Code](https://github.com/kolint/next/tree/main/packages/{{name}})

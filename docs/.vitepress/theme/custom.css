@@ -7,3 +7,15 @@
 a.footnote-backref {
   text-decoration: none;
 }
+
+dl {
+  margin: 1em 0;
+}
+
+dt {
+  margin-bottom: 0.25em;
+}
+
+dd {
+  margin-bottom: 1em;
+}

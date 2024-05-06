@@ -1,0 +1,9 @@
+{
+  "name": "@kolint/typescript-plugin",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

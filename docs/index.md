@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Introduction
-      link: /intro
+      link: /guide/intro
     - theme: alt
       text: View on GitHub
       link: https://github.com/kolint/next
@@ -64,21 +64,21 @@ hero:
 
 <div class="index-content">
 
-## Linting
+## Analyzer
 
-<!-- @include: @/parts/features/linting/description.md -->
+<!-- @include: @/parts/packages/analyzer/description.md -->
 
 <div align="center">
 
-[Read more ›](/linting/intro)
+[Read more ›](/analyzer/intro)
 
 </div>
 
-<!-- @include: @/parts/features/linting/example.md -->
+<!-- @include: @/parts/features/analyzer/vp-example.md -->
 
 ## Server-side Render {#ssr}
 
-<!-- @include: @/parts/features/ssr/description.md -->
+<!-- @include: @/parts/packages/ssr/description.md -->
 
 <div align="center">
 
@@ -86,11 +86,11 @@ hero:
 
 </div>
 
-<!-- @include: @/parts/features/ssr/example.md -->
+<!-- @include: @/parts/features/ssr/vp-example.md -->
 
 ## Language Support
 
-<!-- @include: @/parts/features/language-support/description.md -->
+<!-- @include: @/parts/packages/language-support/description.md -->
 
 <div align="center">
 
@@ -98,6 +98,6 @@ hero:
 
 </div>
 
-<!-- @include: @/parts/features/language-support/example.md -->
-
 </div>
+
+<!-- @include: @/parts/reference.md -->

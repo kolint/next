@@ -4,8 +4,8 @@
     "exactOptionalPropertyTypes": true
   },
   "references": [
-    { "path": "tsconfig.lib.json" },
-    { "path": "tsconfig.test.json" }
+    { "path": "tsconfig.lib.json" }
+    // { "path": "tsconfig.test.json" }
   ],
   "include": []
 }

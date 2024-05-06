@@ -104,6 +104,9 @@ importers:
       prettier-plugin-packagejson:
         specifier: ^2.5.0
         version: 2.5.0(prettier@3.2.5)
+      revise-static-content:
+        specifier: ~0.1.1
+        version: 0.1.1
       ts-node:
         specifier: 10.9.2
         version: 10.9.2(@swc/core@1.4.15)(@types/node@20.12.7)(typescript@5.4.5)
@@ -391,6 +394,8 @@ importers:
       knockout:
         specifier: 3.5.1
         version: 3.5.1
+
+  packages/typescript-plugin: {}
 
   packages/vscode:
     dependencies:
@@ -5323,6 +5328,10 @@ packages:
   reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+
+  revise-static-content@0.1.1:
+    resolution: {integrity: sha512-8LSYXo5fGjZ+0Lb/hPb+tsGHcs7WDlAUUjcA4ldTti1i53Ngtu2Rl+O+zhHZEyf8nbTXcsBVvsZ/BE5t3Erb+A==}
+    hasBin: true
 
   rfdc@1.3.1:
     resolution: {integrity: sha512-r5a3l5HzYlIC68TpmYKlxWjmOP6wiPJ1vWv2HeLhNsRZMrCkxeqxiHlQ21oXmQ4F3SiryXBHhAD7JZqvOJjFmg==}
@@ -12216,6 +12225,13 @@ snapshots:
       signal-exit: 3.0.7
 
   reusify@1.0.4: {}
+
+  revise-static-content@0.1.1:
+    dependencies:
+      globby: 14.0.1
+      js-yaml: 4.1.0
+      magic-string: 0.30.10
+      meow: 13.2.0
 
   rfdc@1.3.1: {}
 
