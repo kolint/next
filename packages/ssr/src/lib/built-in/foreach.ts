@@ -30,7 +30,7 @@ const foreach: Plugin = {
     const { items, alias } = extract(value());
 
     const inner = utils.getInnerRange(binding.parent, generated.original);
-    const original = generated.slice(...inner.offset);
+    const original = generated.slice(...inner.offsets);
 
     // Render all fragments
     const fragments = Array.from(Array.from(items).entries()).map(
@@ -42,7 +42,7 @@ const foreach: Plugin = {
         );
       },
     );
-    generated.overwrite(...inner.offset, fragments.join(""));
+    generated.overwrite(...inner.offsets, fragments.join(""));
 
     // Append template above element
     const id = utils.randomId();
@@ -53,7 +53,7 @@ const foreach: Plugin = {
 
     // Replace binding with "_ssr_foreach"
     generated.overwrite(
-      ...binding.range.offset,
+      ...binding.range.offsets,
       `_ssr_foreach: { template: "${id}", value: ${binding.expression} }`,
     );
   },

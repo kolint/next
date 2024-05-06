@@ -1,1 +1,0 @@
-A language server (implementing the [language server protocol](#https://microsoft.github.io/language-server-protocol/)) for Knockout.js to provide language features, such as intellisense, diagnostics, syntax highlighting, etc. mainly for editors.

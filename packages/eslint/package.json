@@ -1,0 +1,22 @@
+{
+  "name": "@kolint/eslint",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./analyzer": "./src/analyzer.ts"
+  },
+  "dependencies": {
+    "@kolint/location": "workspace:^"
+  },
+  "devDependencies": {
+    "@kolint/typescript": "workspace:^"
+  },
+  "peerDependencies": {
+    "@kolint/analyzer": "workspace:^",
+    "eslint": "^9.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

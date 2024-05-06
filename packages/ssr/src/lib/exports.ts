@@ -4,7 +4,6 @@ export {
   type BindingContextOptions,
   type ChildContextOptions,
 } from "./binding-context.js";
-export { Binding } from "./binding.js";
 export {
   type Diagnostic,
   type DiagnosticError,

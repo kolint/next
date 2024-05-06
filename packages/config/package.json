@@ -1,0 +1,12 @@
+{
+  "name": "@kolint/config",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "peerDependencies": {
+    "@kolint/analyzer": "workspace:~"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

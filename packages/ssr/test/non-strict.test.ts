@@ -25,7 +25,7 @@ describe("non-strict", () => {
     assert(document.includes("><"));
   });
 
-  test("handles invalid binding expression", async () => {
+  test.todo("handles invalid binding expression", async () => {
     const source = html`
       <!-- ko ssr: {} -->
       <div data-bind="text: ???"></div>

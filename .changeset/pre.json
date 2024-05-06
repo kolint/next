@@ -1,35 +1,6 @@
 {
   "mode": "pre",
   "tag": "beta",
-  "initialVersions": {
-    "@kolint/check": "0.3.5",
-    "@kolint/compiler": "0.0.0",
-    "@kolint/language-server": "0.0.0",
-    "@kolint/legacy-compiler": "0.0.0",
-    "@kolint/parser": "0.0.0",
-    "@kolint/ssr": "0.6.0",
-    "@kolint/ts-utils": "0.0.0",
-    "@kolint/vscode": "0.0.0",
-    "@kolint-dev/eslint": "0.0.0",
-    "@kolint-dev/nx": "0.0.0",
-    "@kolint-dev/scripts": "0.0.0",
-    "@kolint-dev/tsconfig": "0.0.0",
-    "@samples/config": "0.0.0"
-  },
-  "changesets": [
-    "angry-melons-serve",
-    "blue-chefs-shave",
-    "cyan-dingos-act",
-    "famous-pets-rescue",
-    "gold-seals-design",
-    "long-coats-jump",
-    "lovely-cycles-shake",
-    "many-games-fail",
-    "orange-cats-travel",
-    "pretty-fishes-attack",
-    "serious-pears-wait",
-    "six-snails-wonder",
-    "small-rabbits-poke",
-    "thin-hats-brake"
-  ]
+  "initialVersions": {},
+  "changesets": []
 }

@@ -23,6 +23,7 @@ export default config([
       // projects
       "packages/ssr/e2e/frontend/",
       "packages/ssr/scripts/**",
+      "packages/internal/",
     ],
   },
   {

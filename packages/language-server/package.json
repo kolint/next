@@ -1,6 +1,6 @@
 {
   "name": "@kolint/language-server",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0",
   "description": "",
   "keywords": [
     "kolint"
@@ -14,11 +14,17 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@kolint/compiler": "workspace:~",
-    "@kolint/ts-utils": "workspace:~",
-    "source-map": "^0.7.4",
+    "@kolint/analyzer": "workspace:~",
+    "@kolint/config": "workspace:~",
+    "@kolint/location": "workspace:~",
+    "@kolint/typescript": "workspace:~",
+    "minimatch": "^9.0.4",
+    "ts-morph": "^22.0.0",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=20.0.0"

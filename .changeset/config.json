@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": "./commit.cjs",
   "fixed": [],
-  "linked": [["@kolint/check", "@kolint/compiler", "@kolint/legacy-compiler"]],
+  "linked": [["@kolint/parser", "@kolint/syntax-tree"]],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",

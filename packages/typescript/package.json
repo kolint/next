@@ -1,0 +1,32 @@
+{
+  "name": "@kolint/typescript",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./analyzer": "./src/analyzer.ts",
+    "./types/loose": {
+      "types": "./types/loose.d.ts"
+    },
+    "./types/strict": {
+      "types": "./types/strict.d.ts"
+    }
+  },
+  "dependencies": {
+    "@kolint/fabricator": "workspace:^",
+    "@kolint/location": "workspace:^",
+    "@kolint/syntax-tree": "workspace:^",
+    "source-map": "~0.7.4",
+    "ts-morph": "^22.0.0"
+  },
+  "devDependencies": {
+    "@kolint/parser": "workspace:^",
+    "knockout": "3.5.1"
+  },
+  "peerDependencies": {
+    "@kolint/analyzer": "workspace:^"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -4,10 +4,50 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
       "options": {
-        "command": "bun ./scripts/build.ts",
-        "cwd": "{projectRoot}"
+        "tsup": [
+          {
+            "entry": {
+              "index": "{projectRoot}/src/lib/exports.ts",
+              "rollup/index": "{projectRoot}/src/rollup/plugin.ts",
+              "vite/index": "{projectRoot}/src/vite/plugin.ts",
+              "webpack/index": "{projectRoot}/src/webpack/loader.ts"
+            },
+            "tsconfig": "{projectRoot}/tsconfig.node.json",
+            "platform": "node"
+          },
+          {
+            "entry": {
+              "runtime/index": "{projectRoot}/src/runtime/index.ts"
+            },
+            "tsconfig": "{projectRoot}/tsconfig.web.json",
+            "platform": "browser"
+          }
+        ],
+        "package": {
+          "exports": {
+            ".": {
+              "types": "./index.d.ts",
+              "default": "./index.js"
+            },
+            "./rollup": {
+              "types": "./rollup/index.js",
+              "default": "./rollup/index.d.ts"
+            },
+            "./vite": {
+              "types": "./vite/index.js",
+              "default": "./vite/index.d.ts"
+            },
+            "./webpack": {
+              "types": "./webpack/index.js",
+              "default": "./webpack/index.d.ts"
+            },
+            "./runtime": {
+              "types": "./runtime/index.js",
+              "default": "./runtime/index.d.ts"
+            }
+          }
+        }
       }
     },
     "test": {

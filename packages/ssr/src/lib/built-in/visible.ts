@@ -1,6 +1,6 @@
 import { type Plugin } from "../plugin.js";
 import * as utils from "../utils.js";
-import { Element } from "@kolint/parser";
+import { Element } from "@kolint/syntax-tree";
 
 export const visible: Plugin = {
   filter: (binding) =>

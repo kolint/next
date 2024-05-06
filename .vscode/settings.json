@@ -15,6 +15,10 @@
     "*.js": "$(basename).test.js, $(basename).spec.js, , $(basename).d.ts, $(basename).js.map",
     "*.json": "$(basename).schema.json"
   },
+  "files.associations": {
+    "*.ts.snap": "typescript",
+    "*.js.snap": "javascript"
+  },
   "json.schemas": [
     {
       "fileMatch": ["nx.json"],
@@ -33,5 +37,8 @@
     "project.json": "nx"
   },
   "eslint.validate": ["json"],
-  "eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true,
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  }
 }

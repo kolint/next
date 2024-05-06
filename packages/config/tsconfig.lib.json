@@ -1,0 +1,4 @@
+{
+  "extends": ["./tsconfig.json", "@kolint-dev/tsconfig/node.json"],
+  "include": ["src"]
+}

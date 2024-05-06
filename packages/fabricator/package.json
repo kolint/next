@@ -1,0 +1,13 @@
+{
+  "name": "@kolint/fabricator",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@kolint/location": "workspace:^",
+    "source-map": "~0.7.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

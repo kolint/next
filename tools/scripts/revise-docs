@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pnpm revise-static-content README.md packages/*/README.md

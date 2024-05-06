@@ -21,28 +21,28 @@ Tasks are defined in the `project.json` file for each package and inherit from t
 nx <task> <project>
 
 # Example:
-nx build @kolint/compiler
+nx build @kolint/analyzer
 ```
 
 #### Defined Tasks
 
 <dl>
-  <dt><code>build</code></dt>
+  <dt><code>nx build</code></dt>
   <dd>Generates the package distributable, essential before releasing.</dd>
 
-  <dt><code>lint</code></dt>
+  <dt><code>nx lint</code></dt>
   <dd>Identifies common issues in the project by running eslint.</dd>
 
-  <dt><code>test</code></dt>
+  <dt><code>nx test</code></dt>
   <dd>Executes unit tests for the project.</dd>
 
-  <dt><code>e2e</code></dt>
+  <dt><code>nx e2e</code></dt>
   <dd>Runs end-to-end tests, usually requiring a testing environment like a browser.</dd>
 
-  <dt><code>format</code></dt>
-  <dd>Formats the project's code using prettier.</dd>
+  <dt><code>pnpm run format</code></dt>
+  <dd>Formats the project's code using prettier. Can only be run from workspace root.</dd>
 
-  <dt><code>type-check</code></dt>
+  <dt><code>nx type-check</code></dt>
   <dd>Checks the project for typing issues using TypeScript.</dd>
 </dl>
 

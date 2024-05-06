@@ -8,7 +8,8 @@
     "ghcr.io/shyim/devcontainers-features/bun:0": {},
     "ghcr.io/devcontainers/features/node:1": {}
   },
-  "postStartCommand": "pnpm install",
+  "onCreateCommand": [".devcontainer/hooks/create"],
+  "updateContentCommand": [".devcontainer/hooks/update-content"],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -21,7 +22,8 @@
         "ms-vscode.extension-test-runner",
         "github.vscode-github-actions",
         "Vue.volar",
-        "GitHub.vscode-pull-request-github"
+        "GitHub.vscode-pull-request-github",
+        "ms-azuretools.vscode-docker"
       ],
       "settings": {
         "explorer.fileNesting.enabled": true

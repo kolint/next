@@ -1,0 +1,24 @@
+{
+  "name": "@kolint/cli",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "targets": {
+    "build": {
+      "options": {
+        "entry": {
+          "index": "{projectRoot}/src/index.ts",
+          "bin": "{projectRoot}/src/bin.ts"
+        },
+        "package": {
+          "exports": "./index.js",
+          "bin": {
+            "ko": "./bin.js"
+          }
+        }
+      }
+    },
+    "test": {},
+    "lint": {}
+  }
+}

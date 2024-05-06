@@ -18,7 +18,7 @@ const with_: Plugin = {
         expr += `template: ${q}${utils.escapeHtml(template)}${q}, `;
       }
       expr += `value: ${binding.expression} }`;
-      generated.overwrite(...binding.range.offset, expr);
+      generated.overwrite(...binding.range.offsets, expr);
     });
   },
   propagate: ({ value }) => !!value,

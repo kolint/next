@@ -1,6 +1,6 @@
 import builtins from "./_built-ins.js";
 import { BindingContext } from "./binding-context.js";
-import { type Binding, BindingParseError, parseBindings } from "./binding.js";
+import { type Binding, parseBindings } from "./binding.js";
 import {
   type Diagnostic,
   type DiagnosticError,
@@ -12,16 +12,18 @@ import {
 import { evaluateBinding, evaluateInlineData } from "./eval.js";
 import type { Plugin, Self, Sibling } from "./plugin.js";
 import { getInnerRange } from "./utils.js";
+import { type Range } from "@kolint/location";
 import {
-  Element,
-  type ParentNode,
-  type Range,
-  VirtualElement,
-  isParentNode,
   parse,
   formatParse5Error,
   parse5LocationToRange,
 } from "@kolint/parser";
+import {
+  Element,
+  type ParentNode,
+  VirtualElement,
+  isParentNode,
+} from "@kolint/syntax-tree";
 import { resolve as importMetaResolve } from "import-meta-resolve";
 import ko from "knockout";
 import MagicString from "magic-string";
@@ -181,6 +183,7 @@ class Renderer {
             }),
           );
         },
+        bindingAttributes: this.options.attributes,
       });
     } catch (error) {
       throw this.error({
@@ -223,7 +226,7 @@ class Renderer {
   }
 
   async scan(node: ParentNode) {
-    if (node instanceof VirtualElement && node.binding === "ssr") {
+    if (node instanceof VirtualElement && node.binding.name.text === "ssr") {
       await this.renderRoot(node);
       return;
     }
@@ -350,7 +353,7 @@ class Renderer {
 
   async renderRoot(node: VirtualElement, document = this.document) {
     try {
-      const data = await this.loadSsrData(node.param.trim());
+      const data = await this.loadSsrData(node.binding.param.text);
       const context = new BindingContext(data);
 
       // Remove virtual element start and end comments.
@@ -377,7 +380,10 @@ class Renderer {
     document = this.document,
   ) {
     for (const child of node.children) {
-      if (child instanceof VirtualElement && child.binding === "ssr") {
+      if (
+        child instanceof VirtualElement &&
+        child.binding.name.text === "ssr"
+      ) {
         await this.renderRoot(child, document);
         continue;
       }
@@ -397,27 +403,16 @@ class Renderer {
     try {
       let bindings: Binding[];
       try {
-        bindings = parseBindings(node, this.document.original, this.attributes);
+        bindings = parseBindings(node);
       } catch (cause) {
-        if (cause instanceof BindingParseError) {
-          this.emit(
-            this.error({
-              code: "binding-parse-error",
-              message: cause.message,
-              range: cause.range,
-              cause,
-            }),
-          );
-        } else {
-          this.emit(
-            this.error({
-              code: "binding-unknown-error",
-              message: "Failed to parse binding expression.",
-              range: node.range,
-              cause,
-            }),
-          );
-        }
+        this.emit(
+          this.error({
+            code: "binding-parse-error",
+            message: "Failed to parse binding expression.",
+            range: node.range,
+            cause,
+          }),
+        );
         return;
       }
 
@@ -550,7 +545,7 @@ class Renderer {
             const clone = document.clone();
             this.renderDecendants(node, childContext, clone);
             const inner = getInnerRange(node, clone.original);
-            return clone.slice(...inner.offset);
+            return clone.slice(...inner.offsets);
           },
         });
       } catch (cause) {
