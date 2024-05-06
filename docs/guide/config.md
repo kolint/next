@@ -54,6 +54,6 @@ export default {
   attributes: [
     "data-bind",
     "data-i18n", // [!code ++]
-  ]
+  ],
 };
 ```
